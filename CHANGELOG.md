@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0) - 2026-04-15
+### 🐛  Bug Fixes
+- Fix github workflow.
+
 ## [0.1.0](https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0) - 2026-04-15
 ### ⛰️  Features
 - Reduce tool verbosity in prompts.
@@ -22,5 +26,7 @@
 # History
 
 - \[0.1.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
+- \[0.2.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.2.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
+[0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0

@@ -87,5 +87,5 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 Use this repository as the canonical source for prompt/template maintenance.
 
 - Follow each prompt `usage` gate before invocation; prompts are intentionally specialized and non-interchangeable.
-- For prompts that perform repository modifications, keep the req worktree lifecycle and `req --git-check` flow unchanged.
+- For prompts that perform repository modifications, keep the worktree lifecycle and repository-cleanliness flow unchanged while using capability-level tool wording.
 - Release publication is automated by `.github/workflows/release-markdown.yml`: push a tag matching `v<major>.<minor>.<patch>` on `master` to generate changelog and publish `src/**/*` assets.

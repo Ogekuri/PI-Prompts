@@ -1,5 +1,5 @@
 ---
-title: "Prompts Project Requirements"
+title: "PI-Prompts Project Requirements"
 description: Software requirements specification
 version: "0.2.3"
 date: "2026-04-14"
@@ -14,7 +14,7 @@ visibility: "draft"
 tags: ["srs", "prompts", "templates"]
 ---
 
-# Prompts Project Requirements
+# PI-Prompts Project Requirements
 
 ## 1. Introduction
 

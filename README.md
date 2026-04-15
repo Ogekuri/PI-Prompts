@@ -16,7 +16,7 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 <p align="center">
   <a href="#quick-start">Quick Start</a> |
   <a href="#feature-highlights">Feature Highlights</a> |
-  <a href="#prompts-and-agents">Prompts and Agents</a> |
+  <a href="#prompts-and-agents">Prompts</a> |
   <a href="#templates">Templates</a> |
   <a href="#usage">Usage</a>
 </p>
@@ -38,7 +38,8 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 - Tag-driven release workflow publishes versioned prompt/template assets from `src/`.
 
 
-## Prompts and Agents
+## Prompts
+
 | Prompt | Purpose | Argument Hint | Select when |
 | --- | --- | --- | --- |
 | `analyze` | Produce an analysis report. | `Description of the analysis/investigation to perform` | You need read-only investigation and structured evidence output. |
@@ -56,7 +57,6 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 | `renumber` | Renumber SRS requirement IDs deterministically. | `No arguments utilized by the prompt logic (English only)` | You need deterministic ID renumbering and internal cross-reference updates only. |
 | `workflow` | Generate `WORKFLOW.md` from source code. | `No arguments utilized by the prompt logic` | You need runtime execution model documentation regeneration only. |
 | `write` | Draft SRS from user request text. | `Description of the application to be drafted from scratch (English only)` | No authoritative implementation exists; requirements must be drafted directly from user intent. |
-
 
 ## Templates
 | Template | Purpose | How it works |

@@ -142,6 +142,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **REQ-033**: MUST describe repository-cleanliness verification with the `git-status` tool, not a CLI transport literal.
 - **REQ-034**: MUST describe static analysis with the `static-check` tool, not a CLI transport literal.
 - **REQ-035**: MUST describe construct extraction with the `find` and `files-find` tools, not CLI transport literals.
+- **REQ-047**: MUST delegate purely descriptive tool-interface details to tool help/self-documentation whenever omitting them does not change required behavior, tool choice, evidence rules, or workflow order.
 - **REQ-036**: MUST describe base-path retrieval with the `base-path` tool and git-root retrieval with the `git-path` tool.
 - **REQ-037**: MUST describe worktree-name generation with the `worktree-name` tool and worktree creation with the `worktree-create` tool.
 - **REQ-038**: MUST describe worktree deletion with the `worktree-delete` tool and references generation with the `references-generation` tool.

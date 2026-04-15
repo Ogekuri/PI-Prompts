@@ -87,34 +87,13 @@ Structured index of all source-defined symbols (functions, classes, structs, obj
 Use to: identify candidate symbols by name, description, or `@satisfies` link; obtain exact file paths and line ranges; understand function signatures and contracts before extracting code. Cross-reference with WORKFLOW.md call-traces to narrow scope.
 
 ### 3. Code Extraction: `find` / `files-find` tools
-Extract actual source constructs as structured markdown with signatures, line ranges, and optional line-numbered code. Use after pillars 1-2 to extract only the targeted constructs identified during analysis.
-#### What these tools do (and what they don't)
-- Extract named constructs (e.g., CLASS, FUNCTION, STRUCT, INTERFACE, IMPORT, …) filtered by TAG and name-regex.
-- Regex (PATTERN) matches construct name only (not body). For body-content search, use rg/git grep (pillar 4).
-- Output per file: header `@@@ <filepath> | <language>`, per-construct blocks with:
-    - `### <TAG>: <name>` + optional Signature + `Lines: <start>-<end>`
-    - optional extracted Doxygen fields (if present in/around the construct)
-    - fenced code block with the complete construct slice (comments stripped, strings preserved)
-#### Choose the right mode
-- Project-wide scan: use the `find` tool.
-    - Provide `<TAG_FILTER>` and `<NAME_REGEX>`.
-    - `here` scope is implicit; base overrides are forbidden.
-    - The tool scans all files under configured source dirs and does not take a filename.
-- Target specific files: use the `files-find` tool.
-    - Provide `<TAG_FILTER>`, `<NAME_REGEX>`, and one or more target file paths.
-    - `here` scope is optional when the tool interface supports it.
-#### Enable line-numbered code for evidence citation
-Enable line numbers on the `find` or `files-find` tool so code lines are prefixed as `<n>:`.
-#### TAGs and filters
-- TAG_FILTER: pipe-separated, case-insensitive (e.g., `CLASS|FUNCTION|IMPORT`).
-- Tags are language-dependent; unsupported tags are ignored. Consult the active tool help for supported TAGs per language.
-- Broad cross-language TAG_FILTER: `CLASS|STRUCT|ENUM|INTERFACE|TRAIT|IMPL|FUNCTION|METHOD|MODULE|NAMESPACE|TYPE_ALIAS|TYPEDEF|IMPORT|CONSTANT|VARIABLE|MACRO|DECORATOR|COMPONENT|PROPERTY|PROTOCOL|EXTENSION|UNION`
-#### Regex rules (NAME_REGEX)
-- Regex matching follows `re.search()` semantics against construct names (tool behavior, independent of repository language).
-- Prefer anchored patterns: exact `^Foo$`, prefix `^parse_`, suffix `Service$`. Use `.*` only when scope is already constrained by files/TAGs.
-#### Failure modes you must handle
-- "No constructs found": adjust TAGs (supported?), file paths, or NAME_REGEX (valid regex?).
-- Regex-based extractor (not full AST): treat results as evidence pointers; confirm edge cases by opening referenced file/lines.
+Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
+- Use the `find` tool for project-wide scans and the `files-find` tool when target files are already known.
+- Use these tools for construct/name-based extraction only; use `rg`/`git grep` for body-content search and other free-text searches.
+- Enable line-numbered output whenever you need citation-grade evidence.
+- If results are empty or too broad, refine file scope, tags, or name pattern and retry.
+- Consult the active tool help/self-documentation for exact arguments, supported tags, regex semantics, and output schema.
+
 
 ### 4. Supplementary Search: `rg` / `git grep`
 Use for: string/pattern searches inside code bodies, cross-file references, configuration values, error messages, or any content not captured by construct-name-based extraction.

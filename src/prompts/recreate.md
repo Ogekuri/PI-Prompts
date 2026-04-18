@@ -132,7 +132,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - If the command returns an error code or prints any text containing "ERROR", OUTPUT exactly "ERROR: Worktree generation failed!", and then terminate the execution.
 
 4. Generate the **Software Requirements Specification**
-   - Read the template at `.req/docs/Requirements_Template.md` and apply its guidelines to the requirement draft.
+   - Read the template at `%%TEMPLATE_PATH%%/Requirements_Template.md` and apply its guidelines to the requirement draft.
    - Read the **Software Requirements Specification** document `%%DOC_PATH%%/REQUIREMENTS.md` and extract a complete, explicit list of atomic requirements.
       - Preserve every requirement’s original intent; do not delete any requirement.
       - **ID preservation**: If a requirement already has an ID, you MUST keep that exact ID unchanged.
@@ -181,7 +181,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
       - Write each requirement for other LLM **Agents** and Automated Parsers, NOT humans.
       - Must be optimized for machine comprehension. Do not write flowery prose. Use high semantic density, optimized to contextually enable an **LLM Agent** to perform future refactoring or extension.
       - Write requirements, section titles, tables, and other content in **English language**.
-      - Follow `.req/docs/Requirements_Template.md`.
+      - Follow `%%TEMPLATE_PATH%%/Requirements_Template.md`.
       - Output the entire response in clean, properly formatted Markdown.
    - Preserve requirement identifiers and cross-references.
       - You MUST ensure all requirement IDs in the saved document are unique (no collisions).

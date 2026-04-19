@@ -40,6 +40,9 @@
 !scripts/**/*
 !images/
 !images/**/*
+!pi-usereq/
+!pi-usereq/docs/
+!pi-usereq/docs/**/*.md
 
 ##########################################
 # Exlucde specific files and directories #

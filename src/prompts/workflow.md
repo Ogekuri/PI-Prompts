@@ -166,16 +166,6 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
       - `symbol_name(...)`: `<single-line role>` [`<defining filepath>`]
          - `<optional: brief invariants/external boundaries>`
          - `<child internal calls as nested bullet list, in call order>`
-3. **CRITICAL**: Stage & commit
-   - Show a summary of changes with `git diff` and `git diff --stat`.
-   - Stage changes explicitly (prefer targeted add; avoid `git add -A` if it may include unintended files): `git add <file...>` (ensure to include only `%%DOC_PATH%%/WORKFLOW.md`).
-   - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", and then terminate the execution.
-   - Commit a structured commit message with: `git commit -m "docs(<COMPONENT>)<BREAKING>: <DESCRIPTION> [useReq]"`
-      - Set `<COMPONENT>` to the most specific component, module, or function affected. If multiple areas are touched, choose the primary one. If you cannot identify a unique component, use `core`.
-      - Set `<DESCRIPTION>` to a short, clear summary in **English language** of what changed, including (when applicable) updates to: requirements/specs, source code, tests. Use present tense, avoid vague wording, and keep it under ~80 characters if possible.
-      - Set `<BREAKING>` to `!` if a breaking change was implemented (a modification to an API, library, or system that breaks backward compatibility, causing dependent client applications or code to fail or behave incorrectly), set empty otherwise.
-      - Include main features added, requirements changes, or a bug-fix description adding a multi-line comment (maximum 10 lines).
-         - Do not include the 'Co-authored-by' trailer or any AI attribution. A GPG-signed commit is not required.
-   - Confirm the repo is clean with the `git-status` tool. If the command returns an error code or prints any text containing "ERROR", override the final line with EXACTLY "WARNING: Workflow request completed with unclean git repository!".
+3. %%COMMIT%%%
 4. Present results
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.

@@ -19,12 +19,17 @@ In scope: renumbering requirement identifiers in `%%DOC_PATH%%/REQUIREMENTS.md` 
 - **Act as a Senior Technical Requirements Engineer** when analyzing source code to infer behavior: ensure every software requirement generated is atomic, unambiguous, and empirically testable.
 - **Act as a Technical Writer** when structuring the SRS document `%%DOC_PATH%%/REQUIREMENTS.md`: use RFC 2119 keywords exclusively (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and never use "shall"; maintain a clean, hierarchical Markdown structure with a maximum depth of 3 levels.
 - **Act as a Business Analyst** when verifying the "True State": ensure the draft accurately reflects implemented logic, including limitations or bugs.
-- **Act as an Expert GitOps Engineer** when preparing the final git commit, staged-change summary, and commit message.
+- **Act as an Expert GitOps Engineer** when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+
+
+## Pre-requisite: Execution Context
+- **CRITICAL**: All information declared in this `Pre-requisite: Execution Context` section MUST remain continuously available in the active execution context for the entire workflow and MUST NEVER be dropped, forgotten, or overwritten.
+- Generate <WORKTREE_NAME> with the `worktree-name` tool, retain the literal result for later steps, and use simple sequential execution with only linear shell commands compatible with restrictive filtering systems for all worktree operations in this workflow.
 
 
 ## Absolute Rules, Non-Negotiable
 - **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
-- **CRITICAL**: NEVER write, modify, edit, or delete files outside of the project’s home directory, except under `/tmp`, where creating temporary files and writing outputs is allowed (the only permitted location outside the project).
+- **CRITICAL**: NEVER write, modify, edit, or delete files outside of the active git worktree directory, except under `/tmp`, and except for worktree operations executed through the `worktree-create` and `worktree-delete` tools.
 - You can read, write, or edit `%%DOC_PATH%%/REQUIREMENTS.md`.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
 - **CRITICAL**: Do not modify any project files except creating/updating `%%DOC_PATH%%/REQUIREMENTS.md`.
@@ -44,7 +49,7 @@ In scope: renumbering requirement identifiers in `%%DOC_PATH%%/REQUIREMENTS.md` 
 ## Execution Protocol (Global vs Local)
 You must manage the execution flow using two distinct methods:
 -  **Global Roadmap** (*check-list*): 
-   - You MUST maintain a *check-list* internally with `4` Steps (one item per Step).
+   - You MUST maintain a *check-list* internally with `8` Steps (one item per Step).
    - **Do NOT** use the *task-list tool* for this high-level roadmap.
 -  **Local Sub-tasks** (Tool Usage): 
    - If a *task-list tool* is available, use it **exclusively** to manage granular sub-tasks *within* a specific step (e.g., in Step X: "1. Edit file A", "2. Edit file B"; or in Step Y: "1. Fix test K", "2. Fix test L").
@@ -65,15 +70,50 @@ During the execution flow you MUST follow these directives:
 
 
 ## Steps
-Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..4`, and start following the roadmap at the same time, following the instructions of Step 1 (Renumber the Software Requirements Specification). Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
-1. **CRITICAL**: Renumber requirement IDs in the Software Requirements Specification
-   - Renumber requirement IDs in `%%DOC_PATH%%/REQUIREMENTS.md` deterministically and update all requirement-ID cross-references accordingly.
-2. Validate the Software Requirements Specification
-   - Re-read the updated document and verify internal consistency of IDs, references, and ordering.
-3. **CRITICAL**: Stage & commit
+Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..8`, and start following the roadmap at the same time, following the instructions of Step 1. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
+1. **CRITICAL**: Check GIT Status
+   - Check GIT status with the `git-status` tool. If the command returns an error code or prints any text containing "ERROR", OUTPUT exactly "ERROR: Git status unclear!", and then terminate the execution.
+2. **CRITICAL**: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence
+   - Check required docs presence with the `docs-check` tool. If the command returns an error code or prints any text containing "ERROR", OUTPUT exactly "ERROR: Required docs check failed!", and then terminate the execution.
+3. **CRITICAL**: Worktree Generation & Isolation
+   - Derive <BASE_PATH> with the `base-path` tool, derive <GIT_PATH> with the `git-path` tool, and generate <WORKTREE_NAME> with the `worktree-name` tool using simple sequential tool execution without shell composition.
+   - Create the dedicated isolated worktree with the `worktree-create` tool, then execute `cd <GIT_PATH>/../<WORKTREE_NAME>` before proceeding to the next step.
+   - If the command returns an error code or prints any text containing "ERROR", OUTPUT exactly "ERROR: Worktree generation failed!", and then terminate the execution.
+
+4. **CRITICAL**: Renumber requirement IDs in the **Software Requirements Specification**
+   - Read the **Software Requirements Specification** document `%%DOC_PATH%%/REQUIREMENTS.md`.
+   - Determine the existing requirement ID scheme, if any (prefix + numeric width). If multiple schemes exist, select the most common one as the canonical output scheme; if no clear scheme exists, use `REQ-001`, `REQ-002`, ... as the output scheme.
+   - Renumber requirements in strict document order (top-to-bottom, as they appear in the file) to a progressive sequence starting at 1.
+      - You MUST NOT modify any requirement text after `:`, any headings, any ordering, or any non-ID content.
+      - You MUST NOT add, delete, split, merge, or reorganize requirements.
+      - You MUST ensure the final set of requirement IDs is unique and strictly progressive (no gaps) in the chosen scheme.
+   - Update every internal cross-reference to requirement identifiers so that references still point to the correct renumbered requirement.
+      - Cross-references MUST be updated wherever requirement IDs are referenced in `%%DOC_PATH%%/REQUIREMENTS.md`.
+      - If an internal reference points to a non-existent requirement (before or after renumbering), treat this as an error and report it.
+   - Produce and include in the final report an explicit old-ID → new-ID mapping in document order.
+   - Save changes by overwriting `%%DOC_PATH%%/REQUIREMENTS.md` with only the ID and cross-reference updates applied.
+5. Validate the **Software Requirements Specification**
+   - Review `%%DOC_PATH%%/REQUIREMENTS.md` and validate the renumbering invariants:
+      - Only requirement IDs and requirement-ID cross-references changed; all other text is identical.
+      - Requirement IDs are unique and strictly progressive in document order.
+      - All internal cross-references point to an existing renumbered requirement ID.
+      - Report `OK` if the invariants hold. Report `FAIL` if any invariant is violated.
+6. **CRITICAL**: Stage & commit
    - Show a summary of changes with `git diff` and `git diff --stat`.
-   - Stage only `%%DOC_PATH%%/REQUIREMENTS.md`.
-   - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", and then terminate the execution.
-   - Commit with `git commit -m "docs(<COMPONENT>)<BREAKING>: <DESCRIPTION> [useReq]"`; do not include AI attribution; a GPG-signed commit is not required.
-4. Present results
-   - PRINT the final report using the fixed report schema and final status line.
+   - Stage changes explicitly (prefer targeted add; avoid `git add -A` if it may include unintended files): `git add <file...>` (ensure to include only `%%DOC_PATH%%/REQUIREMENTS.md`).
+   - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", and then delete the isolated worktree and branch with the `worktree-delete` tool, and then terminate the execution.
+   - Commit a structured commit message with: `git commit -m "docs(<COMPONENT>)<BREAKING>: <DESCRIPTION> [useReq]"`
+      - Set `<COMPONENT>` to the most specific component, module, or function affected. If multiple areas are touched, choose the primary one. If you cannot identify a unique component, use `core`.
+      - Set `<DESCRIPTION>` to a short, clear summary in **English language** of what changed, including (when applicable) updates to: requirements/specs, source code, tests. Use present tense, avoid vague wording, and keep it under ~80 characters if possible.
+      - Set `<BREAKING>` to `!` if a breaking change was implemented (a modification to an API, library, or system that breaks backward compatibility, causing dependent client applications or code to fail or behave incorrectly), set empty otherwise.
+      - Include main features added, requirements changes, or a bug-fix description adding a multi-line comment (maximum 10 lines).
+         - Do not include the 'Co-authored-by' trailer or any AI attribution. A GPG-signed commit is not required.
+   - Confirm the repo is clean with the `git-status` tool. If the command returns an error code or prints any text containing "ERROR", override the final line with EXACTLY "WARNING: Renumber request completed with unclean git repository!".
+7. **CRITICAL**: Merge Conflict Management
+   - Return to the original repository directory (the sibling directory of the worktree).
+   - Ensure you are on the original branch used before worktree creation by deriving `<BASE_PATH>` with the `base-path` tool if needed and executing `cd <BASE_PATH>`.
+   - Merge the isolated branch into the original branch: `git merge <WORKTREE_NAME>`
+   - If the merge completes successfully, delete the isolated worktree and branch with the `worktree-delete` tool; if the command returns an error code or prints any text containing "ERROR", OUTPUT exactly "ERROR: Worktree cleanup verification failed!", and then terminate the execution.
+   - If the merge fails or results in conflicts, do NOT remove the worktree directory and override the final line with EXACTLY "WARNING: Renumber request completed with merge conflicting!".
+8. Present results
+   - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.

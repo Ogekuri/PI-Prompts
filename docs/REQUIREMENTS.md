@@ -1,14 +1,14 @@
 ---
 title: "PI-Prompts Project Requirements"
 description: Software requirements specification
-version: "0.2.6"
+version: "0.2.7"
 date: "2026-04-20"
 author: "req-write"
 scope:
   paths:
     - "src/prompts/**/*.md"
     - "src/docs/**/*.md"
-    - "src/istructions/**/*.md"
+    - "src/instructions/**/*.md"
   excludes:
     - ".*/**"
 visibility: "draft"
@@ -60,7 +60,7 @@ This project defines and maintains prompt and template artifacts used by the use
 - **PRJ-002**: MUST maintain template artifacts in `src/docs/` as mandatory authoring guides and keep template taxonomy aligned with prompt-level Doxygen coverage directives.
 - **PRJ-003**: MUST define each prompt with a single primary workflow intent and deterministic output objective.
 - **PRJ-004**: MUST preserve the process order Requirements -> Design -> Implementation -> Verification when editing prompt instructions.
-- **PRJ-005**: MUST maintain reusable workflow-instruction artifacts in `src/istructions/` when shared prompt text is externalized.
+- **PRJ-005**: MUST maintain reusable workflow-instruction artifacts in `src/instructions/` when shared prompt text is externalized.
 
 ### 2.3 In-Scope Artifacts
 | Category | Path | Intended Function |
@@ -84,7 +84,7 @@ This project defines and maintains prompt and template artifacts used by the use
 | Template | `src/docs/Document_Source_Code_in_Doxygen_Style.md` | Mandatory source-code documentation guideline. |
 | Template | `src/docs/HDT_Test_Authoring_Guide.md` | Mandatory unit-test authoring guideline. |
 | Template | `src/docs/Requirements_Template.md` | Mandatory SRS authoring guideline. |
-| Instruction | `src/istructions/commit.md` | Canonical shared stage-and-commit instruction for commit-bearing prompts. |
+| Instruction | `src/instructions/commit.md` | Canonical shared stage-and-commit instruction for commit-bearing prompts. |
 
 ## 3. Requirements
 
@@ -93,7 +93,7 @@ This project defines and maintains prompt and template artifacts used by the use
 - **DES-002**: MUST standardize repeated operational instructions, including final-commit handling and completion or error messages, using identical wording across prompts and forbidding bell-control output suffixes, except prompt-name specialization.
 - **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
 - **DES-004**: MUST preserve reusable keyword tokens exactly, including `%%TEMPLATE_PATH%%`, so installation-time substitution remains valid.
-- **DES-005**: MUST externalize the shared final-commit step in `src/istructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%%`.
+- **DES-005**: MUST externalize the shared final-commit step in `src/instructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%%`.
 
 Proposed repository structure (max depth 3, depth 4 for `src/`):
 
@@ -103,7 +103,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
     │   ├── Document_Source_Code_in_Doxygen_Style.md
     │   ├── HDT_Test_Authoring_Guide.md
     │   └── Requirements_Template.md
-    ├── istructions/
+    ├── instructions/
     │   └── commit.md
     └── prompts/
         ├── analyze.md
@@ -143,7 +143,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **REQ-016**: MUST define `flowchart.md` to generate `FLOWCHART.md` as a Mermaid flowchart of primary program flow from source-code evidence only.
 - **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
 - **REQ-049**: MUST express template-guideline path references with `%%TEMPLATE_PATH%%` instead of literal repository-relative paths.
-- **REQ-050**: MUST keep `src/istructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%%`.
+- **REQ-050**: MUST keep `src/instructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%%`.
 - **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
 - **REQ-019**: MUST enforce canonical phrasing for shared operational instructions and preserve Source Code Analysis Toolkit ordering 1→2→3→4.
 - **REQ-032**: MUST omit standalone docs-presence verification steps and proceed directly to the first retained workflow action.

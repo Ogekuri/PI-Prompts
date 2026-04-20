@@ -166,6 +166,6 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
       - `symbol_name(...)`: `<single-line role>` [`<defining filepath>`]
          - `<optional: brief invariants/external boundaries>`
          - `<child internal calls as nested bullet list, in call order>`
-3. %%COMMIT%%%
+3. %%COMMIT%%
 4. Present results
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.

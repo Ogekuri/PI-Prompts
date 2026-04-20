@@ -43,7 +43,7 @@ This project defines and maintains prompt and template artifacts used by the use
 
 ### 1.5 Absolute Rules, Non-Negotiable
 - When editing prompt, template, or instruction artifacts:
-  - MUST preserve placeholder tokens `%%ARGS%%`, `%%COMMIT%%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%` exactly as-is.
+  - MUST preserve placeholder tokens `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%` exactly as-is.
   - MUST keep all prompt/template/instruction text free of typographical and grammatical errors.
   - MUST use uniform terminology and identical canonical instruction phrasing for identical actions, references, and process keywords.
   - MUST keep interruption rules explicit: prompts MUST NOT interrupt agent reasoning flow unless the interruption is required by defined workflow conditions.
@@ -93,7 +93,7 @@ This project defines and maintains prompt and template artifacts used by the use
 - **DES-002**: MUST standardize repeated operational instructions, including final-commit handling and completion or error messages, using identical wording across prompts and forbidding bell-control output suffixes, except prompt-name specialization.
 - **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
 - **DES-004**: MUST preserve reusable keyword tokens exactly, including `%%TEMPLATE_PATH%%`, so installation-time substitution remains valid.
-- **DES-005**: MUST externalize the shared final-commit step in `src/instructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%%`.
+- **DES-005**: MUST externalize the shared final-commit step in `src/instructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%`.
 
 Proposed repository structure (max depth 3, depth 4 for `src/`):
 
@@ -141,9 +141,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **REQ-014**: MUST define `write.md` to generate an SRS from user-request text without relying on source-code evidence.
 - **REQ-015**: MUST define `readme.md` to update root `README.md` from user-visible implementation evidence only.
 - **REQ-016**: MUST define `flowchart.md` to generate `FLOWCHART.md` as a Mermaid flowchart of primary program flow from source-code evidence only.
-- **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
+- **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
 - **REQ-049**: MUST express template-guideline path references with `%%TEMPLATE_PATH%%` instead of literal repository-relative paths.
-- **REQ-050**: MUST keep `src/instructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%%`.
+- **REQ-050**: MUST keep `src/instructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%`.
 - **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
 - **REQ-019**: MUST enforce canonical phrasing for shared operational instructions and preserve Source Code Analysis Toolkit ordering 1→2→3→4.
 - **REQ-032**: MUST omit standalone docs-presence verification steps and proceed directly to the first retained workflow action.
@@ -197,7 +197,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **ANZ-CTX-004**: MUST define the `## Behavior` section to instruct: Only analyze the code and present the results; make no changes; Do NOT create or modify tests in this workflow; Report facts: for each finding include file paths and, when useful, line numbers or short code excerpts; Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `git grep`, `git rev-parse`, `git branch --show-current`; Do NOT run any other git commands; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read files as needed (read-only only; eg, `cat`, `sed -n`, `head`, `tail`, `rg`, `less`); Do NOT use in-place editing flags (eg, `-i`, `perl -pi`) in this workflow.
 
 ##### Steps Requirements
-- **ANZ-STP-001**: MUST define Step 1 to instruct: Analyze the [User Request](#users-request) and present the analysis report.
+- **ANZ-STP-001**: MUST define Step 1 to instruct: Analyze the [User Request](#users-request).
+- **ANZ-STP-002**: MUST define Step 2 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.2 Change Prompt
 
@@ -213,7 +214,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **CHG-STP-003**: MUST define Step 3 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying static-analysis results, running existing unit tests with language-specific priority policy, and implementing needed bug fixes.
 - **CHG-STP-004**: MUST define Step 4 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **CHG-STP-005**: MUST define Step 5 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **CHG-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%%`.
+- **CHG-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%`.
 - **CHG-STP-007**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.3 Check Prompt
@@ -241,7 +242,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **COV-STP-002**: MUST define Step 2 to instruct: Generate Verification Delta by running the `static-check` tool, executing existing unit tests with language-specific priority policy, and implementing needed bug fixes.
 - **COV-STP-003**: MUST define Step 3 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **COV-STP-004**: MUST define Step 4 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **COV-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%%`.
+- **COV-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%`.
 - **COV-STP-006**: MUST define Step 6 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.5 Create Prompt
@@ -255,7 +256,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 ##### Steps Requirements
 - **CRT-STP-001**: MUST define Step 1 to instruct: Generate the Software Requirements Specification.
 - **CRT-STP-002**: MUST define Step 2 to instruct: Validate the Software Requirements Specification.
-- **CRT-STP-003**: MUST define Step 3 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+- **CRT-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%`.
+- **CRT-STP-004**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.6 Fix Prompt
 
@@ -270,7 +272,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **FIX-STP-002**: MUST define Step 2 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying defect resolution with requirement evidence plus the `static-check` tool, running existing unit tests with language-specific priority policy, explicitly confirming reproducer-unit-test success when created, and implementing needed bug fixes.
 - **FIX-STP-003**: MUST define Step 3 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **FIX-STP-004**: MUST define Step 4 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **FIX-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%%`.
+- **FIX-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%`.
 - **FIX-STP-006**: MUST define Step 6 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 - **FIX-STP-011**: MUST define Step 1 incompatibility branch to output a three-column requirement-conflict table (`Requirement ID`, `Conflicting Excerpt`, `Conflict Reason + Interrupted Implementation Intent`) before emitting the exact error string and terminating.
 
@@ -288,7 +290,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **IMP-STP-003**: MUST define Step 3 to instruct: Static analysis: build the runtime model from %%SRC_PATHS%%.
 - **IMP-STP-004**: MUST define Step 4 to instruct: Generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` document using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **IMP-STP-005**: MUST define Step 5 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **IMP-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%%`.
+- **IMP-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%`.
 - **IMP-STP-007**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.8 New Prompt
@@ -305,7 +307,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **NEW-STP-003**: MUST define Step 3 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying static-analysis results, running existing unit tests with language-specific priority policy, and implementing needed bug fixes.
 - **NEW-STP-004**: MUST define Step 4 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **NEW-STP-005**: MUST define Step 5 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **NEW-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%%`.
+- **NEW-STP-006**: MUST define Step 6 to instruct: `%%COMMIT%%`.
 - **NEW-STP-007**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.9 ReCreate Prompt
@@ -319,7 +321,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 ##### Steps Requirements
 - **RCR-STP-001**: MUST define Step 1 to instruct: Generate the Software Requirements Specification.
 - **RCR-STP-002**: MUST define Step 2 to instruct: Validate the Software Requirements Specification.
-- **RCR-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%%`.
+- **RCR-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%`.
 - **RCR-STP-004**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.10 Refactor Prompt
@@ -335,7 +337,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **RFR-STP-002**: MUST define Step 2 to instruct: Generate Verification Delta by running the `static-check` tool, executing existing unit tests with language-specific priority policy, and implementing needed bug fixes.
 - **RFR-STP-003**: MUST define Step 3 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **RFR-STP-004**: MUST define Step 4 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **RFR-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%%`.
+- **RFR-STP-005**: MUST define Step 5 to instruct: `%%COMMIT%%`.
 - **RFR-STP-006**: MUST define Step 6 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.11 References Prompt
@@ -348,7 +350,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 
 ##### Steps Requirements
 - **REF-STP-001**: MUST define Step 1 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
-- **REF-STP-002**: MUST define Step 2 to instruct: `%%COMMIT%%%`.
+- **REF-STP-002**: MUST define Step 2 to instruct: `%%COMMIT%%`.
 - **REF-STP-003**: MUST define Step 3 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.12 Renumber Prompt
@@ -362,7 +364,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 ##### Steps Requirements
 - **RNB-STP-001**: MUST define Step 1 to instruct: CRITICAL: Renumber requirement IDs in the Software Requirements Specification.
 - **RNB-STP-002**: MUST define Step 2 to instruct: Validate the Software Requirements Specification.
-- **RNB-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%%`.
+- **RNB-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%`.
 - **RNB-STP-004**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.13 Workflow Prompt
@@ -376,7 +378,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 ##### Steps Requirements
 - **WFL-STP-001**: MUST define Step 1 to instruct: Static analysis: build the runtime model from %%SRC_PATHS%%.
 - **WFL-STP-002**: MUST define Step 2 to instruct: Generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` document using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
-- **WFL-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%%`.
+- **WFL-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%`.
 - **WFL-STP-004**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.14 Write Prompt
@@ -389,7 +391,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 
 ##### Steps Requirements
 - **WRT-STP-001**: MUST define Step 1 to instruct: Generate the Software Requirements Specification.
-- **WRT-STP-002**: MUST define Step 2 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+- **WRT-STP-002**: MUST define Step 2 to instruct: `%%COMMIT%%`.
+- **WRT-STP-003**: MUST define Step 3 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.15 Readme Prompt
 
@@ -403,7 +406,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 ##### Steps Requirements
 - **RDM-STP-001**: MUST define Step 1 to instruct: Analyze user-visible implementation surface from %%SRC_PATHS%% and candidate related files.
 - **RDM-STP-002**: MUST define Step 2 to instruct: Identify exact root `README.md` sections impacted by detected user-visible implementation changes and additional edits explicitly requested in [User Request](#users-request), then update only those sections while preserving unrelated content and existing structure/formatting whenever possible.
-- **RDM-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%%`.
+- **RDM-STP-003**: MUST define Step 3 to instruct: `%%COMMIT%%`.
 - **RDM-STP-004**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
 #### 3.3.16 Flowchart Prompt
@@ -433,7 +436,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **FCH-STP-003**: MUST define Step 2 to instruct grouping non-atomic functions into sequential alphabetical phases.
 - **FCH-STP-004**: MUST define Step 2 to instruct extracting sequentially numbered atomic operations as parameterless function prototypes.
 - **FCH-STP-005**: MUST define Step 2 to instruct deducing control flow, decisions, and joins from the Step 1 code analysis before writing the file.
-- **FCH-STP-006**: MUST define Step 3 to instruct: `%%COMMIT%%%`.
+- **FCH-STP-006**: MUST define Step 3 to instruct: `%%COMMIT%%`.
 - **FCH-STP-007**: MUST define Step 4 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 - **FCH-STP-011**: MUST define Step 2 to instruct sibling branches from one decision node to use comparable semantic granularity.
 - **FCH-STP-012**: MUST define Step 2 to instruct normalizing equivalent branches by expanding or collapsing composite helpers to remove hidden-step ambiguity.

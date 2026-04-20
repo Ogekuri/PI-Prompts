@@ -96,7 +96,7 @@ Use for: string/pattern searches inside code bodies, cross-file references, conf
 ## Execution Protocol (Global vs Local)
 You must manage the execution flow using two distinct methods:
 -  **Global Roadmap** (*check-list*): 
-   - You MUST maintain a *check-list* internally with `1` Steps (one item per Step).
+   - You MUST maintain a *check-list* internally with `2` Steps (one item per Step).
    - **Do NOT** use the *task-list tool* for this high-level roadmap.
 -  **Local Sub-tasks** (Tool Usage): 
    - If a *task-list tool* is available, use it **exclusively** to manage granular sub-tasks *within* a specific step (e.g., in Step X: "1. Edit file A", "2. Edit file B"; or in Step Y: "1. Fix test K", "2. Fix test L").
@@ -117,11 +117,12 @@ During the execution flow you MUST follow these directives:
 
 
 ## Steps
-Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..1`, and start following the roadmap at the same time, executing the instructions of Step 1. If a tool call is required in Step 1, invoke it immediately; otherwise proceed to Step 1 without additional commentary. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
-1. Analyze the [User Request](#users-request) and present the analysis report
+Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..2`, and start following the roadmap at the same time, executing the instructions of Step 1. If a tool call is required in Step 1, invoke it immediately; otherwise proceed to Step 1 without additional commentary. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
+1. Analyze the [User Request](#users-request)
    - Using [User Request](#users-request) as a unified semantic framework, extract all directly and tangentially related information from `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, prioritizing high recall to capture every borderline connection across both sources, to identify the most likely related files and functions based on explicit evidence, and treat any uncertain links as candidates without claiming completeness, then analyze the involved source code from %%SRC_PATHS%% to answer the [User Request](#users-request), ensuring compliance with %%GUIDELINES_FILES%% documents if present.
    - Do NOT create or modify tests in this workflow. If you cite tests as evidence, treat them as read-only artifacts.
    - Read %%GUIDELINES_FILES%% files and ensure any suggested follow-up changes would conform to those **guidelines**. Do not check unrelated **guidelines**.
+2. Present results
    - PRINT, in the response, the final analysis report for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.
 
 <h2 id="users-request">User's Request</h2>

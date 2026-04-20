@@ -1513,7 +1513,7 @@ import { makeRelativeIfContainsProject } from "./utils.js";
 
 ### fn `export function buildPromptReplacementPaths(projectBase: string, config: UseReqConfig): Record<string, string>` (L244-272)
 - @brief Builds placeholder replacements for bundled prompt rendering.
-- @details Computes runtime path context from the execution path, derives installation-owned template and guideline paths, enumerates visible guideline files from the installed resource tree, and returns the token map consumed by prompt templates. Runtime is O(g log g + s) where g is guideline count and s is source-directory count. Side effects are limited to filesystem reads.
+- @details Computes runtime path context from the execution path, derives installation-owned template and guideline paths, enumerates visible guideline files from the installed resource tree, and returns the token map consumed by prompt templates, including `%%COMMIT%%`. Runtime is O(g log g + s) where g is guideline count and s is source-directory count. Side effects are limited to filesystem reads.
 - @param[in] projectBase {string} Absolute project root path.
 - @param[in] config {UseReqConfig} Effective project configuration.
 - @return {Record<string, string>} Placeholder-to-string replacement map including runtime path tokens.
@@ -2741,7 +2741,7 @@ import { readBundledPrompt } from "./resources.js";
 
 ### fn `export function applyReplacements(text: string, replacements: Record<string, string>): string` (L148-154)
 - @brief Applies literal placeholder replacements to bundled prompt markdown.
-- @details Replaces every placeholder token using split/join semantics so all occurrences are updated without regex escaping. Time complexity O(t*n) where t is replacement count and n is prompt length.
+- @details Replaces every placeholder token, including `%%COMMIT%%`, using split/join semantics so all occurrences are updated without regex escaping. Time complexity O(t*n) where t is replacement count and n is prompt length.
 - @param[in] text {string} Prompt markdown containing placeholder tokens.
 - @param[in] replacements {Record<string, string>} Token-to-value map.
 - @return {string} Prompt markdown with all placeholder tokens expanded.
@@ -2749,7 +2749,7 @@ import { readBundledPrompt } from "./resources.js";
 
 ### fn `export function renderPrompt(` (L166-184)
 - @brief Renders a bundled prompt for the current project context.
-- @details Loads the bundled markdown template, expands configuration-derived placeholders, injects conditional pi.dev conformance guidance, and rewrites legacy tool references to internal names. Time complexity O(n) relative to prompt size. No tracked files are modified.
+- @details Loads the bundled markdown template, expands configuration-derived placeholders, injects conditional pi.dev conformance guidance, rewrites legacy tool references to internal names, preserves `%%COMMIT%%` for commit-bearing workflows, and keeps `analyze.md` reporting as an explicit final step. Time complexity O(n) relative to prompt size. No tracked files are modified.
 - @param[in] promptName {string} Bundled prompt identifier.
 - @param[in] args {string} Raw user-supplied prompt arguments.
 - @param[in] projectBase {string} Absolute project root used for placeholder and manifest resolution.
@@ -2987,7 +2987,7 @@ import { getInstallationPath, RESOURCE_ROOT_DIRNAME } from "./path-context.js";
 
 ### fn `export function readBundledPrompt(promptName: string): string` (L47-50)
 - @brief Reads one bundled markdown prompt by logical prompt name.
-- @details Resolves the prompt file under the installation-owned `resources/prompts` directory, validates resource accessibility, and loads it as UTF-8 text. Time complexity is O(n) in file size. Side effects are limited to filesystem reads.
+- @details Resolves the prompt file under the installation-owned `resources/prompts` directory, validates resource accessibility, and loads it as UTF-8 text; bundled prompt workflows now use `%%COMMIT%%` in commit-bearing templates, keep that stage penultimate in `write.md` and `create.md`, and expose `Present results` as Step 2 in `analyze.md`. Time complexity is O(n) in file size. Side effects are limited to filesystem reads.
 - @param[in] promptName {string} Prompt identifier without the `.md` suffix.
 - @return {string} Raw prompt markdown content.
 - @throws {Error} Propagates `fs.readFileSync` errors when the prompt file is missing or unreadable.

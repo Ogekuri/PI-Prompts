@@ -64,6 +64,6 @@ During the execution flow you MUST follow these directives:
 Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..3`, and start following the roadmap at the same time, executing the instructions of Step 1. If a tool call is required in Step 1, invoke it immediately; otherwise proceed to Step 1 without additional commentary. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
 1. Update `%%DOC_PATH%%/REFERENCES.md` references file
    -  Create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
-2. %%COMMIT%%%
+2. %%COMMIT%%
 3. Present results
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.

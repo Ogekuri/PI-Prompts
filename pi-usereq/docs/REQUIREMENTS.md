@@ -1,8 +1,8 @@
 ---
 title: "PI-useReq Requirements"
 description: Software requirements specification
-version: "0.0.31"
-date: "2026-04-19"
+version: "0.0.32"
+date: "2026-04-20"
 author: "OpenAI Codex"
 scope:
   paths:
@@ -79,9 +79,11 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 
 ### 3.2 Functions
 - **REQ-001**: MUST access bundled prompts, templates, and guidelines from `<installation-path>/resources` without requiring user-home resource copies before prompt or tool execution.
-- **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, and `%%ARGS%%` tokens when rendering prompts.
+- **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, and `%%ARGS%%` tokens when rendering prompts.
 - **REQ-003**: MUST rewrite legacy `req --...` prompt text references to internal tool names such as `find tool` and `git-check tool`.
 - **REQ-004**: MUST register `req-<prompt>` commands for every bundled prompt name and send rendered prompt content as a user message.
+- **REQ-159**: MUST place `%%COMMIT%%` as the penultimate numbered step in bundled prompts `create.md` and `write.md`.
+- **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.
 - **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-find` only through agent-tool registration.
 - **REQ-044**: MUST expose `references`, `compress`, `find`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
 - **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.

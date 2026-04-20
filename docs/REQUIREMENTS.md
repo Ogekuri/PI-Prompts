@@ -1,7 +1,7 @@
 ---
 title: "PI-Prompts Project Requirements"
 description: Software requirements specification
-version: "0.2.7"
+version: "0.2.8"
 date: "2026-04-20"
 author: "req-write"
 scope:
@@ -43,7 +43,7 @@ This project defines and maintains prompt and template artifacts used by the use
 
 ### 1.5 Absolute Rules, Non-Negotiable
 - When editing prompt, template, or instruction artifacts:
-  - MUST preserve placeholder tokens `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%` exactly as-is.
+  - MUST preserve placeholder tokens `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%PROMPT%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%` exactly as-is.
   - MUST keep all prompt/template/instruction text free of typographical and grammatical errors.
   - MUST use uniform terminology and identical canonical instruction phrasing for identical actions, references, and process keywords.
   - MUST keep interruption rules explicit: prompts MUST NOT interrupt agent reasoning flow unless the interruption is required by defined workflow conditions.
@@ -92,7 +92,7 @@ This project defines and maintains prompt and template artifacts used by the use
 - **DES-001**: MUST organize artifacts into dedicated prompt and template with explicit responsibilities.
 - **DES-002**: MUST standardize repeated operational instructions, including final-commit handling and completion or error messages, using identical wording across prompts and forbidding bell-control output suffixes, except prompt-name specialization.
 - **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
-- **DES-004**: MUST preserve reusable keyword tokens exactly, including `%%TEMPLATE_PATH%%`, so installation-time substitution remains valid.
+- **DES-004**: MUST preserve reusable runtime-substituted keyword tokens exactly, including `%%COMMIT%%`, `%%PROMPT%%`, and `%%TEMPLATE_PATH%%`, so prompt artifacts cannot redefine or mutate them.
 - **DES-005**: MUST externalize the shared final-commit step in `src/instructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%`.
 
 Proposed repository structure (max depth 3, depth 4 for `src/`):
@@ -141,9 +141,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **REQ-014**: MUST define `write.md` to generate an SRS from user-request text without relying on source-code evidence.
 - **REQ-015**: MUST define `readme.md` to update root `README.md` from user-visible implementation evidence only.
 - **REQ-016**: MUST define `flowchart.md` to generate `FLOWCHART.md` as a Mermaid flowchart of primary program flow from source-code evidence only.
-- **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
+- **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%PROMPT%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
 - **REQ-049**: MUST express template-guideline path references with `%%TEMPLATE_PATH%%` instead of literal repository-relative paths.
 - **REQ-050**: MUST keep `src/instructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%`.
+- **REQ-051**: MUST require `src/instructions/commit.md` to set commit-message `<TYPE>` exactly to the runtime-substituted token `%%PROMPT%%`.
 - **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
 - **REQ-019**: MUST enforce canonical phrasing for shared operational instructions and preserve Source Code Analysis Toolkit ordering 1→2→3→4.
 - **REQ-032**: MUST omit standalone docs-presence verification steps and proceed directly to the first retained workflow action.

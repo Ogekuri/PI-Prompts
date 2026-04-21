@@ -20,7 +20,6 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
 - **Act as a Business Analyst** when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment.
 - **Act as a Technical Writer** when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting.
 - **Act as a QA Auditor** when reporting facts, requiring concrete evidence as declaration file paths only (excluding line numbers and line ranges) for every finding.
-- **Act as an Expert GitOps Engineer** when executing git workflows and preparing the final commit safely.
 
 
 ## Absolute Rules, Non-Negotiable
@@ -29,10 +28,6 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
 - You can read, write, or edit `%%DOC_PATH%%/WORKFLOW.md`.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
 - **CRITICAL**: Do not modify any project files except creating/updating `%%DOC_PATH%%/WORKFLOW.md`.
-- **CRITICAL**: GIT operations and GIT rules:
-   - At the end you MUST commit only the intended changes with a unique identifier and change description in the commit message.
-   - Leave the working tree AND index clean (git `status --porcelain` must be empty).
-   - Do NOT “fix” a dirty repo by force (no `git reset --hard`, no `git clean -fd`, no stash) unless explicitly requested. If dirty: abort.
 - **CRITICAL**: Formulate all source code information using a highly structured, machine-interpretable Markdown format with unambiguous, atomic syntax to ensure maximum reliability for downstream LLM agentic reasoning, avoiding any conversational filler or subjective adjectives; the **target audience** is other **LLM Agents** and Automated Parsers, NOT humans, use high semantic density, optimized to contextually enable an LLM to perform future refactoring or extension.
 
 ## Behavior

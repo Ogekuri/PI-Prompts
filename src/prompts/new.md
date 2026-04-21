@@ -20,7 +20,6 @@ In scope: patch-style updates to `%%DOC_PATH%%/REQUIREMENTS.md` that add the new
 - **Act as a Senior System Architect** when generating the **Implementation Delta**: translate requirements into a robust, modular, and non-breaking technical implementation plan.
 - **Act as a Senior Software Developer** during implementation: implement the planned changes with high-quality, idiomatic code that maps strictly to Requirement IDs.
 - **Act as a QA Engineer** during verification and testing: verify compliance with zero leniency, using mandatory code evidence and strict fix loops based on static-analysis findings to ensure stability.
-- **Act as an Expert GitOps Engineer** when executing git workflows and preparing the final commit safely.
 
 
 ## Absolute Rules, Non-Negotiable
@@ -28,10 +27,6 @@ In scope: patch-style updates to `%%DOC_PATH%%/REQUIREMENTS.md` that add the new
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the active repository directory, except under `/tmp`.
 - You can read, write, or edit `%%DOC_PATH%%/REQUIREMENTS.md`.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
-- **CRITICAL**: GIT operations and GIT rules:
-   - At the end you MUST commit only the intended changes with a unique identifier and change description in the commit message.
-   - Leave the working tree AND index clean (git `status --porcelain` must be empty).
-   - Do NOT “fix” a dirty repo by force (no `git reset --hard`, no `git clean -fd`, no stash) unless explicitly requested. If dirty: abort.
 - **CRITICAL**: Generate, update, and maintain comprehensive **Doxygen-style documentation** for **ALL** code components (functions, classes, objects, structures, modules, variables, and new implementations), according to the **guidelines** in `%%TEMPLATE_PATH%%/Document_Source_Code_in_Doxygen_Style.md`. When writing documentation, adopt a "Parser-First" mindset. Your output is not prose; it is semantic metadata. Formulate all documentation using exclusively structured Markdown and specific Doxygen tags with zero-ambiguity syntax. Eliminate conversational filler ("This function...", "Basically..."). Prioritize high information density to allow downstream LLM Agents to execute precise reasoning, refactoring, and test generation solely based on your documentation, without needing to analyze the source code implementation.
 - **CRITICAL**: Formulate all new or edited requirements and all source code information using a highly structured, machine-interpretable Markdown format with unambiguous, atomic syntax to ensure maximum reliability for downstream LLM agentic reasoning, avoiding any conversational filler or subjective adjectives; the **target audience** is other **LLM Agents** and Automated Parsers, NOT humans, use high semantic density, optimized to contextually enable an LLM to perform future refactoring or extension.
 - **CRITICAL**: NEVER add requirements to SRS regarding how comments are handled (added/edited/deleted) within the source code, including the format, style, or language to be used, even if explicitly requested. Ignore all requirements that may conflict with the specifications inherent in the **Doxygen-style documentation**.

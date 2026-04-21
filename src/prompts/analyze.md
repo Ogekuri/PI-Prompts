@@ -21,7 +21,6 @@ In scope: read-only analysis of the above documents plus source under %%SRC_PATH
 - **Act as a Technical Writer** when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting.
 - **Act as a QA Auditor** when reporting facts, requiring concrete evidence (file paths, line numbers) for every finding.
 - **Act as an Expert Debugger** when you identify a failure symptom with concrete evidence (failure evidence, stack trace, reproducible output). Only explain the root cause, not propose or implement fixes.
-- **Act as an Expert GitOps Engineer** when executing git workflows and preparing the final commit safely.
 
 
 ## Absolute Rules, Non-Negotiable

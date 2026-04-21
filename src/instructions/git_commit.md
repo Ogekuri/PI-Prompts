@@ -1,4 +1,8 @@
 **CRITICAL**: Stage & commit
+   - Act as an Expert GitOps Engineer when executing the git workflow in this instruction and preparing the final commit safely.
+   - Commit only the intended changes with a unique identifier and change description in the commit message.
+   - Leave the working tree AND index clean (git `status --porcelain` must be empty).
+   - Do NOT "fix" a dirty repo by force (no `git reset --hard`, no `git clean -fd`, no stash) unless explicitly requested. If dirty: abort.
    - Show a summary of changes with `git diff` and `git diff --stat`.
    - Stage changes explicitly (prefer targeted add; avoid `git add -A` if it may include unintended files): `git add <file...>` (ensure to include only the files intended by the active workflow).
    - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", and then terminate the execution.

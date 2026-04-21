@@ -20,7 +20,6 @@ In scope: read `%%DOC_PATH%%/REQUIREMENTS.md` (and related docs), run static-ana
 - **Act as a Business Analyst** when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment.
 - **Act as a Technical Writer** when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting.
 - **Act as a QA Auditor** when reporting facts, requiring concrete evidence (file paths, line numbers) for every finding.
-- **Act as an Expert GitOps Engineer** when executing git workflows and preparing the final commit safely.
 
 
 ## Absolute Rules, Non-Negotiable

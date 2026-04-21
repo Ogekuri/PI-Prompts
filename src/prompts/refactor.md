@@ -73,9 +73,9 @@ Structured index of all source-defined symbols (functions, classes, structs, obj
 
 Use to: identify candidate symbols by name, description, or `@satisfies` link; obtain exact file paths and line ranges; understand function signatures and contracts before extracting code. Cross-reference with WORKFLOW.md call-traces to narrow scope.
 
-### 3. Code Extraction: `find` / `files-find` tools
+### 3. Code Extraction: `search` / `files-search` tools
 Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
-- Prefer the `find` tool for project-wide named-symbol, declaration, and construct scans, and the `files-find` tool when target files are already known.
+- Prefer the `search` tool for project-wide named-symbol, declaration, and construct scans, and the `files-search` tool when target files are already known.
 - Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 - Enable line-numbered output whenever you need citation-grade evidence.
 - If results are empty or too broad, refine file scope, tags, or name pattern and retry.
@@ -88,8 +88,8 @@ Use for: string/pattern searches inside code bodies, cross-file references, conf
 ### Recommended Analysis Workflow
 1. **Read `%%DOC_PATH%%/WORKFLOW.md`** (full read) → identify execution units, call-trace paths, and function names relevant to the task.
 2. **Read `%%DOC_PATH%%/REFERENCES.md`** (full read or targeted search) → locate candidate symbols by name/description/`@satisfies`, obtain file paths and line ranges, understand function contracts.
-3. **Extract code** via the `find` or `files-find` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-find` targets, and enable line numbers when citing evidence.
-4. **Search code bodies** via `rg`/`grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
+3. **Extract code** via the `search` or `files-search` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-search` targets, and enable line numbers when citing evidence.
+4. **Search code bodies** via `rg`/`grep` → after `search`/`files-search`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
 
 
 ## Execution Protocol (Global vs Local)
@@ -127,7 +127,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - A change is allowed ONLY if it: (a) preserves externally observable behavior required by `%%DOC_PATH%%/REQUIREMENTS.md` AND (b) improves structure/performance/reliability with measurable evidence or a clear invariant-based justification. Do not claim performance wins without explicit benchmarks, profiling notes, or complexity-relevant code changes. If the request requires new user-visible features, new configuration options, or changes to documented behavior, recommend to use the `/req-new` or `/req-change` workflow instead, then OUTPUT exactly "ERROR: Refactor failed due to incompatible requirements!", and then terminate the execution.
    - IMPLEMENT the **Implementation Delta** in the source code (creating new files/directories if necessary). You may make minimal mechanical adjustments needed to fit the actual codebase (file paths, symbol names), but you MUST NOT add new features or scope beyond the **Implementation Delta**.
 2. Generate **Verification Delta** by verifying static-analysis results and implementing needed bug fixes
-   - Read ALL requirements from `%%DOC_PATH%%/REQUIREMENTS.md`, analyze them one by one, and cross-reference them with the source code to check requirements. For each requirement, prefer the `find` and `files-find` tools to locate named symbols, declarations, constructs, and already-known files used as evidence. Use `rg` / `grep` only for supplementary free-text/body-content searches, fallback cases that construct extraction cannot express, or confirmation inside already targeted files. Read only the identified files to verify compliance and do not assume compliance without locating the specific code implementation.
+   - Read ALL requirements from `%%DOC_PATH%%/REQUIREMENTS.md`, analyze them one by one, and cross-reference them with the source code to check requirements. For each requirement, prefer the `search` and `files-search` tools to locate named symbols, declarations, constructs, and already-known files used as evidence. Use `rg` / `grep` only for supplementary free-text/body-content searches, fallback cases that construct extraction cannot express, or confirmation inside already targeted files. Read only the identified files to verify compliance and do not assume compliance without locating the specific code implementation.
       - For each requirement, report `OK` if satisfied or `FAIL` if not.
       - Do not mark a requirement as `OK` without code evidence; for `OK` items provide only a compact pointer (file path + symbol + line range). For each requirement, provide a concise evidence pointer (file path + symbol + line range) excerpts only for `FAIL` requirements or when requirement is architectural, structural, or negative (e.g., "MUST NOT ..."). For such high-level requirements, cite the specific file paths or directory structures that prove compliance. Line ranges MUST be obtained from tooling output (e.g., `nl -ba` / `sed -n`) and MUST NOT be estimated. If evidence is missing, you MUST report `FAIL`. Do not assume implicit behavior.
       - For every `FAIL`, provide evidence with a short explanation. Provide file path(s) and line numbers where possible.

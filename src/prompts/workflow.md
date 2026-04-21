@@ -86,9 +86,9 @@ Structured index of all source-defined symbols (functions, classes, structs, obj
 
 Use to: identify candidate symbols by name, description, or `@satisfies` link; obtain exact file paths and line ranges; understand function signatures and contracts before extracting code. Cross-reference with WORKFLOW.md call-traces to narrow scope.
 
-### 3. Code Extraction: `find` / `files-find` tools
+### 3. Code Extraction: `search` / `files-search` tools
 Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
-- Prefer the `find` tool for project-wide named-symbol, declaration, and construct scans, and the `files-find` tool when target files are already known.
+- Prefer the `search` tool for project-wide named-symbol, declaration, and construct scans, and the `files-search` tool when target files are already known.
 - Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 - Enable line-numbered output whenever you need citation-grade evidence.
 - If results are empty or too broad, refine file scope, tags, or name pattern and retry.
@@ -101,8 +101,8 @@ Use for: string/pattern searches inside code bodies, cross-file references, conf
 ### Recommended Analysis Workflow
 1. **Read `%%DOC_PATH%%/WORKFLOW.md`** (full read) → identify execution units, call-trace paths, and function names relevant to the task.
 2. **Read `%%DOC_PATH%%/REFERENCES.md`** (full read or targeted search) → locate candidate symbols by name/description/`@satisfies`, obtain file paths and line ranges, understand function contracts.
-3. **Extract code** via the `find` or `files-find` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-find` targets, and enable line numbers when citing evidence.
-4. **Search code bodies** via `rg`/`grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
+3. **Extract code** via the `search` or `files-search` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-search` targets, and enable line numbers when citing evidence.
+4. **Search code bodies** via `rg`/`grep` → after `search`/`files-search`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
 
 
 ## Execution Protocol (Global vs Local)

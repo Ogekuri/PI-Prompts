@@ -23,13 +23,13 @@ In scope: read `%%DOC_PATH%%/REQUIREMENTS.md` (and related docs), run static-ana
 
 
 ## Absolute Rules, Non-Negotiable
-- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
+- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the project’s home directory, except under `/tmp`, where creating temporary files and writing outputs is allowed (the only permitted location outside the project).
 - You MUST read `%%DOC_PATH%%/REQUIREMENTS.md`, but you MUST NOT modify it in this workflow.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
 - **CRITICAL**: Do not modify any git tracked files (i.e., returned by `git ls-files`). You may run commands that create untracked artifacts ONLY if: (a) they are confined to standard disposable locations (e.g., `tmp/`, `temp/`, `.cache/`, `.pytest_cache/`, `node_modules/.cache`, `/tmp`), (b) they do not change any tracked file contents, and (c) you do NOT rely on those artifacts as permanent outputs. If unsure, run tools in a temporary directory (e.g., `tmp/`, `temp/`, `/tmp`) or use tool flags that disable caches.
 - **CRITICAL**: Only read-only access to the git repository is allowed. You may inspect files, history, diffs, status, and other repository metadata, but you MUST NOT execute any command or action that modifies the repository state, the index, refs, history, branches, tags, remotes, or the `.git` directory. Any repository write or state-changing action is forbidden.
-- Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `git grep`, `git rev-parse`, `git branch --show-current`. Do NOT run any other git commands.
+- Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `grep`, `git rev-parse`, `git branch --show-current`. Do NOT run any other git commands.
 
 ## Behavior
 - Only analyze the code and static-analysis execution results and present the results; make no changes.
@@ -76,20 +76,20 @@ Use to: identify candidate symbols by name, description, or `@satisfies` link; o
 ### 3. Code Extraction: `find` / `files-find` tools
 Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
 - Prefer the `find` tool for project-wide named-symbol, declaration, and construct scans, and the `files-find` tool when target files are already known.
-- Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`git grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
+- Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 - Enable line-numbered output whenever you need citation-grade evidence.
 - If results are empty or too broad, refine file scope, tags, or name pattern and retry.
 - Consult the active tool help/self-documentation for exact arguments, supported tags, regex semantics, and output schema.
 
 
-### 4. Supplementary Search: `rg` / `git grep`
+### 4. Supplementary Search: `rg` / `grep`
 Use for: string/pattern searches inside code bodies, cross-file references, configuration values, error messages, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 
 ### Recommended Analysis Workflow
 1. **Read `%%DOC_PATH%%/WORKFLOW.md`** (full read) → identify execution units, call-trace paths, and function names relevant to the task.
 2. **Read `%%DOC_PATH%%/REFERENCES.md`** (full read or targeted search) → locate candidate symbols by name/description/`@satisfies`, obtain file paths and line ranges, understand function contracts.
 3. **Extract code** via the `find` or `files-find` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-find` targets, and enable line numbers when citing evidence.
-4. **Search code bodies** via `rg`/`git grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
+4. **Search code bodies** via `rg`/`grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
 
 
 ## Execution Protocol (Global vs Local)
@@ -119,7 +119,7 @@ During the execution flow you MUST follow these directives:
 Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..2`, and start following the roadmap at the same time, executing the instructions of Step 1. If a tool call is required in Step 1, invoke it immediately; otherwise proceed to Step 1 without additional commentary. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
 1. Run static analysis, check requirements coverage and generate **Implementation Delta**
    - Run the `static-check` tool to verify the current state. Do not modify repository files during this check. Record the static-check result as evidence for the final analysis report. If output is exactly `Error: no source files found in configured directories.`, treat it as successful no-source completion and continue.
-   - Read `%%DOC_PATH%%/REQUIREMENTS.md` and cross-reference with the source code from %%SRC_PATHS%%, %%TEST_PATH%% to check ALL requirements, but use progressive disclosure: provide full evidence only for `FAIL` items and a compact pointer-only index for `OK` items. For each requirement, prefer the `find` and `files-find` tools to locate named symbols, declarations, constructs, and already-known files used as evidence. Use `rg` / `git grep` only for supplementary free-text/body-content searches, fallback cases that construct extraction cannot express, or confirmation inside already targeted files. Read only the identified files to verify compliance and do not assume compliance without locating the specific code implementation.
+   - Read `%%DOC_PATH%%/REQUIREMENTS.md` and cross-reference with the source code from %%SRC_PATHS%%, %%TEST_PATH%% to check ALL requirements, but use progressive disclosure: provide full evidence only for `FAIL` items and a compact pointer-only index for `OK` items. For each requirement, prefer the `find` and `files-find` tools to locate named symbols, declarations, constructs, and already-known files used as evidence. Use `rg` / `grep` only for supplementary free-text/body-content searches, fallback cases that construct extraction cannot express, or confirmation inside already targeted files. Read only the identified files to verify compliance and do not assume compliance without locating the specific code implementation.
       - For each requirement, report `OK` if satisfied or `FAIL` if not.
       - Do not mark a requirement as `OK` without code evidence; for `OK` items provide only a compact pointer (file path + symbol + line range). For each requirement, provide a concise evidence pointer (file path + symbol + line range) excerpts only for `FAIL` requirements or when requirement is architectural, structural, or negative (e.g., "MUST NOT ..."). For such high-level requirements, cite the specific file paths or directory structures that prove compliance. Line ranges MUST be obtained from tooling output (e.g., `nl -ba` / `sed -n`) and MUST NOT be estimated. If evidence is missing, you MUST report `FAIL`. Do not assume implicit behavior.
       - For every `FAIL`, provide evidence with a short explanation. Provide file path(s) and line numbers where possible.

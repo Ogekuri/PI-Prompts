@@ -24,7 +24,7 @@ In scope: read-only analysis of the above documents plus source under %%SRC_PATH
 
 
 ## Absolute Rules, Non-Negotiable
-- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
+- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the project’s home directory, except under `/tmp`, where creating temporary files and writing outputs is allowed (the only permitted location outside the project).
 - You MUST read `%%DOC_PATH%%/REQUIREMENTS.md`, but you MUST NOT modify it in this workflow.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
@@ -35,7 +35,7 @@ In scope: read-only analysis of the above documents plus source under %%SRC_PATH
 - Only analyze the code and present the results; make no changes.
 - Do NOT create or modify tests in this workflow.
 - Report facts: for each finding include file paths and, when useful, line numbers or short code excerpts.
-- Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `git grep`, `git rev-parse`, `git branch --show-current`. Do NOT run any other git commands.
+- Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `grep`, `git rev-parse`, `git branch --show-current`. Do NOT run any other git commands.
 - If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`).
 - Non-Python tooling should use the project's standard commands.
 - Use filesystem/shell tools to read files as needed (read-only only; e.g., `cat`, `sed -n`, `head`, `tail`, `rg`, `less`). Do NOT use in-place editing flags (e.g., `-i`, `perl -pi`) in this workflow.
@@ -77,20 +77,20 @@ Use to: identify candidate symbols by name, description, or `@satisfies` link; o
 ### 3. Code Extraction: `find` / `files-find` tools
 Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
 - Prefer the `find` tool for project-wide named-symbol, declaration, and construct scans, and the `files-find` tool when target files are already known.
-- Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`git grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
+- Use these tools as the default discovery path for named-symbol, declaration, construct, and known-file lookup; use `rg`/`grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 - Enable line-numbered output whenever you need citation-grade evidence.
 - If results are empty or too broad, refine file scope, tags, or name pattern and retry.
 - Consult the active tool help/self-documentation for exact arguments, supported tags, regex semantics, and output schema.
 
 
-### 4. Supplementary Search: `rg` / `git grep`
+### 4. Supplementary Search: `rg` / `grep`
 Use for: string/pattern searches inside code bodies, cross-file references, configuration values, error messages, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
 
 ### Recommended Analysis Workflow
 1. **Read `%%DOC_PATH%%/WORKFLOW.md`** (full read) → identify execution units, call-trace paths, and function names relevant to the task.
 2. **Read `%%DOC_PATH%%/REFERENCES.md`** (full read or targeted search) → locate candidate symbols by name/description/`@satisfies`, obtain file paths and line ranges, understand function contracts.
 3. **Extract code** via the `find` or `files-find` tool → use symbol names from steps 1-2 as `NAME_REGEX`, file paths as `files-find` targets, and enable line numbers when citing evidence.
-4. **Search code bodies** via `rg`/`git grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
+4. **Search code bodies** via `rg`/`grep` → after `find`/`files-find`, use only when you need free-text/body-content search, a fallback that construct extraction cannot express, or confirmation inside already targeted files.
 
 
 ## Execution Protocol (Global vs Local)

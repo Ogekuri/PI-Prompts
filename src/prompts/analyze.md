@@ -30,6 +30,7 @@ In scope: read-only analysis of the above documents plus source under %%SRC_PATH
 - You MUST read `%%DOC_PATH%%/REQUIREMENTS.md`, but you MUST NOT modify it in this workflow.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
 - **CRITICAL**: Do not modify any git tracked files (i.e., returned by `git ls-files`). You may run commands that create untracked artifacts ONLY if: (a) they are confined to standard disposable locations (e.g., `tmp/`, `temp/`, `.cache/`, `.pytest_cache/`, `node_modules/.cache`, `/tmp`), (b) they do not change any tracked file contents, and (c) you do NOT rely on those artifacts as permanent outputs. If unsure, run tools in a temporary directory (e.g., `tmp/`, `temp/`, `/tmp`) or use tool flags that disable caches.
+- **CRITICAL**: Only read-only access to the git repository is allowed. You may inspect files, history, diffs, status, and other repository metadata, but you MUST NOT execute any command or action that modifies the repository state, the index, refs, history, branches, tags, remotes, or the `.git` directory. Any repository write or state-changing action is forbidden.
 
 ## Behavior
 - Only analyze the code and present the results; make no changes.

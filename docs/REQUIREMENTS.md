@@ -84,7 +84,8 @@ This project defines and maintains prompt and template artifacts used by the use
 | Template | `src/docs/Document_Source_Code_in_Doxygen_Style.md` | Mandatory source-code documentation guideline. |
 | Template | `src/docs/HDT_Test_Authoring_Guide.md` | Mandatory unit-test authoring guideline. |
 | Template | `src/docs/Requirements_Template.md` | Mandatory SRS authoring guideline. |
-| Instruction | `src/instructions/commit.md` | Canonical shared stage-and-commit instruction for commit-bearing prompts. |
+| Instruction | `src/instructions/git_commit.md` | Canonical shared stage-and-commit instruction for commit-bearing prompts. |
+| Instruction | `src/instructions/git_read-only.md` | Canonical git read-only restriction for read-only prompts. |
 
 ## 3. Requirements
 
@@ -93,7 +94,8 @@ This project defines and maintains prompt and template artifacts used by the use
 - **DES-002**: MUST standardize repeated operational instructions, including final-commit handling and completion or error messages, using identical wording across prompts and forbidding bell-control output suffixes, except prompt-name specialization.
 - **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
 - **DES-004**: MUST preserve reusable runtime-substituted keyword tokens exactly, including `%%COMMIT%%`, `%%PROMPT%%`, and `%%TEMPLATE_PATH%%`, so prompt artifacts cannot redefine or mutate them.
-- **DES-005**: MUST externalize the shared final-commit step in `src/instructions/commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%`.
+- **DES-005**: MUST externalize the shared final-commit step in `src/instructions/git_commit.md` and reference it from commit-bearing prompts with `%%COMMIT%%`.
+- **DES-006**: MUST maintain `src/instructions/git_read-only.md` as the canonical git-mutation prohibition for read-only prompts.
 
 Proposed repository structure (max depth 3, depth 4 for `src/`):
 
@@ -104,7 +106,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
     │   ├── HDT_Test_Authoring_Guide.md
     │   └── Requirements_Template.md
     ├── instructions/
-    │   └── commit.md
+    │   ├── git_commit.md
+    │   └── git_read-only.md
     └── prompts/
         ├── analyze.md
         ├── change.md
@@ -143,8 +146,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/`):
 - **REQ-016**: MUST define `flowchart.md` to generate `FLOWCHART.md` as a Mermaid flowchart of primary program flow from source-code evidence only.
 - **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%COMMIT%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%PROMPT%%`, `%%SRC_PATHS%%`, `%%TEMPLATE_PATH%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
 - **REQ-049**: MUST express template-guideline path references with `%%TEMPLATE_PATH%%` instead of literal repository-relative paths.
-- **REQ-050**: MUST keep `src/instructions/commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%`.
-- **REQ-051**: MUST require `src/instructions/commit.md` to set commit-message `<TYPE>` exactly to the runtime-substituted token `%%PROMPT%%`.
+- **REQ-050**: MUST keep `src/instructions/git_commit.md` as the canonical final-commit instruction and replace each commit-step body in commit-bearing prompts with the literal token `%%COMMIT%%`.
+- **REQ-051**: MUST require `src/instructions/git_commit.md` to set commit-message `<TYPE>` exactly to the runtime-substituted token `%%PROMPT%%`.
+- **REQ-052**: MUST keep `src/instructions/git_read-only.md` as the canonical git read-only restriction for read-only prompts.
+- **REQ-053**: MUST make read-only prompts allow repository inspection only and forbid git commands or actions that modify repository state, the index, refs, history, branches, tags, remotes, or `.git`.
 - **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
 - **REQ-019**: MUST enforce canonical phrasing for shared operational instructions and preserve Source Code Analysis Toolkit ordering 1→2→3→4.
 - **REQ-032**: MUST omit standalone docs-presence verification steps and proceed directly to the first retained workflow action.

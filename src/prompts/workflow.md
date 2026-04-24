@@ -2,7 +2,7 @@
 description: "Write a WORKFLOW.md using the project's source code"
 argument-hint: "No arguments utilized by the prompt logic"
 usage: >
-  Select this prompt ONLY for docs-maintenance of %%DOC_PATH%%/WORKFLOW.md, when it is missing/outdated and you need to regenerate the runtime/workflow model (processes/threads, internal call-traces, communication edges) from evidence in %%SRC_PATHS%% and commit that doc change. Do NOT select if you will change requirements, source code, or tests; choose /req-change, /req-new, /req-fix, /req-refactor, /req-cover, /req-implement, /req-create, or /req-recreate as appropriate. Do NOT select for read-only analysis/audits (use /req-analyze or /req-check).
+  Select this prompt ONLY for docs-maintenance of %%DOC_PATH%%/WORKFLOW.md when it is missing or outdated and you need to regenerate the runtime/workflow model (processes, threads, internal call-traces, communication edges) from evidence in %%SRC_PATHS%%, then commit that doc change. Prefer /req-flowchart for FLOWCHART-only maintenance, /req-change, /req-new, /req-fix, /req-refactor, /req-cover, /req-implement, /req-create, or /req-recreate for changes beyond WORKFLOW.md, and /req-analyze or /req-check for read-only analysis.
 ---
 
 # Write a WORKFLOW.md using the project's source code

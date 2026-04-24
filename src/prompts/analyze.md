@@ -2,7 +2,7 @@
 description: "Produce an analysis report"
 argument-hint: "Description of the analysis/investigation to perform"
 usage: >
-  Select this prompt if you need a read-only, evidence-backed investigation/triage of the current state (SRS in %%DOC_PATH%%/REQUIREMENTS.md, runtime model in %%DOC_PATH%%/WORKFLOW.md, references in %%DOC_PATH%%/REFERENCES.md, and code under %%SRC_PATHS%%) to answer a question or decide which follow-up workflow to run. Use when you must NOT change any files and the deliverable is an analysis report with concrete evidence pointers. Do NOT select if you must, (a) produce an OK/FAIL verdict for every requirement ID (use /req-check), (b) modify requirements (use /req-new or /req-change), (c) implement code/tests (use /req-fix, /req-refactor, /req-cover, /req-implement), or (d) regenerate only WORKFLOW docs (use /req-workflow).
+  Select this prompt for a read-only, evidence-backed investigation/triage of the current state (SRS in %%DOC_PATH%%/REQUIREMENTS.md, runtime model in %%DOC_PATH%%/WORKFLOW.md, references in %%DOC_PATH%%/REFERENCES.md, and code under %%SRC_PATHS%%) when the deliverable is an analysis report with concrete evidence pointers and no repository changes. Prefer /req-check for requirement-by-requirement OK/FAIL audits, /req-new or /req-change for requirement updates, /req-fix, /req-refactor, /req-cover, or /req-implement for code changes, and /req-workflow for standalone WORKFLOW.md regeneration.
 ---
 
 # Produce an analysis report

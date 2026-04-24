@@ -2,7 +2,7 @@
 description: "Implement minimal changes to cover uncovered existing requirements"
 argument-hint: "Optional, context to focus coverage work (can be empty)"
 usage: >
-  Select this prompt when specific uncovered requirement IDs already exist (typically identified by /req-check) and the goal is to implement the minimal deltas needed to satisfy those IDs WITHOUT changing %%DOC_PATH%%/REQUIREMENTS.md. Use for targeted gap-closure in an otherwise existing codebase (small/known missing surface), including adding/adjusting tests under %%TEST_PATH%%, verifying, updating %%DOC_PATH%%/WORKFLOW.md and %%DOC_PATH%%/REFERENCES.md, and committing. Do NOT select if you must change or add requirements (use /req-change or /req-new), if the request is primarily a defect fix relative to already-covered requirements (use /req-fix), or if the implementation is largely absent and needs end-to-end build-out from the SRS (use /req-implement).
+  Select this prompt when specific uncovered requirement IDs already exist (typically identified by /req-check) and the goal is to implement the minimal deltas needed to satisfy those IDs WITHOUT changing %%DOC_PATH%%/REQUIREMENTS.md. Use it for targeted gap-closure in an otherwise existing codebase (small or known missing surface), including adding or adjusting tests under %%TEST_PATH%%, verifying, updating %%DOC_PATH%%/WORKFLOW.md and %%DOC_PATH%%/REFERENCES.md, and committing. Prefer /req-change or /req-new for SRS changes, /req-fix for defect restoration against already-covered requirements, and /req-implement for end-to-end build-out from the SRS.
 ---
 
 # Implement minimal changes to cover uncovered existing requirements

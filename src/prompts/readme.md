@@ -2,7 +2,7 @@
 description: "Write README.md from user-visible implementation evidence"
 argument-hint: "Description of additional edits to perform on README.md file"
 usage: >
-  Select this prompt ONLY for docs-maintenance of root README.md, when user-visible behavior changed and you must align README with current implementation evidence. Analyze externally visible surfaces only (features, CLI parameters, GUI behavior, distributed APIs, configuration schema), identify affected README sections before editing, and update only those sections while preserving unrelated content/format. Do NOT include internal implementation logic. Do NOT select if requirements, workflow, references, source code, or tests must change.
+  Select this prompt ONLY for docs-maintenance of root README.md when user-visible behavior changed and you must align README with current implementation evidence. Analyze externally visible surfaces only (features, CLI parameters, GUI behavior, distributed APIs, configuration schema), identify affected README sections before editing, update only those sections while preserving unrelated content/format, and keep internal implementation logic out of scope. Prefer /req-change, /req-new, /req-fix, /req-refactor, /req-cover, /req-implement, /req-workflow, or /req-create when requirements, source code, tests, or other canonical docs must also change.
 ---
 
 # Write README.md from user-visible implementation evidence

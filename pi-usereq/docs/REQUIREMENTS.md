@@ -1,7 +1,7 @@
 ---
 title: "PI-useReq Requirements"
 description: Software requirements specification
-version: "0.0.36"
+version: "0.0.37"
 date: "2026-04-24"
 author: "OpenAI Codex"
 scope:
@@ -86,6 +86,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.
 - **REQ-161**: MUST confine generic GitOps persona text and repository-write commit rules to `src/instructions/git_commit.md`, and bundled prompts MUST NOT repeat them outside `%%COMMIT%%`.
 - **REQ-162**: MUST maintain bundled prompt templates `analyze.md`, `change.md`, `check.md`, `cover.md`, `create.md`, `fix.md`, `flowchart.md`, `implement.md`, `new.md`, `readme.md`, `recreate.md`, `refactor.md`, `renumber.md`, `workflow.md`, and `write.md` under `src/prompts`.
+- **REQ-163**: MUST make every bundled prompt YAML `usage` field express selection criteria and alternative slash-command routing without the literal phrase `Do NOT select if`.
 - **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-search` only through agent-tool registration.
 - **REQ-044**: MUST expose `references`, `compress`, `search`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
 - **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.
@@ -246,6 +247,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **TST-002**: MUST verify bundled prompt, template, and guideline resources remain readable from `installation-path` and rendered prompts replace every dynamic placeholder, including `%%COMMIT%%`, with runtime path context.
 - **TST-045**: MUST verify bundled prompts omit generic GitOps persona text and generic repository-write commit rules outside `%%COMMIT%%`, while `src/instructions/git_commit.md` retains that guidance.
 - **TST-046**: MUST verify `src/prompts/*.md` replaces every `git grep` reference with `grep` and leaves no `git grep` string in bundled prompts.
+- **TST-047**: MUST verify every `src/prompts/*.md` YAML `usage` field expresses selection criteria, routes alternative workflows when relevant, and omits the literal phrase `Do NOT select if`.
 - **TST-003**: MUST verify standalone CLI outputs for `files-tokens`, `files-compress`, `files-search`, and `--test-static-check` match the Python oracle for every fixture file.
 - **TST-004**: MUST verify project-scan CLI outputs for `compress`, `search`, `tokens`, `files-static-check`, `static-check`, `git-check`, `docs-check`, `git-path`, and `get-base-path` match the Python oracle.
 - **TST-005**: MUST verify the configuration menu persists `docs-dir`, disables startup tools, adds static-check entries, and omits prompt-delivery mode controls.

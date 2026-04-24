@@ -2,7 +2,7 @@
 description: "Deterministically renumber requirement IDs in the Software Requirements Specification without changing requirement text or order"
 argument-hint: "No arguments utilized by the prompt logic (English only)"
 usage: >
-  Select this prompt when %%DOC_PATH%%/REQUIREMENTS.md already exists and you must enforce a clean, progressive, deterministic requirement ID sequence in document order, WITHOUT changing any requirement text, headings, or ordering. Only IDs and internal requirement-ID cross-references may change; all requirement content after the ID MUST remain byte-identical. Output is only the updated SRS; source code, tests, %%DOC_PATH%%/WORKFLOW.md, and %%DOC_PATH%%/REFERENCES.md must not change.
+  Select this prompt when %%DOC_PATH%%/REQUIREMENTS.md already exists and you must enforce a clean, progressive, deterministic requirement ID sequence in document order WITHOUT changing any requirement text, headings, or ordering. Only IDs and internal requirement-ID cross-references may change; all requirement content after the ID MUST remain byte-identical. Output is only the updated SRS; source code, tests, %%DOC_PATH%%/WORKFLOW.md, and %%DOC_PATH%%/REFERENCES.md remain unchanged. Prefer /req-recreate for structural SRS rewrites, /req-create or /req-write for SRS authoring, and /req-change or /req-new for requirement evolution tied to implementation.
 ---
 
 # Deterministically renumber requirement IDs in the Software Requirements Specification

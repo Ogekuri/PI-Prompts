@@ -1,8 +1,8 @@
 ---
 title: "PI-useReq Requirements"
 description: Software requirements specification
-version: "0.0.36"
-date: "2026-04-24"
+version: "0.0.35"
+date: "2026-04-21"
 author: "OpenAI Codex"
 scope:
   paths:
@@ -80,8 +80,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 ### 3.2 Functions
 - **REQ-001**: MUST access bundled prompts, templates, and guidelines from `<installation-path>/resources` without requiring user-home resource copies before prompt or tool execution.
 - **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, and `%%ARGS%%` tokens when rendering prompts.
-- **REQ-003**: MUST rewrite legacy prompt text tool references to canonical internal tool names, including `files-summarize`, `summarize`, `search tool`, and `git-check tool`.
-- **REQ-162**: MUST make bundled prompts use `grep` instead of `git grep`.
+- **REQ-003**: MUST rewrite legacy `req --...` prompt text references to internal tool names such as `search tool` and `git-check tool`, and bundled prompts MUST use `grep` instead of `git grep`.
 - **REQ-004**: MUST register `req-<prompt>` commands for every bundled prompt name and send rendered prompt content as a user message.
 - **REQ-159**: MUST place `%%COMMIT%%` as the penultimate numbered step in every bundled prompt that ends with a commit workflow.
 - **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.

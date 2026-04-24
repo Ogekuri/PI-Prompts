@@ -2,9 +2,9 @@
 
 ## Source Surface Summary
 - Source root: `src`
-- Source kind: static Markdown resources only; bundled prompts expose YAML front matter for selection/routing guidance
+- Source kind: static Markdown resources only; bundled prompts expose YAML front matter with a single `description` key
 - Executable source symbols under `src`: none detected
-- Prompt resources under `src/prompts`: 15 files with positive `usage` routing metadata
+- Prompt resources under `src/prompts`: 15 files with single-key YAML `description` metadata
 - Template resources under `src/docs`: 3 files
 - Instruction resources under `src/instructions`: 2 files
 - Removed prompt in this revision: `src/prompts/references.md`

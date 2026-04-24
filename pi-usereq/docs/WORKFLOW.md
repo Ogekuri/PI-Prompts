@@ -1,7 +1,7 @@
 ## Execution Units Index
 - ID: `PROC:main`
   - Type: Process
-  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`, and consumes prompt-front-matter routing metadata.
+  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`, and consumes prompt-front-matter description metadata.
   - Entrypoints:
     - no internal executable entrypoints detected under `src`
   - Parent Process: none

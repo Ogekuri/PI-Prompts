@@ -1,8 +1,5 @@
 ---
 description: "Implement source code from requirements (from scratch)"
-argument-hint: "No arguments utilized by the prompt logic"
-usage: >
-  Select this prompt when %%DOC_PATH%%/REQUIREMENTS.md is already authoritative and stable, but the codebase under %%SRC_PATHS%% is missing large parts of the required functionality (greenfield or major gaps) and you must build an end-to-end implementation, including creating new modules/files and tests under %%TEST_PATH%%, WITHOUT changing requirements. Prefer /req-cover for a small or known set of uncovered requirement IDs, /req-change or /req-new for requirement edits, /req-fix or /req-refactor for narrow corrective or internal-improvement work, and /req-check or /req-analyze for read-only evaluation.
 ---
 
 # Implement source code from requirements from scratch

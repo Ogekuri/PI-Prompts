@@ -1,8 +1,5 @@
 ---
 description: "Perform a refactor without changing the requirements"
-argument-hint: "Description of the refactor goal"
-usage: >
-  Select this prompt when the primary intent is internal code improvement under %%SRC_PATHS%% (maintainability, structure, or performance) and externally observable behavior must remain unchanged and compliant with %%DOC_PATH%%/REQUIREMENTS.md while the SRS stays unchanged. Use it when you will restructure internals, keep public interfaces and data formats stable, verify via the `static-check` tool and conditional execution of existing unit tests using language-specific test-suite priority policy, update %%DOC_PATH%%/WORKFLOW.md and %%DOC_PATH%%/REFERENCES.md, and commit. Prefer /req-fix for incorrect behavior relative to requirements, /req-new or /req-change for requirement or behavior updates, /req-cover or /req-implement for uncovered requirement coverage, and /req-check or /req-analyze for read-only work.
 ---
 
 # Perform a refactor without changing the requirements

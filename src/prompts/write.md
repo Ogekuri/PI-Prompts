@@ -1,8 +1,5 @@
 ---
 description: "Produce a Software Requirements Specification draft based on the User Request description"
-argument-hint: "Description of the application to be drafted from scratch (English only)"
-usage: >
-  Select this prompt to draft or author %%DOC_PATH%%/REQUIREMENTS.md ONLY from the user’s textual request for greenfield or kickoff work when no authoritative implementation exists to analyze. Use it when you must capture intent, fill gaps via explicit Assumptions, and produce an SRS suitable for SRS-driven development without touching code, tests, %%DOC_PATH%%/WORKFLOW.md, or %%DOC_PATH%%/REFERENCES.md. Prefer /req-create or /req-recreate when repository evidence must ground the SRS, /req-change or /req-new when requirements and implementation both change, and /req-analyze, /req-check, /req-fix, /req-refactor, /req-cover, or /req-implement for audit or implementation work.
 ---
 
 # Produce a Software Requirements Specification draft based on the User Request description

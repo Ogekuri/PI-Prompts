@@ -1,8 +1,5 @@
 ---
 description: "Produce an analysis report"
-argument-hint: "Description of the analysis/investigation to perform"
-usage: >
-  Select this prompt for a read-only, evidence-backed investigation/triage of the current state (SRS in %%DOC_PATH%%/REQUIREMENTS.md, runtime model in %%DOC_PATH%%/WORKFLOW.md, references in %%DOC_PATH%%/REFERENCES.md, and code under %%SRC_PATHS%%) when the deliverable is an analysis report with concrete evidence pointers and no repository changes. Prefer /req-check for requirement-by-requirement OK/FAIL audits, /req-new or /req-change for requirement updates, /req-fix, /req-refactor, /req-cover, or /req-implement for code changes, and /req-workflow for standalone WORKFLOW.md regeneration.
 ---
 
 # Produce an analysis report

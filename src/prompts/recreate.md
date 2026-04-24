@@ -1,8 +1,5 @@
 ---
 description: "Reorganize and update the Software Requirements Specification based on source code analysis (preserve requirement IDs)"
-argument-hint: "No arguments utilized by the prompt logic (English only)"
-usage: >
-  Select this prompt when %%DOC_PATH%%/REQUIREMENTS.md already exists but must be rebuilt into a clean structure based on evidence from code under %%SRC_PATHS%% while preserving all existing requirement IDs with no renumbering. Requirements may be reorganized, moved, grouped, and clarified, and new requirements may be added only with NEW non-colliding IDs appended beyond the existing ID space. Output is only the rewritten SRS in English; source code, tests, %%DOC_PATH%%/WORKFLOW.md, and %%DOC_PATH%%/REFERENCES.md remain unchanged. Prefer /req-change or /req-new for incremental requirement or behavior changes, /req-write for user-request-only drafting, and /req-fix, /req-refactor, /req-cover, or /req-implement for implementation work.
 ---
 
 # Reorganize and update the Software Requirements Specification draft based on source code analysis

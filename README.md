@@ -48,12 +48,12 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 | `cover` | Cover uncovered existing requirements. | `Optional: context to focus coverage work (can be empty)` | Requirements are already defined and only minimal implementation deltas are needed for uncovered IDs. |
 | `create` | Draft SRS from existing source code. | `No arguments utilized by the prompt logic (English only)` | Implementation exists and you must bootstrap/update `REQUIREMENTS.md` from code evidence. |
 | `fix` | Fix a defect without changing requirements. | `Description of the defect/bug to fix` | Behavior is incorrect relative to existing requirements and must be restored. |
+| `flowchart` | Generate `FLOWCHART.md` from source code. | `No arguments utilized by the prompt logic` | You need primary execution-flow documentation regeneration only. |
 | `implement` | Implement source code from requirements. | `No arguments utilized by the prompt logic` | `REQUIREMENTS.md` is authoritative and you must build missing implementation/test coverage. |
 | `new` | Add a new requirement and corresponding implementation. | `Description of the new requirement/feature to implement` | Requested behavior is additive and can be implemented by appending new requirement IDs. |
 | `readme` | Align root `README.md` with implementation evidence. | `Description of additional edits to perform on README.md file` | Only user-facing README coverage must be updated from external interface evidence. |
 | `recreate` | Reorganize and update SRS from source evidence. | `No arguments utilized by the prompt logic (English only)` | You must rewrite SRS structure while preserving existing IDs and optionally appending new IDs. |
 | `refactor` | Optimize internals without requirement changes. | `Description of the refactor goal` | Internal maintainability/performance improvements are required without user-visible behavior changes. |
-| `references` | Generate `REFERENCES.md` from source code. | `No arguments utilized by the prompt logic` | You need to regenerate symbol/reference index documentation only. |
 | `renumber` | Renumber SRS requirement IDs deterministically. | `No arguments utilized by the prompt logic (English only)` | You need deterministic ID renumbering and internal cross-reference updates only. |
 | `workflow` | Generate `WORKFLOW.md` from source code. | `No arguments utilized by the prompt logic` | You need runtime execution model documentation regeneration only. |
 | `write` | Draft SRS from user request text. | `Description of the application to be drafted from scratch (English only)` | No authoritative implementation exists; requirements must be drafted directly from user intent. |

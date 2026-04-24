@@ -2,7 +2,7 @@
 description: "Write a FLOWCHART.md using the project's source code"
 argument-hint: "No arguments utilized by the prompt logic"
 usage: >
-  Select this prompt ONLY for docs-maintenance of %%DOC_PATH%%/FLOWCHART.md, when it is missing/outdated and you need to regenerate the primary runtime flowchart from evidence in %%SRC_PATHS%% and commit that doc change. Do NOT select if you will change requirements, workflow, references, source code, or tests; choose /req-change, /req-new, /req-fix, /req-refactor, /req-cover, /req-implement, /req-create, /req-recreate, /req-workflow, or /req-references as appropriate. Do NOT select for read-only analysis/audits (use /req-analyze or /req-check).
+  Select this prompt ONLY for docs-maintenance of %%DOC_PATH%%/FLOWCHART.md, when it is missing/outdated and you need to regenerate the primary runtime flowchart from evidence in %%SRC_PATHS%% and commit that doc change. Do NOT select if you will change requirements, workflow, references, source code, or tests; choose /req-change, /req-new, /req-fix, /req-refactor, /req-cover, /req-implement, /req-create, /req-recreate, or /req-workflow as appropriate. Do NOT select for read-only analysis/audits (use /req-analyze or /req-check).
 ---
 
 # Write a FLOWCHART.md using the project's source code

@@ -1,8 +1,8 @@
 ---
 title: "PI-useReq Requirements"
 description: Software requirements specification
-version: "0.0.35"
-date: "2026-04-21"
+version: "0.0.36"
+date: "2026-04-24"
 author: "OpenAI Codex"
 scope:
   paths:
@@ -81,10 +81,11 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **REQ-001**: MUST access bundled prompts, templates, and guidelines from `<installation-path>/resources` without requiring user-home resource copies before prompt or tool execution.
 - **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, and `%%ARGS%%` tokens when rendering prompts.
 - **REQ-003**: MUST rewrite legacy `req --...` prompt text references to internal tool names such as `search tool` and `git-check tool`, and bundled prompts MUST use `grep` instead of `git grep`.
-- **REQ-004**: MUST register `req-<prompt>` commands for every bundled prompt name and send rendered prompt content as a user message.
+- **REQ-004**: MUST register `req-<prompt>` commands for each maintained bundled prompt template and send rendered prompt content as a user message.
 - **REQ-159**: MUST place `%%COMMIT%%` as the penultimate numbered step in every bundled prompt that ends with a commit workflow.
 - **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.
 - **REQ-161**: MUST confine generic GitOps persona text and repository-write commit rules to `src/instructions/git_commit.md`, and bundled prompts MUST NOT repeat them outside `%%COMMIT%%`.
+- **REQ-162**: MUST maintain bundled prompt templates `analyze.md`, `change.md`, `check.md`, `cover.md`, `create.md`, `fix.md`, `flowchart.md`, `implement.md`, `new.md`, `readme.md`, `recreate.md`, `refactor.md`, `renumber.md`, `workflow.md`, and `write.md` under `src/prompts`.
 - **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-search` only through agent-tool registration.
 - **REQ-044**: MUST expose `references`, `compress`, `search`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
 - **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.
@@ -193,7 +194,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **REQ-022**: MUST resolve Python checker executables in this preference order: `<project>/.venv/bin/python`, `PI_USEREQ_PYTHON`, `python3`, `python`.
 - **REQ-023**: MUST require `Command`-module executables to exist on `PATH` before static-check execution.
 - **REQ-024**: MUST make `git-check` fail unless configured `git-path` exists, resolves inside a work tree, has no porcelain changes, and has a valid `HEAD`.
-- **REQ-025**: MUST make `docs-check` fail when `REQUIREMENTS.md`, `WORKFLOW.md`, or `REFERENCES.md` is missing and name the prompt command that should generate the missing file.
+- **REQ-025**: MUST make `docs-check` fail when `REQUIREMENTS.md`, `WORKFLOW.md`, or `REFERENCES.md` is missing and name an existing prompt command that remediates the missing file.
 - **REQ-026**: MUST make `git-wt-name` emit `useReq-<project>-<sanitized-branch>-<YYYYMMDDHHMMSS>`.
 - **REQ-027**: MUST make `git-wt-create` reject invalid names, create `../<wtName>` from the configured git root, and copy `.pi-usereq` into the matching worktree base when present.
 - **REQ-028**: MUST make `git-wt-delete` remove the exact named worktree and/or branch when either exists and fail when neither exists.
@@ -351,7 +352,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 │   └── resources/
 │       ├── templates/{Requirements_Template.md,HDT_Test_Authoring_Guide.md,Document_Source_Code_in_Doxygen_Style.md}
 │       ├── guidelines/{Google_Python_Style_Guide.md,Google_C++_Style_Guide.md}
-│       └── prompts/{analyze.md,change.md,check.md,cover.md,create.md,fix.md,flowchart.md,implement.md,new.md,readme.md,recreate.md,refactor.md,references.md,renumber.md,workflow.md,write.md}
+│       └── prompts/{analyze.md,change.md,check.md,cover.md,create.md,fix.md,flowchart.md,implement.md,new.md,readme.md,recreate.md,refactor.md,renumber.md,workflow.md,write.md}
 ├── tests/
 │   ├── extension-registration.test.ts
 │   ├── helpers.ts
@@ -368,8 +369,8 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 ├── .github/
 │   ├── workflows/
 │   │   └── release-npm.yml
-│   └── skills/{req-analyze,req-change,req-check,req-cover,req-create,req-fix,req-flowchart,req-implement,req-new,req-readme,req-recreate,req-references,req-refactor,req-renumber,req-workflow,req-write}/SKILL.md
-├── .pi/prompts/{req-analyze.prompt.md,req-change.prompt.md,req-check.prompt.md,req-cover.prompt.md,req-create.prompt.md,req-fix.prompt.md,req-flowchart.prompt.md,req-implement.prompt.md,req-new.prompt.md,req-readme.prompt.md,req-recreate.prompt.md,req-references.prompt.md,req-refactor.prompt.md,req-renumber.prompt.md,req-workflow.prompt.md,req-write.prompt.md}
+│   └── skills/{req-analyze,req-change,req-check,req-cover,req-create,req-fix,req-flowchart,req-implement,req-new,req-readme,req-recreate,req-refactor,req-renumber,req-workflow,req-write}/SKILL.md
+├── .pi/prompts/{req-analyze.prompt.md,req-change.prompt.md,req-check.prompt.md,req-cover.prompt.md,req-create.prompt.md,req-fix.prompt.md,req-flowchart.prompt.md,req-implement.prompt.md,req-new.prompt.md,req-readme.prompt.md,req-recreate.prompt.md,req-refactor.prompt.md,req-renumber.prompt.md,req-workflow.prompt.md,req-write.prompt.md}
 ├── .req/docs/{Requirements_Template.md,HDT_Test_Authoring_Guide.md,Document_Source_Code_in_Doxygen_Style.md}
 ├── .claude/commands/req/*.md
 ├── .codex/skills/req-*/SKILL.md
@@ -447,7 +448,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 | REQ-022 | `src/core/static-check.ts` :: `detectPythonExecutable` :: candidate order is project `.venv/bin/python`, `PI_USEREQ_PYTHON`, `python3`, then `python`. |
 | REQ-023 | `src/core/static-check.ts` :: `StaticCheckCommand` constructor :: `if (!findExecutable(cmd)) throw new ReqError(...)`. |
 | REQ-024 | `src/core/tool-runner.ts` :: `runGitCheck` :: bash command requires worktree membership, empty `git status --porcelain`, and symbolic or detached `HEAD`. |
-| REQ-025 | `src/core/tool-runner.ts` :: `runDocsCheck` :: maps missing docs files to `/req-write`, `/req-workflow`, and `/req-references` prompt guidance. |
+| REQ-025 | `src/core/tool-runner.ts` :: `runDocsCheck` :: reports a missing canonical document and names an existing remediation prompt command. |
 | REQ-026 | `src/core/tool-runner.ts` :: `runGitWtName` :: emits `useReq-${projectName}-${sanitizedBranch}-${executionId}` using timestamp components. |
 | REQ-027 | `src/core/tool-runner.ts` :: `runGitWtCreate` :: validates name, runs `git worktree add`, then copies `.pi/pi-usereq` into the worktree base directory. |
 | REQ-028 | `src/core/tool-runner.ts` :: `runGitWtDelete` :: checks branch/worktree existence, removes exact worktree path, deletes branch, and fails if neither exists. |

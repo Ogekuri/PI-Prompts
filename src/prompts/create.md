@@ -1,7 +1,3 @@
----
-description: "Write a Software Requirements Specification using the project's source code"
----
-
 # Write a Software Requirements Specification using the project's source code
 
 ## Purpose

@@ -1,7 +1,9 @@
+# PI-Prompts Workflow
+
 ## Execution Units Index
 - ID: `PROC:main`
   - Type: Process
-  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`, and consumes prompt-front-matter description metadata.
+  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents now start with level-1 titles and omit YAML front matter.
   - Entrypoints:
     - no internal executable entrypoints detected under `src`
   - Parent Process: none
@@ -12,14 +14,14 @@
 - Entrypoints:
   - none under `src`
 - Lifecycle/trigger:
-  - Start trigger: external prompt-host runtime selects one bundled Markdown asset from `src/prompts`, `src/docs`, or `src/instructions` and reads its YAML front matter.
+  - Start trigger: external prompt-host runtime selects one bundled Markdown asset from `src/prompts`, `src/docs`, or `src/instructions` and reads its leading Markdown title line or instruction body.
   - Stop trigger: external prompt-host runtime finishes reading or rendering the selected asset.
   - Looping model: one-shot resource load per prompt or document request.
   - Threads: no explicit threads detected.
 - Internal Call-Trace Tree:
   - none; `src/` contains static Markdown resources only and declares no internal executable functions.
 - External Boundaries:
-  - External prompt-host runtime resolves repository files, reads YAML front matter, expands placeholders, and delivers rendered prompt text.
+  - External prompt-host runtime resolves repository files, reads standalone prompt/template title lines plus instruction snippets, expands placeholders, and delivers rendered prompt text.
   - Git and repository tooling execute outside `src` after the rendered prompt is consumed.
 
 ## Communication Edges

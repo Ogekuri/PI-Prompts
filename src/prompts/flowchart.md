@@ -1,7 +1,3 @@
----
-description: "Write a FLOWCHART.md using the project's source code"
----
-
 # Write a FLOWCHART.md using the project's source code
 
 ## Purpose

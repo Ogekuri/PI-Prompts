@@ -1,7 +1,3 @@
----
-description: "Produce an analysis report"
----
-
 # Produce an analysis report
 
 ## Purpose

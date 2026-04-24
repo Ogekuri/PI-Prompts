@@ -1,7 +1,3 @@
----
-description: "Perform a refactor without changing the requirements"
----
-
 # Perform a refactor without changing the requirements
 
 ## Purpose

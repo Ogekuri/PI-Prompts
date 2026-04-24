@@ -31,7 +31,7 @@ This repository maintains the prompt set in `src/prompts/` and the documentation
 
 ## Feature Highlights
 - Prompt catalog with 15 task-specialized prompt cards in `src/prompts/` for SRS-driven workflows (`Requirements -> Design -> Implementation -> Verification`).
-- Every prompt declares a YAML `description` field to make prompt identification explicit and deterministic.
+- Every bundled prompt/template document starts with a level-1 title and omits YAML front matter.
 - Shared shell-safety contract across prompts: linear commands only, explicit option termination for `rg`/`git grep` patterns that start with `-`/`--`, and no substitution-based shell composition.
 - Reusable templates in `src/docs/` for SRS authoring, HDT test authoring, and Doxygen-style source documentation.
 - Included guideline set in `guidelines/` (Google Python/C++ style guides) for `%%GUIDELINES_FILES%%` integrations.

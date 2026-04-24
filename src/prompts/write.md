@@ -1,7 +1,3 @@
----
-description: "Produce a Software Requirements Specification draft based on the User Request description"
----
-
 # Produce a Software Requirements Specification draft based on the User Request description
 
 ## Purpose

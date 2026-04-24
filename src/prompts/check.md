@@ -1,7 +1,3 @@
----
-description: "Run the requirements check"
----
-
 # Run the requirements check
 
 ## Purpose

@@ -1,7 +1,3 @@
----
-description: "Implement a new requirement and make the corresponding source code changes"
----
-
 # Implement a new requirement and make the corresponding source code changes
 
 ## Purpose

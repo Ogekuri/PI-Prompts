@@ -1,7 +1,3 @@
----
-description: "Reorganize and update the Software Requirements Specification based on source code analysis (preserve requirement IDs)"
----
-
 # Reorganize and update the Software Requirements Specification draft based on source code analysis
 
 ## Purpose

@@ -1,26 +1,3 @@
----
-title: "PI-useReq Requirements"
-description: Software requirements specification
-version: "0.0.37"
-date: "2026-04-24"
-author: "OpenAI Codex"
-scope:
-  paths:
-    - "src/**/*.ts"
-    - "scripts/**"
-    - ".github/workflows/**"
-    - "tests/**/*.ts"
-    - "tests/fixtures_attended_results/**/*.json"
-  excludes:
-    - "node_modules/**"
-    - "dist/**"
-    - "build/**"
-    - "target/**"
-    - ".venv/**"
-visibility: "draft"
-tags: ["markdown", "requirements", "typescript", "cli", "pi-extension"]
----
-
 # PI-useReq Requirements
 
 ## 1. Introduction
@@ -32,7 +9,7 @@ tags: ["markdown", "requirements", "typescript", "cli", "pi-extension"]
 - Requirement IDs MUST NOT be renumbered, reused, or repurposed outside the dedicated renumbering workflow.
 - Each requirement MUST be atomic, single-sentence, and testable, with a target length of 35 words or fewer.
 - This document MUST describe observed implementation state, including limitations and partial behavior.
-- Future edits MUST update only `date` and `version` in the YAML front matter and MUST NOT add in-document revision history.
+- Every maintained standalone Markdown document MUST start with a level-1 title line beginning with `# ` and MUST NOT use YAML front matter or in-document revision history.
 
 ### 1.2 Project Scope
 PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone extension-debug surface for requirements-oriented prompt delivery, source summarization, static-check orchestration, git validation, worktree lifecycle helpers, offline extension contract validation, and npm release automation. Implemented UI is the pi selection/input/editor/status/notification surface. No standalone GUI code is present. `scripts/` contains the standalone harness, bash wrapper, and support modules. `.github/workflows/` contains the npm release workflow in this revision.
@@ -86,7 +63,8 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.
 - **REQ-161**: MUST confine generic GitOps persona text and repository-write commit rules to `src/instructions/git_commit.md`, and bundled prompts MUST NOT repeat them outside `%%COMMIT%%`.
 - **REQ-162**: MUST maintain bundled prompt templates `analyze.md`, `change.md`, `check.md`, `cover.md`, `create.md`, `fix.md`, `flowchart.md`, `implement.md`, `new.md`, `readme.md`, `recreate.md`, `refactor.md`, `renumber.md`, `workflow.md`, and `write.md` under `src/prompts`.
-- **REQ-163**: MUST make every bundled prompt YAML front matter contain exactly one `description` key.
+- **REQ-163**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` begin with a level-1 title line starting with `# `.
+- **REQ-164**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` omit YAML front matter.
 - **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-search` only through agent-tool registration.
 - **REQ-044**: MUST expose `references`, `compress`, `search`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
 - **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.
@@ -247,7 +225,8 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **TST-002**: MUST verify bundled prompt, template, and guideline resources remain readable from `installation-path` and rendered prompts replace every dynamic placeholder, including `%%COMMIT%%`, with runtime path context.
 - **TST-045**: MUST verify bundled prompts omit generic GitOps persona text and generic repository-write commit rules outside `%%COMMIT%%`, while `src/instructions/git_commit.md` retains that guidance.
 - **TST-046**: MUST verify `src/prompts/*.md` replaces every `git grep` reference with `grep` and leaves no `git grep` string in bundled prompts.
-- **TST-047**: MUST verify every `src/prompts/*.md` YAML front matter contains exactly one `description` key.
+- **TST-047**: MUST verify every bundled standalone Markdown document under `src/prompts` and `src/docs` starts with a level-1 title line beginning with `# `.
+- **TST-048**: MUST verify every bundled standalone Markdown document under `src/prompts` and `src/docs` omits YAML front matter.
 - **TST-003**: MUST verify standalone CLI outputs for `files-tokens`, `files-compress`, `files-search`, and `--test-static-check` match the Python oracle for every fixture file.
 - **TST-004**: MUST verify project-scan CLI outputs for `compress`, `search`, `tokens`, `files-static-check`, `static-check`, `git-check`, `docs-check`, `git-path`, and `get-base-path` match the Python oracle.
 - **TST-005**: MUST verify the configuration menu persists `docs-dir`, disables startup tools, adds static-check entries, and omits prompt-delivery mode controls.

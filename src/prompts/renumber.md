@@ -1,7 +1,3 @@
----
-description: "Deterministically renumber requirement IDs in the Software Requirements Specification without changing requirement text or order"
----
-
 # Deterministically renumber requirement IDs in the Software Requirements Specification
 
 ## Purpose

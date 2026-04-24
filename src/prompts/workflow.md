@@ -1,7 +1,3 @@
----
-description: "Write a WORKFLOW.md using the project's source code"
----
-
 # Write a WORKFLOW.md using the project's source code
 
 ## Purpose

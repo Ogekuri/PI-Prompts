@@ -1,7 +1,3 @@
----
-description: "Update the requirements and implement the corresponding changes"
----
-
 # Update the requirements and implement the corresponding changes
 
 ## Purpose

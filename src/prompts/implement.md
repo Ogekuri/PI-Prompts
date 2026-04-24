@@ -1,7 +1,3 @@
----
-description: "Implement source code from requirements (from scratch)"
----
-
 # Implement source code from requirements from scratch
 
 ## Purpose

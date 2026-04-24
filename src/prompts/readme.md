@@ -1,7 +1,3 @@
----
-description: "Write README.md from user-visible implementation evidence"
----
-
 # Write README.md from user-visible implementation evidence
 
 ## Purpose

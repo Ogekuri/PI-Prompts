@@ -1,7 +1,3 @@
----
-description: "Implement minimal changes to cover uncovered existing requirements"
----
-
 # Implement minimal changes to cover uncovered existing requirements
 
 ## Purpose

@@ -1,7 +1,3 @@
----
-description: "Fix a defect without changing the requirements"
----
-
 # Fix a defect without changing the requirements
 
 ## Purpose

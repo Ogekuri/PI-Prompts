@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0) - 2026-07-08
+### 🐛  Bug Fixes
+- Update README.md file.
+
 ## [0.3.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.2.0..v0.3.0) - 2026-07-08
 ### ⛰️  Features
 - Add src/instructions/git_read-only.md file.
@@ -105,7 +109,9 @@
 - \[0.1.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 - \[0.2.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.2.0
 - \[0.3.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.3.0
+- \[0.4.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.4.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
 [0.3.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.2.0..v0.3.0
+[0.4.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0

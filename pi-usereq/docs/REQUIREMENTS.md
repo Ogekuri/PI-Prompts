@@ -1,464 +1,469 @@
-# PI-useReq Requirements
+---
+title: "Prompts Project Requirements"
+description: Software requirements specification
+version: "0.2.3"
+date: "2026-04-14"
+author: "req-write"
+scope:
+  paths:
+    - "src/prompts/**/*.md"
+    - "src/docs/**/*.md"
+  excludes:
+    - ".*/**"
+visibility: "draft"
+tags: ["srs", "prompts", "templates"]
+---
+
+# Prompts Project Requirements
 
 ## 1. Introduction
 
 ### 1.1 Document Rules
-- This document MUST be written and maintained in English.
-- Requirement statements MUST use RFC 2119 keywords exclusively and MUST NOT use "shall".
-- Requirement bullets MUST use unique, stable IDs with prefixes limited to PRJ, CTN, DES, REQ, and TST.
-- Requirement IDs MUST NOT be renumbered, reused, or repurposed outside the dedicated renumbering workflow.
-- Each requirement MUST be atomic, single-sentence, and testable, with a target length of 35 words or fewer.
-- This document MUST describe observed implementation state, including limitations and partial behavior.
-- Every maintained standalone Markdown document MUST start with a level-1 title line beginning with `# ` and MUST NOT use YAML front matter or in-document revision history.
+Prefix `DOC` is reserved for document-authoring constraints in this section.
+
+- **DOC-001**: MUST write and maintain this document in English.
+- **DOC-002**: MUST use only RFC 2119 keywords (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and MUST NOT use modal verbs outside that set in requirement statements.
+- **DOC-003**: MUST express every requirement bullet using the canonical format `- **<ID>**: <RFC2119 keyword> <single-sentence requirement>.`.
+- **DOC-004**: MUST keep requirement IDs unique and non-repurposed within each published revision, and MUST update internal cross-references deterministically when IDs are renumbered.
+- **DOC-005**: MUST write requirements for LLM Agents and automated parsers using high semantic density and no conversational filler.
 
 ### 1.2 Project Scope
-PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone extension-debug surface for requirements-oriented prompt delivery, source summarization, static-check orchestration, git validation, worktree lifecycle helpers, offline extension contract validation, and npm release automation. Implemented UI is the pi selection/input/editor/status/notification surface. No standalone GUI code is present. `scripts/` contains the standalone harness, bash wrapper, and support modules. `.github/workflows/` contains the npm release workflow in this revision.
+This project defines and maintains prompt and template artifacts used by the useReq process to enforce SRS-driven development with the sequence Requirements -> Design -> Implementation -> Verification.
+
+### 1.3 Assumptions
+- No application runtime source code is in scope for this SRS.
+- No mandatory third-party runtime library was requested.
+- Verification can be implemented with deterministic textual checks on Markdown artifacts.
+- **CRITICAL**: Workflows that modify source code MUST execute unit tests during verification only when relevant unit tests already exist in the repository, selecting commands via language-specific test-suite priority policy; read-only workflows MUST rely on static evidence only.
+
+### 1.4 Persona
+- When you edit prompts and templates, act as a Senior AI Prompt Engineer and Senior LLM-Ops Engineer.
+- When performing checks and tests on prompts and templates, act as a Senior AI Prompt Engineer, Senior LLM-Ops Engineer, and an expert static code analyst. Your task is to validate and review the provided prompts and templates.
+
+### 1.5 Absolute Rules, Non-Negotiable
+- When editing prompt or template artifacts:
+  - MUST preserve placeholder tokens `%%ARGS%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, and `%%TEST_PATH%%` exactly as-is.
+  - MUST keep all prompt/template text free of typographical and grammatical errors.
+  - MUST use uniform terminology and identical canonical instruction phrasing for identical actions, references, and process keywords.
+  - MUST keep interruption rules explicit: prompts MUST NOT interrupt agent reasoning flow unless the interruption is required by defined workflow conditions.
+  - MUST optimize prompts/templates for LLM-agent parsing, context efficiency, and token economy.
+  - MUST target prompts/templates to LLM-agent execution and MUST NOT target human-only reading.
+  - MUST require an explicit change request and corresponding `docs/REQUIREMENTS.md` update for any prompt/template file addition or removal.
+  - MUST keep `src/prompts/` and `src/docs/` free of governance instructions about maintaining, editing, or verifying prompts/templates.
+  - MUST NOT add instructions that increase hallucination risk unless explicitly required by a formal requirement.
 
 ## 2. Project Requirements
 
 ### 2.1 Project Functions
-- **PRJ-001**: MUST expose prompt commands that render bundled prompt templates with configuration-derived path substitutions and internal tool-reference adaptation.
-- **PRJ-002**: MUST expose CLI and agent-tool interfaces for token counting, references generation, compression, construct search, and static-check execution on explicit files or configured project sources.
-- **PRJ-003**: MUST provide an interactive pi configuration surface for docs path, tests path, source directories, static-check entries, and active-tool enablement for custom and supported embedded pi CLI tools.
-- **PRJ-004**: MUST provide git repository validation plus standardized worktree naming, creation, and deletion utilities using configured project and git paths.
-- **PRJ-005**: MUST install bundled prompts, documentation templates, and guidelines under the extension installation path and expose them through shared runtime path context.
-- **PRJ-006**: MUST expose a standalone debug surface that inventories extension commands and tools, replays handlers offline, captures registration and UI metadata, provides a bash wrapper, and optionally compares the contract against the official pi SDK runtime.
-- **PRJ-007**: MUST intercept pi CLI lifecycle hooks to maintain extension-owned context telemetry and status-bar session timing.
+- **PRJ-001**: MUST maintain prompt artifacts in `src/prompts/` for SRS-driven workflows.
+- **PRJ-002**: MUST maintain template artifacts in `src/docs/` as mandatory authoring guides and keep template taxonomy aligned with prompt-level Doxygen coverage directives.
+- **PRJ-003**: MUST define each prompt with a single primary workflow intent and deterministic output objective.
+- **PRJ-004**: MUST preserve the process order Requirements -> Design -> Implementation -> Verification when editing prompt instructions.
 
-### 2.2 Project Constraints
-- **CTN-001**: MUST persist project configuration at `<base-path>/.pi-usereq/config.json` with default `docs-dir=pi-usereq/docs`, `tests-dir=tests`, and `src-dir=["src"]`.
-- **CTN-002**: MUST collect project-wide source files through `git ls-files --cached --others --exclude-standard`; non-git project scans therefore fail instead of falling back to directory walking.
-- **CTN-003**: MUST limit project-wide source discovery to extensions listed in `STATIC_CHECK_EXT_TO_LANG`; analyzer-only aliases such as `.cc`, `.cxx`, `.hpp`, and `.exs` remain undiscoverable.
-- **CTN-004**: MUST exclude `tests/fixtures` and `<tests-dir>/fixtures` from project-wide static-check execution.
-- **CTN-005**: MUST declare an ECMAScript module package and TypeScript `NodeNext` module semantics for runtime and import resolution.
-- **CTN-006**: MUST type-check in strict `noEmit` mode and include both `src/**/*.ts` and `tests/**/*.ts` in the TypeScript program.
-- **CTN-007**: MUST declare `./src/index.ts` as the only pi extension entry in package metadata.
-- **CTN-008**: MUST expose package scripts for test, watch-mode test, and CLI execution through `node --import tsx`.
-- **CTN-009**: MUST implement extension debugging outside `src/index.ts` business logic and drive extension behavior only through the default extension export, registered commands, registered tools, and registered events.
-- **CTN-010**: MUST execute offline harness flows without requiring pi.dev services or `docs/pi.dev/agent-document-manifest.json`.
-- **CTN-011**: MUST store bundled prompt, template, and guideline resources under `src/resources/{prompts,templates,guidelines}` and install them under `<installation-path>/resources/{prompts,templates,guidelines}`.
-- **CTN-012**: MUST NOT persist `base-path` or `git-path` in `.pi-usereq/config.json`.
+### 2.3 In-Scope Artifacts
+| Category | Path | Intended Function |
+| --- | --- | --- |
+| Prompt | `src/prompts/analyze.md` | Produce an analysis report. |
+| Prompt | `src/prompts/change.md` | Update requirements and implement corresponding changes. |
+| Prompt | `src/prompts/check.md` | Run requirements compliance checks. |
+| Prompt | `src/prompts/cover.md` | Implement deltas that cover unmet requirements. |
+| Prompt | `src/prompts/create.md` | Draft SRS from project source evidence. |
+| Prompt | `src/prompts/fix.md` | Fix defects without changing requirements. |
+| Prompt | `src/prompts/flowchart.md` | Draft `FLOWCHART.md` as a Mermaid flowchart from source evidence. |
+| Prompt | `src/prompts/implement.md` | Implement code from requirements. |
+| Prompt | `src/prompts/new.md` | Add new requirements and implement corresponding changes. |
+| Prompt | `src/prompts/recreate.md` | Reorganize and renumber the SRS. |
+| Prompt | `src/prompts/refactor.md` | Optimize internals without requirement changes. |
+| Prompt | `src/prompts/references.md` | Draft `REFERENCES.md` from source evidence. |
+| Prompt | `src/prompts/readme.md` | Update `README.md` from user-visible implementation evidence. |
+| Prompt | `src/prompts/renumber.md` | Renumber SRS requirements deterministically. |
+| Prompt | `src/prompts/workflow.md` | Draft `WORKFLOW.md` from source evidence. |
+| Prompt | `src/prompts/write.md` | Draft SRS from user-request text. |
+| Template | `src/docs/Document_Source_Code_in_Doxygen_Style.md` | Mandatory source-code documentation guideline. |
+| Template | `src/docs/HDT_Test_Authoring_Guide.md` | Mandatory unit-test authoring guideline. |
+| Template | `src/docs/Requirements_Template.md` | Mandatory SRS authoring guideline. |
 
 ## 3. Requirements
 
 ### 3.1 Design and Implementation
-- **DES-001**: MUST implement the standalone executable in `src/cli.ts` as flag parsing plus dispatch to `tool-runner.ts` or `runStaticCheck`.
-- **DES-002**: MUST implement extension activation in `src/index.ts` by registering prompt commands, agent tools, configuration commands, and shared wrappers for supported pi CLI lifecycle hooks.
-- **DES-003**: MUST represent parsed source constructs as `SourceElement` instances produced by `SourceAnalyzer` and enriched with signatures, hierarchy, visibility, inheritance, body annotations, and Doxygen fields.
-- **DES-004**: MUST implement static-check execution through `StaticCheckBase`, `StaticCheckPylance`, `StaticCheckRuff`, and `StaticCheckCommand`, selected by `dispatchStaticCheckForFile`.
-- **DES-005**: MUST centralize project file collection, token/reference/compress/search operations, git checks, docs checks, and worktree helpers in `src/core/tool-runner.ts`.
-- **DES-006**: MUST keep CLI compression and construct-search renderers as markdown blocks headed by `@@@ <path> | <language>`, while agent-tool compression and construct-search responses use dedicated JSON payload builders.
-- **DES-007**: MUST implement the standalone debug surface in `scripts/debug-extension.ts`, `scripts/pi-usereq-debug.sh`, and `scripts/lib/` recording and SDK-probe modules without altering extension runtime control flow.
-- **DES-008**: MUST format `files-references`, `references`, `files-compress`, and `compress` agent-tool outputs as deterministic agent-oriented JSON with dedicated metadata fields for source structure, symbols, and Doxygen tags.
-- **DES-009**: MUST treat `docs/pi.dev/agent-document-manifest.json` as the authoritative API contract for new or modified software that interfaces with the pi.dev CLI.
-- **DES-010**: MUST centralize event-driven context snapshots, run-timing state, and status-bar rendering through shared extension-status helpers.
-- **DES-011**: MUST implement `.github/workflows/release-npm.yml` as a two-job GitHub Actions pipeline where `check-branch` gates `build-release`, preserving changelog-driven GitHub Release creation while adding npm publication.
+- **DES-001**: MUST organize artifacts into dedicated prompt and template with explicit responsibilities.
+- **DES-002**: MUST standardize repeated operational instructions, including Git-state checks and completion or error messages, using identical wording across prompts and forbidding bell-control output suffixes, except prompt-name specialization.
+- **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
+- **DES-004**: MUST preserve reusable keyword tokens exactly so installation-time substitution remains valid.
 
-### 3.2 Functions
-- **REQ-001**: MUST access bundled prompts, templates, and guidelines from `<installation-path>/resources` without requiring user-home resource copies before prompt or tool execution.
-- **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, `%%ARGS%%`, and `%%CONTEXT_FILES%%` tokens when rendering prompts.
-- **REQ-003**: MUST rewrite legacy `req --...` prompt text references to internal tool names such as `search tool` and `git-check tool`, and bundled prompts MUST use `grep` instead of `git grep`.
-- **REQ-004**: MUST register `req-<prompt>` commands for each maintained bundled prompt template and send rendered prompt content as a user message.
-- **REQ-159**: MUST place `%%COMMIT%%` as the penultimate numbered step in every bundled prompt that ends with a commit workflow.
-- **REQ-160**: MUST define bundled prompt `analyze.md` with an explicit step `2. Present results` containing the fixed final reporting schema.
-- **REQ-161**: MUST confine generic GitOps persona text and repository-write commit rules to `src/instructions/git_commit.md`, and bundled prompts MUST NOT repeat them outside `%%COMMIT%%`.
-- **REQ-162**: MUST maintain bundled prompt templates `analyze.md`, `change.md`, `check.md`, `cover.md`, `create.md`, `fix.md`, `flowchart.md`, `implement.md`, `new.md`, `readme.md`, `recreate.md`, `refactor.md`, `renumber.md`, `workflow.md`, and `write.md` under `src/prompts`.
-- **REQ-163**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` begin with a level-1 title line starting with `# `.
-- **REQ-164**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` omit YAML front matter.
-- **REQ-165**: MUST append an identical `## Context Files` section as the last section of every bundled prompt under `src/prompts`, ending with the `%%CONTEXT_FILES%%` token as the final line.
-- **REQ-166**: MUST make the `## Context Files` preamble instruct the agent that enumerated files are pre-injected into context, MUST NOT be re-read or searched, and are runtime-determined by the prompt-host program.
-- **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-search` only through agent-tool registration.
-- **REQ-044**: MUST expose `references`, `compress`, `search`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
-- **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.
-- **REQ-046**: MUST implement a recording extension API supporting `registerCommand`, `registerTool`, `on`, `getAllTools`, `getActiveTools`, `setActiveTools`, and `sendUserMessage`, and preserve stable registration order in serialized snapshots.
-- **REQ-047**: MUST implement a recording command context UI supporting `select`, `input`, `notify`, `setStatus`, and `setEditorText`, and serialize queued inputs plus emitted UI side effects.
-- **REQ-048**: MUST load the target extension via its default export, invoke it as a black box, and execute offline replays only through registered `session_start`, command, and tool handlers.
-- **REQ-049**: MUST set both `ctx.cwd` and `process.cwd()` from the requested debug cwd during offline replay and report both effective values in the result payload.
-- **REQ-050**: MUST expose harness subcommands `inspect`, `session-start`, `command`, `tool`, and `sdk-smoke`.
-- **REQ-051**: MUST support `json` and `pretty` output modes for every harness subcommand and default to the human-readable mode when none is specified.
-- **REQ-052**: MUST make `inspect` emit commands, tools, event-handler names, active tools, sent user messages, and a manual containing concrete usage examples for every registered `req-*` command and agent tool.
-- **REQ-053**: MUST make `session-start` invoke all registered `session_start` handlers and capture final active tools, statuses, notifications, editor text, and sent user messages.
-- **REQ-054**: MUST make `command` invoke the named registered command handler with supplied args and capture sent user messages plus UI side effects in the result payload.
-- **REQ-055**: MUST make `tool` invoke the named registered tool `execute` handler with supplied params and capture returned `content`, returned `details`, and UI side effects.
-- **REQ-056**: MUST make `sdk-smoke` use `DefaultResourceLoader` and `createAgentSession(...)` to load an explicit extension path and inventory extension-owned commands and tools from the official runtime.
-- **REQ-057**: MUST compare offline and SDK inventories for command names, command descriptions, tool names, tool descriptions, parameter-schema presence, normalized provenance/sourceInfo, and active tools after `session_start`.
-- **REQ-058**: MUST exit with non-zero status when a requested harness command or tool is not registered or when SDK parity loading fails.
-- **REQ-059**: MUST expose package scripts `debug:ext`, `debug:ext:inspect`, `debug:ext:session`, `debug:ext:command`, `debug:ext:tool`, and `debug:ext:sdk`.
-- **REQ-060**: MUST provide `scripts/pi-usereq-debug.sh` as a bash wrapper for `scripts/debug-extension.ts`.
-- **REQ-061**: MUST make `scripts/pi-usereq-debug.sh` expose `inspect`, `session`, `command`, `prompt`, `tool`, `sdk`, `raw`, and `help` subcommands.
-- **REQ-062**: MUST make `scripts/pi-usereq-debug.sh` default to `src/index.ts` plus caller cwd, permit later `--cwd` and `--extension` overrides, auto-prefix bare prompt names with `req-`, and map `session`/`sdk` to `session-start`/`sdk-smoke`.
-- **REQ-065**: MUST make `scripts/pi-usereq-debug.sh tool` accept `--args <text>` by forwarding a JSON object through `--params`, while preserving direct `--params <json>` passthrough.
-- **REQ-006**: MUST provide a `pi-usereq` menu that edits `docs-dir`, `tests-dir`, and `src-dir`, manages static-check and startup-tool submenus, exposes `show-config`, resets defaults, and saves configuration on exit.
-- **REQ-007**: MUST provide a startup-tools submenu with overview, status display, per-tool toggle, enable-all, disable-all, and reset-defaults actions for configurable custom and embedded pi CLI active tools.
-- **REQ-063**: MUST derive configurable embedded pi CLI tools from runtime builtin tools named `read`, `bash`, `edit`, `write`, `grep`, and `ls`.
-- **REQ-064**: MUST default all custom tools except `search` and embedded `read`, `bash`, `edit`, and `write` to enabled, and custom `search` plus embedded `grep` and `ls` to disabled.
-- **REQ-066**: MUST omit `reset-context` and `context-reset` fields from persisted project configuration.
-- **REQ-067**: MUST send every rendered `req-<prompt>` payload into the current active session.
-- **REQ-068**: MUST use one prompt-delivery path that never creates replacement sessions or pre-reset flows.
-- **REQ-008**: MUST provide a static-check submenu that adds entries by guided language/module selection or raw spec, removes language entries, and shows supported languages and modules.
-- **REQ-009**: MUST refresh shared runtime path context, apply configured startup tools, and publish single-line `pi-usereq` status text during `session_start`.
-- **REQ-109**: MUST make the single-line status bar render `git`, `base`, `docs`, `tests`, and `src` with explicit derived or configured path values, keeping every field name separate from its value.
-- **REQ-110**: MUST make the single-line status bar render `tools` as the count of active tools.
-- **REQ-111**: MUST omit prompt-delivery mode fields from the single-line status bar.
-- **REQ-112**: MUST render status-bar field names with the active theme `accent` token and field values with the active theme `warning` token.
-- **REQ-113**: MUST register shared event wrappers for `resources_discover`, `session_start`, `session_before_switch`, `session_before_fork`, `session_before_compact`, `session_compact`, and `session_shutdown`.
-- **REQ-114**: MUST register shared event wrappers for `session_before_tree`, `session_tree`, `context`, `before_provider_request`, `before_agent_start`, `agent_start`, and `agent_end`.
-- **REQ-115**: MUST register shared event wrappers for `turn_start`, `turn_end`, `message_start`, `message_update`, `message_end`, `tool_execution_start`, and `tool_execution_update`.
-- **REQ-116**: MUST register shared event wrappers for `tool_execution_end`, `model_select`, `tool_call`, `tool_result`, `user_bash`, and `input`.
-- **REQ-117**: MUST route every intercepted hook through `updateExtensionStatus` with the originating hook name and event payload, even when no hook-specific side effect exists.
-- **REQ-118**: MUST obtain latest context-usage facts from `ctx.getContextUsage()` or an equivalent runtime API and store them in extension session state.
-- **REQ-119**: MUST refresh stored context-usage facts during `session_start` and after intercepted events before rebuilding the status bar when newer data is available.
-- **REQ-120**: MUST render single-line status fields in this order: `git`, `base`, `docs`, `tests`, `src`, `tools`, `context`, `elapsed`, `last`, `beep`, `sound`.
-- **REQ-121**: MUST render `context` immediately after `tools` with separator ` • ` and a 5-cell bar using `▓` for filled cells.
-- **REQ-122**: MUST compute filled `context` cells by ceiling `usagePercent * 5 / 100`, except 0 percent MUST produce 0 filled cells.
-- **REQ-123**: MUST render `elapsed` immediately after `context`, showing `idle` when no prompt is running and `M:SS` for the active prompt duration.
-- **REQ-124**: MUST render `last` immediately after `elapsed`, showing `N/A` before any normally completed prompt run and otherwise the final `elapsed` value of the latest normally completed run.
-- **REQ-125**: MUST keep `elapsed` and `last` minutes unbounded above 59, zero-pad seconds to two digits, and preserve `last` when escape-triggered cancellation ends the active run.
-- **REQ-126**: MUST render `context` bar cells as theme `warning` `▓` glyphs on a background derived from the active theme `accent` token.
-- **REQ-127**: MUST overlay the literal `CLEAR` with the theme `warning` token on an `accent`-derived background when normalized context usage is unavailable or equals 0 percent.
-- **REQ-128**: MUST overlay the literal `FULL!` with the active theme `error` token on a theme `warning` background when normalized context usage exceeds 90 percent.
-- **REQ-129**: MUST persist independent terminal-beep flags for successful prompt completion, escape-triggered prompt abortion, and error-terminated prompt completion, defaulting each flag to disabled.
-- **REQ-130**: MUST dispatch enabled terminal-beep events through `notifyWindows`, `notifyOSC99`, `notifyOSC9`, or `notifyOSC777` when the matching prompt lifecycle outcome occurs.
-- **REQ-131**: MUST persist a successful-prompt external sound level with allowed values `none`, `low`, `mid`, and `high`, defaulting to `none`.
-- **REQ-132**: MUST execute the configured successful-prompt external sound command only when the prompt ends without abort or error and the sound level is not `none`.
-- **REQ-133**: MUST persist configurable shell-command strings for sound levels `low`, `mid`, and `high`, and MUST substitute `%%INSTALLATION_PATH%%` with the runtime extension installation path before execution.
-- **REQ-134**: MUST persist a configurable sound-level toggle shortcut, defaulting to `alt+s`, and MUST cycle sound levels in the order `none`, `low`, `mid`, `high`, `none`.
-- **REQ-135**: MUST render `beep` immediately after `last`, showing `none` or the comma-ordered enabled event tokens `end`, `esc`, and `err`.
-- **REQ-136**: MUST render `sound` immediately after `beep`, showing one of `none`, `low`, `mid`, or `high`.
-- **REQ-137**: MUST make the configuration UI expose controls for terminal-beep flags, selected notify command, sound toggle hotkey bind, and per-level notify commands.
-- **REQ-010**: MUST count tokens with `js-tiktoken` `cl100k_base`, count characters and lines, and make `files-tokens` emit agent-oriented JSON containing structured per-file metrics, extracted facts, and aggregate metrics.
-- **REQ-011**: MUST generate explicit-file references by analyzing supported source files and emitting agent-oriented JSON with per-file metadata, imports, symbol records, and optional residual text.
-- **REQ-012**: MUST compress supported source files by removing comments and blank lines, preserving indentation for Python, Haskell, and Elixir, and optionally preserving original line numbers.
-- **REQ-013**: MUST search explicit files by tag filter and name regex, then emit matching constructs with signature, line range, Doxygen fields, and comment-stripped code excerpts.
-- **REQ-014**: MUST make `references` scan configured `src-dir` files and emit agent-oriented JSON containing repository structure plus the structured per-file reference records used by `files-references`.
-- **REQ-015**: MUST make CLI project-scope compression scan configured `src-dir` files and emit one compressed markdown block per supported file.
-- **REQ-016**: MUST make `search` scan configured `src-dir` files using the requested tag filter and regular expression.
-- **REQ-017**: MUST make `tokens` count only existing canonical docs `REQUIREMENTS.md`, `WORKFLOW.md`, and `REFERENCES.md`, reuse the structured `files-tokens` JSON contract, and fail when none exist.
-- **REQ-069**: MUST order `files-tokens` and `tokens` JSON sections as `request`, `summary`, `files`, and `guidance`, and order fields inside each section from canonical identifiers to source facts, metrics, and derived guidance.
-- **REQ-070**: MUST emit counts, sizes, line counts, line ranges, and derived totals as JSON numbers with explicit unit-specific field names, keeping display strings optional and never as the sole carrier of numeric facts.
-- **REQ-071**: MUST normalize `files-tokens` and `tokens` text fields by removing decorative formatting, isolating canonical paths, separating source-derived facts from guidance, and stripping non-semantic presentation artifacts.
-- **REQ-072**: MUST register `files-tokens` and `tokens` with agent-oriented descriptions covering purpose, inputs, output schema, output format, specialized behaviors, configuration options, invocation modes, and failure conditions.
-- **REQ-073**: MUST expose file-derived facts needed for direct access, including canonical path, language, existence, line counts, line ranges, and Doxygen-derived metadata, as dedicated JSON fields when available.
-- **REQ-074**: MUST keep monolithic text summaries optional, place them after structured fields, and omit any fact from text-only representation when the same fact can be emitted as dedicated JSON.
-- **REQ-075**: MUST make `files-tokens` and `tokens` guidance fields explicitly distinguish source observations, derived recommendations, and actionable next-step hints.
-- **REQ-076**: MUST order `files-references` and `references` JSON sections from request metadata to repository summary, file records, and optional residual text.
-- **REQ-077**: MUST expose symbol kind, path, declaration lines, counts, and line ranges as dedicated numeric or array fields, never only inside free-form strings.
-- **REQ-078**: MUST expose parsed Doxygen fields as tag-specific JSON objects or arrays, keeping monolithic `text` only for unsplittable residual content.
-- **REQ-079**: MUST normalize `files-references` and `references` text fields by removing decorative markdown artifacts and preserving only parser-relevant residual content.
-- **REQ-080**: MUST register `files-references` and `references` with agent-oriented descriptions covering purpose, inputs, configuration, output schema, specialized behaviors, and failure conditions.
-- **REQ-081**: MUST make agent-tool `files-compress` and `compress` return structured JSON sections ordered as `request`, `summary`, `repository`, `files`, and `execution`.
-- **REQ-082**: MUST expose canonical paths, absolute paths, language IDs, source line counts, source line ranges, compressed line counts, and removed line counts as dedicated typed compression fields.
-- **REQ-083**: MUST expose compressed excerpts through structured `compressed_lines` arrays and a separate `compressed_source_text` field, never only inside markdown headers, fences, or prefixed display strings.
-- **REQ-084**: MUST expose file-level and symbol-level Doxygen fields as structured tag-specific JSON objects, and emit symbol records with declaration kind, canonical path, signatures, and numeric declaration line ranges.
-- **REQ-085**: MUST keep residual monolithic text optional, place it after structured fields, and omit decorative markdown artifacts from compression JSON field values.
-- **REQ-086**: MUST register `files-compress` and `compress` with agent-oriented descriptions covering scope, parameters, line-number behavior, output schema, project-scope selection rules, output format, and failure conditions.
-- **REQ-087**: MUST expose skipped inputs, unsupported extensions, compression failures, and zero-processable requests as structured statuses and stable error reasons, while keeping stderr diagnostics optional.
-- **REQ-088**: MUST mirror the structured compression payload into tool `content[0].text` and tool `details`, with execution metadata nested under the mirrored JSON object.
-- **REQ-089**: MUST make agent-tool `files-search` and `search` return structured JSON sections ordered as `request`, `summary`, `repository`, `files`, and `execution`.
-- **REQ-090**: MUST expose search request scope facts as dedicated fields, including tag filter, regex pattern, line-number mode, requested paths, configured source directories, and supported tags by language.
-- **REQ-091**: MUST expose per-file and per-match search facts as dedicated fields, including canonical path, language, construct kind, symbol name, signature, declaration order, numeric line ranges, and stripped code lines.
-- **REQ-092**: MUST expose parsed search Doxygen fields as tag-specific JSON objects or arrays for file-level and construct-level metadata, keeping monolithic residual text only when safe splitting is impossible.
-- **REQ-093**: MUST emit search counts, file totals, match totals, line numbers, and line ranges as JSON numbers with explicit unit-specific field names, never only inside display strings.
-- **REQ-094**: MUST normalize `files-search` and `search` text fields by removing markdown headers, fences, bullets, and other presentation-only artifacts from structured JSON values.
-- **REQ-095**: MUST register `files-search` and `search` with agent-oriented descriptions covering purpose, scope, input schema, output schema, `enableLineNumbers`, regex semantics, supported tags by language, and failure conditions.
-- **REQ-096**: MUST expose structured statuses for skipped files, unsupported languages, invalid tag filters, invalid regex patterns, no-match outcomes, and analysis failures, while keeping stderr diagnostics optional.
-- **REQ-097**: MUST mirror the structured search payload into tool `content[0].text` and tool `details`, with execution metadata nested under the mirrored JSON object.
-- **REQ-098**: MUST keep monolithic search `text` fields optional, place them after structured fields, and omit any fact from text-only representation when a dedicated JSON field can carry it.
-- **REQ-099**: MUST make every agent-tool response expose a JSON-first tree whose specialized fields are directly accessible, while monolithic text remains optional and subordinate to the structured payload.
-- **REQ-100**: MUST encode quantitative facts as JSON numbers in unit-specific fields, keep textual fields free of decorative formatting and textual units, and avoid duplicating facts already exposed by specialized fields.
-- **REQ-101**: MUST register every agent tool with machine-oriented metadata describing purpose, required and optional parameters, configuration and invocation variants, output schema and format, specialized behaviors, and stable error conditions.
-- **REQ-102**: MUST make every structured agent-tool execute result mirror the same JSON object into `content[0].text` and `details`, nesting execution metadata under dedicated `execution` fields.
-- **REQ-018**: MUST expose the `test-static-check` driver only through standalone CLI `--test-static-check`, dispatching `dummy`, `pylance`, `ruff`, or `command` checker subcommands directly.
-- **REQ-019**: MUST resolve each explicit static-check file by extension and run every configured checker for that language while capturing only failing checker output.
-- **REQ-020**: MUST parse static-check enable specs in `LANG=MODULE[,CMD[,PARAM...]]` format and normalize supported language and module names case-insensitively.
-- **REQ-021**: MUST reject static-check enable specs with missing `=`, missing module, unknown language, unknown module, or `Command` entries without `cmd`.
-- **REQ-022**: MUST resolve Python checker executables in this preference order: `<project>/.venv/bin/python`, `PI_USEREQ_PYTHON`, `python3`, `python`.
-- **REQ-023**: MUST require `Command`-module executables to exist on `PATH` before static-check execution.
-- **REQ-024**: MUST make `git-check` fail unless configured `git-path` exists, resolves inside a work tree, has no porcelain changes, and has a valid `HEAD`.
-- **REQ-025**: MUST make `docs-check` fail when `REQUIREMENTS.md`, `WORKFLOW.md`, or `REFERENCES.md` is missing and name an existing prompt command that remediates the missing file.
-- **REQ-026**: MUST make `git-wt-name` emit `useReq-<project>-<sanitized-branch>-<YYYYMMDDHHMMSS>`.
-- **REQ-027**: MUST make `git-wt-create` reject invalid names, create `../<wtName>` from the configured git root, and copy `.pi-usereq` into the matching worktree base when present.
-- **REQ-028**: MUST make `git-wt-delete` remove the exact named worktree and/or branch when either exists and fail when neither exists.
-- **REQ-029**: MUST make `get-base-path` print `base-path`, where `base-path` equals the current `execution-path`.
-- **REQ-030**: MUST make extension project-config loading set `execution-path` to current cwd, derive `base-path` from it, and set `config-path` to `<base-path>/.pi-usereq/config.json`.
-- **REQ-103**: MUST resolve `installation-path` from the executing extension entry module and expose it with runtime path context to prompts, tools, and `session_start` handlers.
-- **REQ-104**: MUST keep `docs-dir`, `tests-dir`, and every `src-dir` entry relative to `base-path` and resolve them against `base-path` during execution.
-- **REQ-105**: MUST make `git-path` print the derived repository root only when it equals `base-path` or is an ancestor of `base-path`.
-- **REQ-106**: MUST make prompt `%%GUIDELINES_FILES%%`, `%%GUIDELINES_PATH%%`, and `%%TEMPLATE_PATH%%` resolve under `<installation-path>/resources`.
-- **REQ-107**: MUST express prompt-visible `installation-path`, `execution-path`, `base-path`, `config-path`, template paths, and guideline paths relative to user home using platform-native home environment variables.
-- **REQ-031**: MUST make the `pi-usereq` menu expose a `show-config` action between `Reset defaults` and `Save and close`, writing the current project configuration JSON to the editor.
-- **REQ-032**: MUST inject a pi.dev conformance block into rendered prompts when `docs/pi.dev/agent-document-manifest.json` exists under the project base.
-- **REQ-033**: MUST make that conformance block require manifest-guided document review before implementing or changing extension code that interfaces with pi CLI.
-- **REQ-034**: MUST make that conformance block require manifest-guided document review before validating, analyzing, or fixing extension code that interfaces with pi CLI.
-- **REQ-108**: MUST make that conformance block require API-level compliance with `docs/pi.dev/agent-document-manifest.json` for new or modified software that interfaces with the pi.dev CLI.
-- **REQ-035**: MUST parse repeatable `--enable-static-check LANG=MODULE[,CMD[,PARAM...]]` CLI options before command dispatch and merge resulting entries into persisted project configuration for the current project base.
-- **REQ-036**: MUST preserve existing `static-check` entries, append non-duplicate `--enable-static-check` entries in argument order, and treat canonical language, module, cmd, and params as the duplicate identity.
-- **REQ-037**: MUST reject `--enable-static-check` `Command` entries whose executable is unavailable on `PATH` and MUST NOT modify persisted project configuration when validation fails.
-- **REQ-038**: MUST honor `--verbose` only for `files-references`, `files-compress`, `files-search`, `references`, `compress`, and `search`, emitting command progress to stderr while leaving stdout payload format unchanged.
-- **REQ-039**: MUST support `--enable-line-numbers` only for `files-compress`, `compress`, `files-search`, and `search`, and MUST leave corresponding outputs unnumbered when the flag is absent.
-- **REQ-040**: MUST store canonical expected CLI result fixtures as UTF-8 text files under `tests/fixtures_attended_results/`, preserving normalized exit code, stdout, and stderr for each archived scenario.
-- **REQ-041**: MUST canonicalize environment-dependent path and timestamp segments in archived and observed CLI results with stable placeholder tokens before exact comparison.
-- **REQ-042**: MUST archive explicit-file scenarios for `files-tokens`, `files-references`, `files-compress`, `files-search`, and `test-static-check` across every file under `tests/fixtures/`.
-- **REQ-043**: MUST archive repository scenarios for `references`, `compress`, `search`, `tokens`, `enable-static-check`, `files-static-check`, `static-check`, `git-check`, `git-wt-*`, `git-path`, and `get-base-path`.
-- **REQ-138**: MUST make `.github/workflows/release-npm.yml` trigger release automation from pushed tags matched by the existing workflow filter `v[0-9]+.[0-9]+.[0-9]+`.
-- **REQ-139**: MUST skip downstream release work unless `check-branch` confirms the tagged commit is contained in `origin/master`.
-- **REQ-140**: MUST configure Node.js plus npm registry authentication, run `npm ci`, remove manifest `private`, and publish with provenance and public access using `secrets.NPM_TOKEN`.
-- **REQ-141**: MUST preserve the existing changelog-builder step and use its output as the non-draft non-prerelease GitHub Release body.
-- **REQ-155**: MUST keep `package.json` `name` equal to `pi-usereq` so npm publication resolves to `https://www.npmjs.com/package/pi-usereq`.
-- **REQ-157**: MUST declare `package.json` `repository.type` as `git` and `repository.url` as `git+https://github.com/Ogekuri/PI-useReq.git`.
-- **REQ-158**: MUST declare `package.json` `bugs.url` as `https://github.com/Ogekuri/PI-useReq/issues` and `homepage` as `https://github.com/Ogekuri/PI-useReq#readme`.
-- **REQ-142**: MUST default `PI_NOTIFY_SOUND_LOW_CMD` to `paplay --volume=21845 %%INSTALLATION_PATH%%/resources/sounds/Soft-high-tech-notification-sound-effect.mp3`.
-- **REQ-143**: MUST default `PI_NOTIFY_SOUND_MID_CMD` to `paplay --volume=43690 %%INSTALLATION_PATH%%/resources/sounds/Soft-high-tech-notification-sound-effect.mp3`.
-- **REQ-144**: MUST default `PI_NOTIFY_SOUND_HIGH_CMD` to `paplay --volume=65535 %%INSTALLATION_PATH%%/resources/sounds/Soft-high-tech-notification-sound-effect.mp3`.
-- **REQ-145**: MUST derive `git-path` only at runtime from the current working directory and repository ancestry rules, ignoring project-configuration JSON values.
-- **REQ-146**: MUST NOT read or persist `base-path` or `git-path` in project-configuration JSON.
-- **REQ-147**: MUST render status-bar `git` as the absolute runtime `git-path`, or an empty value when no repository root is resolved.
-- **REQ-148**: MUST render status-bar `base` as `.` when `base-path` equals or lacks `git-path`, otherwise as the path relative to `git-path`.
-- **REQ-149**: MUST label notification settings actions as `Selected notify command`, `Sound toggle hotkey bind`, `Notify command (low vol.)`, `Notify command (mid vol.)`, and `Notify command (high vol.)`.
-- **REQ-150**: MUST omit overview rows and reference-only actions from the main and notification configuration menus.
-- **REQ-151**: MUST render `pi-usereq`, notification, static-check, and startup-tool menus with left-aligned labels and right-aligned current values using the active CLI settings-list theme semantics.
-- **REQ-156**: MUST restrict extension-owned status and settings rendering to CLI-supported theme APIs and documented theme tokens.
-- **REQ-152**: MUST render a persistent bottom-line description for the currently selected configuration entry.
-- **REQ-153**: MUST use scrollable configuration menus when entry count exceeds the visible row budget.
-- **REQ-154**: MUST wrap configuration-menu selection from last-to-first and first-to-last entries.
+Proposed repository structure (max depth 3, depth 4 for `src/`):
 
-## 4. Test Requirements
-- **TST-001**: MUST verify extension activation registers every documented prompt command, agent tool, and configuration command while omitting tool-name slash commands, `test-static-check`, and the removed standalone config-viewer command.
-- **TST-002**: MUST verify bundled prompt, template, and guideline resources remain readable from `installation-path` and rendered prompts replace every dynamic placeholder, including `%%COMMIT%%`, with runtime path context.
-- **TST-045**: MUST verify bundled prompts omit generic GitOps persona text and generic repository-write commit rules outside `%%COMMIT%%`, while `src/instructions/git_commit.md` retains that guidance.
-- **TST-046**: MUST verify `src/prompts/*.md` replaces every `git grep` reference with `grep` and leaves no `git grep` string in bundled prompts.
-- **TST-047**: MUST verify every bundled standalone Markdown document under `src/prompts` and `src/docs` starts with a level-1 title line beginning with `# `.
-- **TST-048**: MUST verify every bundled standalone Markdown document under `src/prompts` and `src/docs` omits YAML front matter.
-- **TST-003**: MUST verify standalone CLI outputs for `files-tokens`, `files-compress`, `files-search`, and `--test-static-check` match the Python oracle for every fixture file.
-- **TST-004**: MUST verify project-scan CLI outputs for `compress`, `search`, `tokens`, `files-static-check`, `static-check`, `git-check`, `docs-check`, `git-path`, and `get-base-path` match the Python oracle.
-- **TST-005**: MUST verify the configuration menu persists `docs-dir`, disables startup tools, adds static-check entries, and omits prompt-delivery mode controls.
-- **TST-006**: MUST verify `session_start` activates configured startup tools and updates the single-line `pi-usereq` status bar.
-- **TST-031**: MUST verify the status bar renders explicit git/base/docs/tests/src paths, active-tool count, and active-theme `accent`/`warning` field-value token separation.
-- **TST-032**: MUST verify extension registration installs wrappers for all documented lifecycle hooks and routes replayed hook payloads through `updateExtensionStatus`.
-- **TST-033**: MUST verify the status bar renders ordered `git`, `base`, `docs`, `tests`, `src`, `tools`, `context`, `elapsed`, `last`, `beep`, and `sound` fields plus the ceiling-based 5-cell context bar.
-- **TST-037**: MUST verify the configuration menu persists terminal-beep flags, selected notify command, sound toggle hotkey bind, and per-level notify commands using the documented menu labels.
-- **TST-038**: MUST verify the sound-toggle shortcut cycles persisted sound levels and refreshes the status bar with the updated `sound` field.
-- **TST-034**: MUST verify `ctx.getContextUsage()` snapshots refresh status updates and prompt timing preserves `last` across normal completion but not escape-triggered cancellation.
-- **TST-035**: MUST verify unavailable or 0-percent context usage renders the literal `CLEAR` with the theme `warning` token on the preserved `accent`-derived context-bar background.
-- **TST-036**: MUST verify context usage above 90 percent renders the literal `FULL!` with the theme `error` token on the preserved theme `warning` background.
-- **TST-043**: MUST verify configuration menus reuse the active CLI settings-list theme semantics for labels, values, descriptions, cursor, and hints.
-- **TST-007**: MUST verify `git-path` output ignores stale stored values and resolves only a current repository root that is identical to or an ancestor of `base-path`.
-- **TST-008**: MUST verify `git-wt-create` and `git-wt-delete` create, configure, copy `.pi-usereq`, and remove the named worktree as observable filesystem side effects.
-- **TST-009**: MUST verify `package.json` declares ESM packaging, the single pi extension entry, and the standard `test`, `test:watch`, and `cli` scripts.
-- **TST-010**: MUST verify `tsconfig.json` declares `NodeNext`, `strict`, `noEmit`, and includes both `src/**/*.ts` and `tests/**/*.ts`.
-- **TST-011**: MUST verify pi.dev-aware prompt rendering injects manifest-driven conformance rules only when the pi.dev manifest exists under the project base.
-- **TST-030**: MUST verify pi.dev-aware prompt rendering injects an explicit API-compliance mandate tied to `docs/pi.dev/agent-document-manifest.json` when the manifest exists.
-- **TST-012**: MUST verify TypeScript CLI parity for standalone command-option regressions covering `--files-tokens`, `--files-references`, `--files-compress`, `--files-search`, `--test-static-check`, `--enable-line-numbers`, `--enable-static-check`, and `--verbose`.
-- **TST-013**: MUST verify TypeScript CLI parity for project-scoped command-option regressions covering `--references`, `--compress`, `--search`, `--tokens`, `--files-static-check`, `--static-check`, `--git-check`, `--git-wt-*`, `--git-path`, and `--get-base-path`.
-- **TST-014**: MUST maintain an executable mapping from each imported command-option regression case to one TypeScript test case identifier and fail verification when any mapped case is missing.
-- **TST-015**: MUST verify archive-backed standalone CLI scenarios load expected results from `tests/fixtures_attended_results/standalone` and compare exact normalized exit code, stdout, and stderr for every file under `tests/fixtures/`.
-- **TST-016**: MUST verify archive-backed repository CLI scenarios load expected results from `tests/fixtures_attended_results/project` and compare exact normalized exit code, stdout, and stderr for the archived command set.
-- **TST-017**: MUST verify every archive-backed scenario required by `REQ-042` and `REQ-043` has a committed expected-result fixture file before executing TypeScript output comparisons.
-- **TST-018**: MUST verify offline harness inspection and session-start replay capture registered commands, registered tools, event handlers, active tools, statuses, notifications, editor text, and sent user messages.
-- **TST-019**: MUST verify offline harness command and tool replay invoke registered handlers, preserve requested cwd semantics, and capture prompt payloads, tool results, and UI side effects.
-- **TST-020**: MUST verify SDK parity comparison reports aligned inventories as clean, reports requested mismatch categories, and `package.json` declares the `debug:ext*` harness scripts.
-- **TST-021**: MUST verify `scripts/pi-usereq-debug.sh tool` forwards `--params` unchanged and converts `--args` text into the JSON object forwarded through `--params`.
-- **TST-022**: MUST verify `files-references` and `references` JSON outputs expose repository, file, symbol, location, and Doxygen facts through dedicated structured fields.
-- **TST-023**: MUST verify harness inspection surfaces agent-oriented `files-references` and `references` tool descriptions with output schema, configuration, specialized behaviors, and failure details.
-- **TST-024**: MUST verify `files-search` and `search` JSON outputs expose request, repository, file, match, location, and Doxygen facts through dedicated structured fields.
-- **TST-025**: MUST verify harness inspection surfaces agent-oriented `files-search` and `search` tool descriptions with input schema, output schema, line-number behavior, regex semantics, supported tags by language, and failure details.
-- **TST-026**: MUST verify `files-compress` and `compress` JSON outputs expose structured request, repository, line, symbol, status, and Doxygen facts through dedicated fields.
-- **TST-027**: MUST verify harness inspection surfaces agent-oriented `files-compress` and `compress` tool descriptions with parameters, line-number behavior, output schema, specialization triggers, and failure conditions.
-- **TST-028**: MUST verify path, static-check, git, docs, and worktree agent-tool outputs expose structured JSON request, result, status, execution, and derived runtime path facts through dedicated fields.
-- **TST-029**: MUST verify harness inspection surfaces machine-oriented descriptions for path, static-check, git, docs, and worktree tools, including parameters, output schema, specialization triggers, and failure conditions.
-- **TST-039**: MUST verify `.github/workflows/release-npm.yml` keeps the existing tag filter, gates downstream release work on `origin/master`, runs npm publication, and creates the GitHub Release from generated changelog text.
-- **TST-042**: MUST verify `package.json` keeps `name` equal to `pi-usereq` so npm publication resolves to `https://www.npmjs.com/package/pi-usereq`.
-- **TST-044**: MUST verify `package.json` keeps npm provenance metadata aligned to the canonical GitHub repository, issues URL, and README homepage.
-- **TST-040**: MUST verify `.pi-usereq/config.json` omits `base-path` and `git-path`, while runtime path tools and status rendering still derive both values correctly.
-- **TST-041**: MUST verify the `pi-usereq` menu exposes `show-config` between `Reset defaults` and `Save and close`, and omits overview rows plus notification reference-only actions.
-
-## 5. Observed Component Model
-
-### 5.1 Runtime Surfaces
-- `src/cli.ts` parses CLI flags, repairs config for project-scoped commands, and dispatches to `tool-runner.ts` or `runStaticCheck`.
-- `src/index.ts` activates the pi extension, registers commands and agent tools, and manages interactive menu/status behavior through `ctx.ui`.
-- `src/core/tool-runner.ts` orchestrates project file collection, markdown generation, compression, construct search, docs checks, git checks, and worktree lifecycle actions.
-- `src/core/source-analyzer.ts` defines `SourceElement`, language specs, extraction heuristics, Doxygen attachment, and Markdown rendering support.
-- `src/core/generate-markdown.ts`, `src/core/compress.ts`, and `src/core/find-constructs.ts` share analyzer and compressor logic to produce reusable Markdown outputs.
-- `src/core/static-check.ts` maps languages/extensions, parses enable specs, resolves inputs, and dispatches checker classes.
-- `src/core/config.ts`, `src/core/resources.ts`, and `src/core/prompts.ts` provide config persistence, home-resource synchronization, and prompt rendering.
-- `src/core/doxygen-parser.ts` normalizes Doxygen tags reused by source references and construct search output.
-- `scripts/debug-extension.ts`, `scripts/pi-usereq-debug.sh`, and `scripts/lib/*.ts` provide the standalone extension debug harness, bash wrapper, recording adapters, offline replay, SDK parity probing, and usage-manual rendering.
-
-### 5.2 Libraries and Runtime Dependencies
-- `@mariozechner/pi-coding-agent` provides extension APIs, command registration, tool registration, and UI integration evidence in `src/index.ts` and `package.json`.
-- `@mariozechner/pi-ai` is a manifest-declared peer dependency evidenced by `package.json` and `package-lock.json`.
-- `@mariozechner/pi-tui` is a manifest-declared peer dependency evidenced by `package.json` and `package-lock.json`.
-- `@sinclair/typebox` provides runtime tool parameter schemas and is declared as a peer dependency evidenced by `src/index.ts`, `package.json`, and `package-lock.json`.
-- `js-tiktoken` provides token counting evidence in `src/core/token-counter.ts`, `package.json`, and `package-lock.json`.
-- `fast-glob` provides wildcard expansion for static-check inputs evidence in `src/core/static-check.ts`, `package.json`, and `package-lock.json`.
-- `tsx` is the manifest-declared TypeScript execution runner for tests and CLI scripts evidenced by `package.json` and `package-lock.json`.
-- `typescript` is the manifest-declared compiler and type-checker evidenced by `package.json`, `package-lock.json`, and `tsconfig.json`.
-- `git` CLI is a runtime dependency for repository checks, file discovery, and worktree lifecycle evidence in `src/core/tool-runner.ts`.
-- `bash` is a runtime dependency for `git-check` cleanliness validation evidence in `src/core/tool-runner.ts`.
-
-### 5.3 Packaging and Tooling Surface
-- `package.json` declares `type: "module"`, `pi.extensions: ["./src/index.ts"]`, and the scripts `test`, `test:watch`, `cli`, `debug:ext`, `debug:ext:inspect`, `debug:ext:session`, `debug:ext:command`, `debug:ext:tool`, and `debug:ext:sdk`.
-- `tsconfig.json` declares `target: "ES2022"`, `module: "NodeNext"`, `moduleResolution: "NodeNext"`, `strict: true`, `noEmit: true`, `skipLibCheck: true`, `resolveJsonModule: true`, and `types: ["node"]`.
-- `.github/workflows/release-npm.yml` validates canonical release tags, publishes the package to npm, and creates the matching GitHub Release.
-- `package.json` declares version `0.0.0` while `package-lock.json` resolves the top-level package as version `0.1.0`; this manifest metadata is inconsistent in the current revision.
-
-## 6. Repository Structure
-
-### 6.1 Tree View
 ```text
-.
-├── README.md
-├── LICENSE
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── src/
-│   ├── cli.ts
-│   ├── index.ts
-│   ├── core/
-│   │   ├── compress-files.ts
-│   │   ├── compress.ts
-│   │   ├── config.ts
-│   │   ├── doxygen-parser.ts
-│   │   ├── errors.ts
-│   │   ├── find-constructs.ts
-│   │   ├── generate-markdown.ts
-│   │   ├── pi-usereq-tools.ts
-│   │   ├── prompts.ts
-│   │   ├── resources.ts
-│   │   ├── source-analyzer.ts
-│   │   ├── static-check.ts
-│   │   ├── token-counter.ts
-│   │   ├── tool-runner.ts
-│   │   └── utils.ts
-│   └── resources/
-│       ├── templates/{Requirements_Template.md,HDT_Test_Authoring_Guide.md,Document_Source_Code_in_Doxygen_Style.md}
-│       ├── guidelines/{Google_Python_Style_Guide.md,Google_C++_Style_Guide.md}
-│       └── prompts/{analyze.md,change.md,check.md,cover.md,create.md,fix.md,flowchart.md,implement.md,new.md,readme.md,recreate.md,refactor.md,renumber.md,workflow.md,write.md}
-├── tests/
-│   ├── extension-registration.test.ts
-│   ├── helpers.ts
-│   ├── oracle-project.test.ts
-│   ├── oracle-standalone.test.ts
-│   ├── prompt-rendering.test.ts
-│   ├── release-workflow.test.ts
-│   └── fixtures/{fixture_c.c,fixture_cpp.cpp,fixture_csharp.cs,fixture_elixir.ex,fixture_go.go,fixture_haskell.hs,fixture_java.java,fixture_javascript.js,fixture_kotlin.kt,fixture_lua.lua,fixture_perl.pl,fixture_php.php,fixture_python.py,fixture_rust.rs,fixture_scala.scala,fixture_shell.sh,fixture_swift.swift,fixture_typescript.ts,fixture_zig.zig}
-├── req/docs/
-├── scripts/
-│   ├── debug-extension.ts
-│   ├── pi-usereq-debug.sh
-│   └── lib/{extension-debug-harness.ts,recording-extension-api.ts,sdk-smoke.ts}
-├── .github/
-│   ├── workflows/
-│   │   └── release-npm.yml
-│   └── skills/{req-analyze,req-change,req-check,req-cover,req-create,req-fix,req-flowchart,req-implement,req-new,req-readme,req-recreate,req-refactor,req-renumber,req-workflow,req-write}/SKILL.md
-├── .pi/prompts/{req-analyze.prompt.md,req-change.prompt.md,req-check.prompt.md,req-cover.prompt.md,req-create.prompt.md,req-fix.prompt.md,req-flowchart.prompt.md,req-implement.prompt.md,req-new.prompt.md,req-readme.prompt.md,req-recreate.prompt.md,req-refactor.prompt.md,req-renumber.prompt.md,req-workflow.prompt.md,req-write.prompt.md}
-├── .req/docs/{Requirements_Template.md,HDT_Test_Authoring_Guide.md,Document_Source_Code_in_Doxygen_Style.md}
-├── .claude/commands/req/*.md
-├── .codex/skills/req-*/SKILL.md
-├── .gemini/commands/req/*.toml
-├── .kiro/agents/*.json
-├── .opencode/command/*.md
-└── .vscode/settings.json
+└── src/
+    ├── docs/
+    │   ├── Document_Source_Code_in_Doxygen_Style.md
+    │   ├── HDT_Test_Authoring_Guide.md
+    │   └── Requirements_Template.md
+    └── prompts/
+        ├── analyze.md
+        ├── change.md
+        ├── check.md
+        ├── cover.md
+        ├── create.md
+        ├── fix.md
+        ├── flowchart.md
+        ├── implement.md
+        ├── new.md
+        ├── recreate.md
+        ├── refactor.md
+        ├── references.md
+        ├── readme.md
+        ├── renumber.md
+        ├── workflow.md
+        └── write.md
 ```
 
-## 7. Test Evidence Summary
+### 3.2 Common Requirements
+- **REQ-001**: MUST define `analyze.md` to produce a read-only analysis report from available project artifacts.
+- **REQ-002**: MUST define `change.md` to modify requirements and implement corresponding project changes in a single controlled workflow.
+- **REQ-003**: MUST define `check.md` to evaluate requirement compliance and report requirement-level pass or fail outcomes.
+- **REQ-004**: MUST define `cover.md` to implement focused deltas that satisfy explicitly uncovered requirement IDs.
+- **REQ-005**: MUST define `create.md` to draft an SRS from repository evidence when source implementation already exists.
+- **REQ-006**: MUST define `fix.md` to correct behavior defects without modifying requirement intent.
+- **REQ-007**: MUST define `implement.md` to implement missing functionality from an authoritative SRS baseline.
+- **REQ-008**: MUST define `new.md` to append strictly additive requirements and implement corresponding deltas.
+- **REQ-009**: MUST define `recreate.md` to reorganize and NOT renumber an SRS while preserving requirement intent.
+- **REQ-010**: MUST define `refactor.md` to improve internals while preserving externally observable behavior and requirement compliance.
+- **REQ-011**: MUST define `references.md` to generate `REFERENCES.md` from source-code evidence only.
+- **REQ-012**: MUST define `renumber.md` to enforce deterministic requirement ID sequencing in SRS documents.
+- **REQ-013**: MUST define `workflow.md` to generate `WORKFLOW.md` from source-code execution evidence.
+- **REQ-014**: MUST define `write.md` to generate an SRS from user-request text without relying on source-code evidence.
+- **REQ-015**: MUST define `readme.md` to update root `README.md` from user-visible implementation evidence only.
+- **REQ-016**: MUST define `flowchart.md` to generate `FLOWCHART.md` as a Mermaid flowchart of primary program flow from source-code evidence only.
+- **REQ-017**: MUST validate placeholder tokens by allowing only `%%ARGS%%`, `%%DOC_PATH%%`, `%%GUIDELINES_FILES%%`, `%%SRC_PATHS%%`, and `%%TEST_PATH%%`, except artifacts that intentionally contain no placeholder tokens.
+- **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
+- **REQ-019**: MUST enforce canonical phrasing for shared operational instructions, including project-operation preference for `req` commands, `req --git-check`, `req --docs-check`, `req --get-base-path`, `req --git-path`, `req --git-wt-name`, `req --git-wt-create <WORKTREE_NAME>`, `req --git-wt-delete <WORKTREE_NAME>`, and the Source Code Analysis Toolkit four-pillar workflow ordering 1→2→3→4; when a workflow requires values retrieved from commands for later reuse, instructions MUST require literal `req` commands and simple sequential execution; worktree-generation instructions MUST explicitly require deriving `<BASE_PATH>` with `req --get-base-path` and `<GIT_PATH>` with `req --git-path` before generating `<WORKTREE_NAME>` with `req --git-wt-name`; instructions that execute `req --git-wt-create <WORKTREE_NAME>` MUST explicitly require `cd <GIT_PATH>/../<WORKTREE_NAME>` immediately after `req --git-wt-create <WORKTREE_NAME>` and before the next step; worktree-exit instructions MUST explicitly require deriving `<BASE_PATH>` with `req --get-base-path` when needed and executing `cd <BASE_PATH>` before merge instead of `req --git-wt-exit`; prompts that execute `req --git-wt-create <WORKTREE_NAME>` MUST include `## Pre-requisite: Execution Context` with `<WORKTREE_NAME>` generation via `req --git-wt-name`; prompts that do not execute `req --git-wt-create <WORKTREE_NAME>` MUST NOT include `<WORKTREE_NAME>`, `req --git-wt-name` generation instructions, or the `## Pre-requisite: Execution Context` section; every declared `Pre-requisite: Execution Context` section MUST explicitly require that all listed context information remains continuously available for the entire workflow and is never dropped, forgotten, or overwritten; final repository-cleanliness verification MUST use `req --git-check` and MUST NOT use `git status --porcelain`; after successful worktree creation, every early-termination branch before merge-phase cleanup MUST instruct only `req --git-wt-delete <WORKTREE_NAME>` for cleanup before termination and MUST NOT instruct `git restore .`, `git checkout .`, or `git clean -fd`; branches before the create step MUST NOT instruct `req --git-wt-delete <WORKTREE_NAME>`; and the create-failure branch for `req --git-wt-create <WORKTREE_NAME>` MUST NOT instruct `req --git-wt-delete <WORKTREE_NAME>`.
+- **REQ-020**: MUST require prompt instructions that generate shell commands to emit only linear commands compatible with restrictive filtering systems.
+- **REQ-021**: MUST optimize prompts/templates for parser efficiency and token economy, except mandatory compliance blocks (`Professional Personas`, `Execution Protocol`, `Execution Directives`, `Steps`) that are retained verbatim.
+- **REQ-022**: MUST optimize prompts/templates for LLM-agent execution and MUST require the `## Professional Personas` section to include `Prompt Engineer and LLM Optimization Specialist` for prompt, agent, skill, and LLM-targeted document work.
+- **REQ-023**: MUST use identical canonical instruction phrasing for identical actions across prompts, outside explicitly prompt specifications, except where explicitly allowed below.
+  - Workflow identity literals MAY vary where required to bind the emitting prompt (`/req-<name>`, commit-type prefix, workflow-specific title/scope text, and step labels tied to workflow intent).
+  - Workflow-scoped failure or warning strings MAY vary only in workflow-name specialization while preserving the same control action pattern (`OUTPUT exactly "<STRING>"`, then terminate or override final line as explicitly defined).
+  - Numeric bounds and scoped nouns MAY vary when they encode workflow-specific semantics (for example step-count cardinality and requirement-type nouns), while shared operational commands MUST remain byte-identical.
+- **REQ-024**: MUST avoid instructions that cause unnecessary token-heavy content, except where explicitly allowed below.
+  - Mandatory compliance blocks MAY remain verbose when retained verbatim by policy (`Professional Personas`, `Execution Protocol`, `Execution Directives`, and `Steps`).
+  - Canonical executable literals MAY remain fully expanded where determinism depends on exact text (shell commands, fixed report schema, fixed error strings, and WORKFLOW.md schema contracts).
+  - High-detail enumerations MAY be used only when they constrain behavior and reduce ambiguity (supported tag sets, allowed temp/cache paths, and explicit termination-condition matrices).
+- **REQ-025**: MUST reject unauthorized chain-interrupt instructions outside explicitly defined workflow interruption points, except where explicitly allowed below.
+  - Authorized interruption points are only explicit Step branches that require exact-string output without bell-control suffixes and immediate stop/override (git-status failure, required-file absence, incompatibility guards, test-loop exhaustion, and no-op commit termination).
+  - Any authorized interruption branch that executes after successful `req --git-wt-create <WORKTREE_NAME>` and before merge-phase cleanup MUST include explicit `req --git-wt-delete <WORKTREE_NAME>` cleanup instruction before termination and MUST NOT include rollback or revert instructions (`git restore .`, `git checkout .`, `git clean -fd`).
+  - The interruption branch triggered by failure of `req --git-wt-create <WORKTREE_NAME>` MUST NOT include `req --git-wt-delete <WORKTREE_NAME>`.
+  - Any branch in step positions before the first `req --git-wt-create <WORKTREE_NAME>` in the same prompt MUST NOT include `req --git-wt-delete <WORKTREE_NAME>`; prompts without create step MUST NOT include `req --git-wt-delete <WORKTREE_NAME>`.
+  - Read-only or coverage workflows MAY emit a declared no-change terminal string when explicitly defined by that workflow step (for example "All requirements are already covered. No changes needed.").
+  - Merge-conflict handling MAY override only the final status line with the predefined warning string, without adding new interruption branches.
+- **REQ-026**: MUST reject new hallucination-risk instructions, except where explicitly allowed below.
+  - Evidence-first high-recall directives MAY remain when uncertainty is explicitly downgraded to candidates and never asserted as complete without file-backed proof.
+  - Autonomous disambiguation directives MAY remain only when constrained to least-invasive choices anchored to repository evidence and requirement traceability.
+  - Tool-gated execution directives MAY require waiting for actual tool responses and exact-string outputs to prevent fabricated results.
+- **REQ-027**: MUST ensure each prompt YAML header `usage` value is generated with length less than or equal to 1024 characters.
+- **REQ-028**: MUST treat `req --here --static-check` as successful when output contains `Error: no source files found in configured directories.` because configured source directories are intentionally empty in this project.
+- **REQ-029**: MUST require prompt instructions that generate shell commands to avoid command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, and nested pipelines.
+- **REQ-030**: MUST require shell-command instructions to apply safe literal-argument handling and to use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`.
+- **REQ-031**: MUST require `rg` and `git grep` search patterns beginning with `-` or `--` to avoid reliance on quoting or backslash escaping alone.
 
-### 7.1 Covered Behaviors
-- `tests/extension-registration.test.ts` covers extension registration, config-menu persistence, startup-tool enablement, runtime `git-path` derivation, and static-check menu mutation flows.
-- `tests/prompt-rendering.test.ts` covers home-resource synchronization and placeholder replacement in rendered prompts.
-- `tests/oracle-standalone.test.ts` compares standalone `files-*` and `--test-static-check` outputs against the Python `usereq.cli` oracle across all fixture languages.
-- `tests/oracle-project.test.ts` compares project-scoped commands against the Python oracle on a temporary git repository and separately verifies worktree create/delete side effects.
-- `tests/release-workflow.test.ts` verifies semver-tag gating, npm publication steps, and GitHub release creation directives in `.github/workflows/release-npm.yml`.
-- Test business logic focuses on parity with the Python oracle, persistent config mutation, startup-tool activation, worktree lifecycle correctness, and npm release workflow structure.
+### 3.3 Prompt's Specific Requirements
 
-## 8. Evidence Matrix
+#### 3.3.1 Analyze Prompt
 
-### 8.1 PRJ and CTN Evidence
-| ID | Evidence |
-| --- | --- |
-| PRJ-001 | `src/index.ts` :: `registerPromptCommands` :: `pi.registerCommand(\`req-${promptName}\`, ...)`; `src/core/prompts.ts` :: `renderPrompt` :: `return adaptPromptForInternalTools(applyReplacements(prompt, replacements));` |
-| PRJ-002 | `src/index.ts` :: `TOOL_RUNNERS` and `registerAgentTools` :: tool names include `files-tokens`, `references`, `compress`, `search`, `static-check`, `git-check`, `docs-check`, `git-wt-*`. |
-| PRJ-003 | `src/index.ts` :: `configurePiUsereq` :: menu options include `Set docs-dir`, `Set tests-dir`, `Manage src-dir`, `Manage static-check`, `Manage startup tools`, `Reset defaults`, `Save and close`. |
-| PRJ-004 | `src/core/tool-runner.ts` :: `runGitCheck`, `runGitWtName`, `runGitWtCreate`, `runGitWtDelete` :: git validation and worktree helpers are exported and invoked by CLI/extension wrappers. |
-| PRJ-005 | `src/core/resources.ts` :: `ensureHomeResources` :: copies bundled resources; bundled tree exists under `src/resources/{prompts,templates,guidelines}`. |
-| CTN-001 | `src/core/config.ts` :: `getProjectConfigPath` and `getDefaultConfig` :: returns `.pi/pi-usereq/config.json`, `pi-usereq/docs`, `tests`, and `["src"]`. |
-| CTN-002 | `src/core/tool-runner.ts` :: `collectSourceFiles` :: executes `git -C <projectBase> ls-files --cached --others --exclude-standard` and fails on non-zero status. |
-| CTN-003 | `src/core/tool-runner.ts` :: `SUPPORTED_EXTENSIONS = new Set(Object.keys(STATIC_CHECK_EXT_TO_LANG))`; `src/core/source-analyzer.ts` :: alias assignments `specs.cc = specs.cpp`, `specs.cxx = specs.cpp`, `specs.hpp = specs.cpp`, `specs.exs = specs.elixir`. |
-| CTN-004 | `src/core/tool-runner.ts` :: `runProjectStaticCheck` :: defines `fixtureRoots` with `tests/fixtures` and `${testsDirRel}/fixtures`, then filters matching files out before execution. |
-| CTN-005 | `package.json` :: `"type": "module"`; `tsconfig.json` :: `"module": "NodeNext"`, `"moduleResolution": "NodeNext"`. |
-| CTN-006 | `tsconfig.json` :: `"strict": true`, `"noEmit": true`, `"include": ["src/**/*.ts", "tests/**/*.ts"]`. |
-| CTN-007 | `package.json` :: `"pi": { "extensions": ["./src/index.ts"] }`. |
-| CTN-008 | `package.json` :: `"scripts"` :: `"test": "node --import tsx --test tests/**/*.test.ts"`, `"test:watch": ...`, `"cli": "node --import tsx ./src/cli.ts"`. |
-| CTN-011 | `src/core/config.ts` :: `buildPromptReplacementPaths` :: emits `%%TEMPLATE_PATH%%` from `~/.pi/pi-usereq/resources/templates`; bundled template files exist under `src/resources/templates/`. |
+##### Context Requirements
+- **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.
+- **ANZ-CTX-002**: MUST define the `## Scope` section to instruct: In scope: read-only analysis of the above documents plus source under %%SRC_PATHS%% (and tests only as evidence when explicitly needed), including tool-assisted extraction; output is an analysis report with concrete evidence (paths/line numbers); Out of scope: any repository modification (requirements/code/tests/docs), generating patches, or applying fixes.
+- **ANZ-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer when analyzing source code and directory structures to understand the system's architecture and logic; Act as a Business Analyst when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment; Act as a Technical Writer when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting; Act as a QA Auditor when reporting facts, requiring concrete evidence (file paths, line numbers) for every finding; Act as an Expert Debugger when you identify a failure symptom with concrete evidence (failure evidence, stack trace, reproducible output); Only explain the root cause, not propose or implement fixes; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **ANZ-CTX-004**: MUST define the `## Behavior` section to instruct: Only analyze the code and present the results; make no changes; Do NOT create or modify tests in this workflow; Report facts: for each finding include file paths and, when useful, line numbers or short code excerpts; Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `git grep`, `git rev-parse`, `git branch --show-current`; Do NOT run any other git commands; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read files as needed (read-only only; eg, `cat`, `sed -n`, `head`, `tail`, `rg`, `less`); Do NOT use in-place editing flags (eg, `-i`, `perl -pi`) in this workflow.
 
-### 8.2 DES Evidence
-| ID | Evidence |
-| --- | --- |
-| DES-001 | `src/cli.ts` :: `parseArgs` and `main` :: parses flags then dispatches with branches such as `runReferences`, `runCompress`, `runFind`, `runProjectStaticCheck`, and `runStaticCheck`. |
-| DES-002 | `src/index.ts` :: `piUsereqExtension` :: calls `registerPromptCommands`, `registerToolWrapperCommands`, `registerAgentTools`, `registerConfigCommands`, then installs `pi.on("session_start", ...)`. |
-| DES-003 | `src/core/source-analyzer.ts` :: `class SourceElement`; `SourceAnalyzer.enrich` :: invokes `extractSignatures`, `detectHierarchy`, `extractVisibility`, `extractInheritance`, `extractBodyAnnotations`, and `extractDoxygenFields`. |
-| DES-004 | `src/core/static-check.ts` :: classes `StaticCheckBase`, `StaticCheckPylance`, `StaticCheckRuff`, `StaticCheckCommand`; `dispatchStaticCheckForFile` switch selects the implementation by module name. |
-| DES-005 | `src/core/tool-runner.ts` :: exports `runFilesTokens`, `runReferences`, `runCompress`, `runFind`, `runProjectStaticCheck`, `runGitCheck`, `runDocsCheck`, `runGitWt*`, `runGitPath`, `runGetBasePath`. |
-| DES-006 | `src/core/compress-files.ts` :: `parts.push(\`@@@ ${outputPath} | ${language}\n> Lines: ...\`)`; `src/core/find-constructs.ts` :: `const header = \`@@@ ${filePath} | ${language}\``. |
-| DES-011 | `.github/workflows/release-npm.yml` :: release jobs validate semver tags and `origin/master`, publish with npm authentication, and create the GitHub Release. |
+##### Steps Requirements
+- **ANZ-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **ANZ-STP-002**: MUST define Step 2 to instruct: Analyze the [User Request](#users-request) and present a human-readable analysis report using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
 
-### 8.3 REQ Evidence
-| ID | Evidence |
-| --- | --- |
-| REQ-001 | `src/core/resources.ts` :: `copyDirectoryContents` :: skips dotfiles, recurses into directories, and uses `fs.copyFileSync(sourcePath, destinationPath)`. |
-| REQ-002 | `src/core/config.ts` :: `buildPromptReplacementPaths` :: emits `%%TEMPLATE_PATH%%` plus docs/guideline/source/test tokens; `src/core/prompts.ts` :: `renderPrompt` merges them with `"%%ARGS%%": args`. |
-| REQ-003 | `src/core/prompts.ts` :: `TOOL_REFERENCE_REPLACEMENTS` and `adaptPromptForInternalTools` :: replaces ``req --search`` style text with `search tool` style text. |
-| REQ-004 | `src/index.ts` :: `registerPromptCommands` :: each handler runs `ensureHomeResources()`, renders the prompt, then executes `pi.sendUserMessage(content)`. |
-| REQ-005 | `src/index.ts` :: `runToolCommand`, `formatResultForEditor`, `showToolResult` :: writes combined output into the editor and notifies `completed` or `failed`. |
-| REQ-006 | `src/index.ts` :: `configurePiUsereq` :: edits docs/tests/src settings, invokes submenus, resets defaults, and persists with `saveProjectConfig`. |
-| REQ-007 | `src/index.ts` :: `configurePiUsereqToolsMenu` :: choices include `Show tool status`, `Toggle tool`, `Enable all`, `Disable all`, `Reset ... defaults`. |
-| REQ-008 | `src/index.ts` :: `configureStaticCheckMenu` :: supports guided language addition, raw-spec addition, language removal, and supported-language display. |
-| REQ-009 | `src/index.ts` :: `pi.on("session_start", ...)` :: calls `ensureHomeResources()`, `applyConfiguredPiUsereqTools`, and `ctx.ui.setStatus(...)`. |
-| REQ-010 | `src/core/token-counter.ts` :: `new TokenCounter("cl100k_base")`; `formatPackSummary`; `src/core/tool-runner.ts` :: `runFilesTokens` validates files and returns summary plus warnings. |
-| REQ-011 | `src/core/reference-payload.ts` :: `buildReferenceToolPayload` :: emits explicit-file JSON with per-file metadata, imports, symbol records, and structured comments/Doxygen fields. |
-| REQ-012 | `src/core/compress.ts` :: `INDENT_SIGNIFICANT = new Set(["python", "haskell", "elixir"])`; `compressSource` drops comments, blank lines, and optionally prefixes line numbers. |
-| REQ-013 | `src/core/find-constructs.ts` :: `findConstructsInFiles` and `formatConstruct` :: filters by tags/regex and emits signature, lines, Doxygen bullets, and stripped code. |
-| REQ-014 | `src/core/tool-runner.ts` :: `runReferences`; `src/core/reference-payload.ts` :: `buildRepositoryTree` :: emit repository structure plus structured per-file reference records as JSON. |
-| REQ-015 | `src/core/tool-runner.ts` :: `runCompress` :: collects configured project files then returns `compressFiles(files, enableLineNumbers, verbose, base)`. |
-| REQ-016 | `src/core/tool-runner.ts` :: `runFind` :: collects configured project files and executes `findConstructsInFiles(files, tagFilter, pattern, ...)`. |
-| REQ-017 | `src/core/tool-runner.ts` :: `runTokens` :: `canonicalNames = ["REQUIREMENTS.md", "WORKFLOW.md", "REFERENCES.md"]` and fails if no canonical docs exist. |
-| REQ-018 | `src/cli.ts` :: `if (args.testStaticCheck) return runStaticCheck(args.testStaticCheck)`; `src/index.ts` :: registers `test-static-check`; `src/core/static-check.ts` :: `runStaticCheck` supports `dummy`, `pylance`, `ruff`, `command`. |
-| REQ-019 | `src/core/tool-runner.ts` :: `runFilesStaticCheck` :: resolves extension via `STATIC_CHECK_EXT_TO_LANG`, iterates configured checkers, and calls `dispatchStaticCheckForFile(..., { failOnly: true })`. |
-| REQ-020 | `src/core/static-check.ts` :: `parseEnableStaticCheck` :: parses `LANG=MODULE[,CMD[,PARAM...]]`, canonicalizes language/module names, and builds `StaticCheckEntry`. |
-| REQ-021 | `src/core/static-check.ts` :: `parseEnableStaticCheck` :: explicit `ReqError` branches for missing `=`, unknown language, missing module, unknown module, and missing `Command` cmd. |
-| REQ-022 | `src/core/static-check.ts` :: `detectPythonExecutable` :: candidate order is project `.venv/bin/python`, `PI_USEREQ_PYTHON`, `python3`, then `python`. |
-| REQ-023 | `src/core/static-check.ts` :: `StaticCheckCommand` constructor :: `if (!findExecutable(cmd)) throw new ReqError(...)`. |
-| REQ-024 | `src/core/tool-runner.ts` :: `runGitCheck` :: bash command requires worktree membership, empty `git status --porcelain`, and symbolic or detached `HEAD`. |
-| REQ-025 | `src/core/tool-runner.ts` :: `runDocsCheck` :: reports a missing canonical document and names an existing remediation prompt command. |
-| REQ-026 | `src/core/tool-runner.ts` :: `runGitWtName` :: emits `useReq-${projectName}-${sanitizedBranch}-${executionId}` using timestamp components. |
-| REQ-027 | `src/core/tool-runner.ts` :: `runGitWtCreate` :: validates name, runs `git worktree add`, then copies `.pi/pi-usereq` into the worktree base directory. |
-| REQ-028 | `src/core/tool-runner.ts` :: `runGitWtDelete` :: checks branch/worktree existence, removes exact worktree path, deletes branch, and fails if neither exists. |
-| REQ-029 | `src/core/tool-runner.ts` :: `runGitPath` and `runGetBasePath` :: print configured path values with trailing newline. |
-| REQ-030 | `src/index.ts` :: `loadProjectConfig` :: sets `config["base-path"] = projectBase`; if inside git, sets resolved root, else deletes `git-path`. |
-| REQ-031 | `src/index.ts` :: `registerConfigCommands` :: `pi-usereq-show-config` writes `JSON.stringify(config, null, 2)` into the editor. |
-| REQ-138 | `.github/workflows/release-npm.yml` :: `on.push.tags` plus release-tag validation restrict automation to canonical `v<major>.<minor>.<patch>` tags. |
-| REQ-139 | `.github/workflows/release-npm.yml` :: branch-check job fetches `origin/master` and gates downstream jobs on containment of `github.sha`. |
-| REQ-140 | `.github/workflows/release-npm.yml` :: publish job uses `actions/setup-node`, `npm ci`, `npm pkg delete private`, and `npm publish --provenance` with `NODE_AUTH_TOKEN`. |
-| REQ-141 | `.github/workflows/release-npm.yml` :: release job uses changelog-builder output as `softprops/action-gh-release` body with non-draft and non-prerelease flags. |
+#### 3.3.2 Change Prompt
 
-### 8.4 TST Evidence
-| ID | Evidence |
-| --- | --- |
-| TST-001 | `tests/extension-registration.test.ts` :: `extension registers all required prompt commands, tool wrappers, and agent tools` validates command and tool registration sets. |
-| TST-002 | `tests/prompt-rendering.test.ts` :: `embedded resources are copied ...` and `prompt rendering replaces all dynamic placeholders ...`. |
-| TST-003 | `tests/oracle-standalone.test.ts` :: `standalone command outputs match the Python oracle for every fixture` across `files-tokens`, `files-compress`, `files-search`, and `--test-static-check`. |
-| TST-004 | `tests/oracle-project.test.ts` :: `project-scan commands match the Python oracle on a git-backed fixture repository` for `compress`, `search`, `tokens`, `files-static-check`, `static-check`, `git-check`, `docs-check`, `git-path`, and `get-base-path`. |
-| TST-005 | `tests/extension-registration.test.ts` :: `configuration menu saves updated docs-dir`, `configuration menu can disable ... tools`, and both static-check menu addition tests. |
-| TST-006 | `tests/extension-registration.test.ts` :: `session_start applies configured pi-usereq startup tools`. |
-| TST-007 | `tests/extension-registration.test.ts` :: `git-path dependent commands derive the repository root at runtime`. |
-| TST-008 | `tests/oracle-project.test.ts` :: `git worktree create/delete wrappers produce expected worktree side effects`. |
-| TST-009 | `package.json` :: `"type": "module"`, `"pi": { "extensions": ["./src/index.ts"] }`, and `"scripts"` entries for `test`, `test:watch`, and `cli`. |
-| TST-010 | `tsconfig.json` :: `"module": "NodeNext"`, `"moduleResolution": "NodeNext"`, `"strict": true`, `"noEmit": true`, and `"include": ["src/**/*.ts", "tests/**/*.ts"]`. |
-| TST-022 | `tests/extension-registration.test.ts` :: `files-references returns structured repository, symbol, and Doxygen facts`; `references returns a structured repository tree for configured source directories`. |
-| TST-023 | `tests/extension-registration.test.ts` :: `reference tools register agent-oriented descriptions and schema details`. |
-| TST-039 | `tests/release-workflow.test.ts` :: workflow-content assertions cover semver gating, `origin/master` containment, npm publication, and GitHub release generation. |
+##### Context Requirements
+- **CHG-CTX-001**: MUST define the `## Purpose` section to instruct: Evolve existing system behavior safely by first updating the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) to encode the requested change, then implementing and verifying the corresponding code/test deltas with strict traceability to requirement IDs so downstream LLM Agents MUST reason over the change deterministically.
+- **CHG-CTX-002**: MUST define the `## Scope` section to instruct: In scope: patch-style edits to `%%DOC_PATH%%/REQUIREMENTS.md`, an implementation plan, code/test changes under %%SRC_PATHS%% and %%TEST_PATH%%, verification via static analysis, requirements evidence checks, and conditional execution of existing unit tests using language-specific test-suite priority policy, and updates to `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, ending with a clean git commit; Out of scope: work that keeps requirements unchanged (use `/req-fix`, `/req-refactor`, or `/req-cover`), and any implementation not justified by the updated requirements.
+- **CHG-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Business Analyst when generating Requirement Delta and during requirements analysis and update: your priority is requirement integrity, atomic description of changes, and ensuring no logical conflicts in `%%DOC_PATH%%/REQUIREMENTS.md`; Act as a Senior System Architect when generating the Implementation Delta: translate requirements into a robust, modular, and non-breaking technical implementation plan; Act as a Senior Software Developer during implementation: implement the planned changes with high-quality, idiomatic code that maps strictly to Requirement IDs; Act as a QA Engineer during verification and testing: verify compliance with zero leniency, using mandatory code evidence and strict fix loops based on static-analysis findings to ensure stability; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **CHG-CTX-004**: MUST define the `## Behavior` section to instruct: Propose changes based only on the requirements, user request, and repository evidence; Every proposed code change MUST reference at least one requirement ID or explicit text in user request; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence; All newly written or edited content MUST be in English; Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in Evidence instead of rewriting it; Prefer clean implementation over legacy support; Do not add backward compatibility UNLESS the updated requirements explicitly mandate it; Do not implement migrations/auto-upgrades UNLESS the updated requirements explicitly include a migration/upgrade requirement; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
 
-## 9. Performance Notes
-No explicit performance optimizations identified.
+##### Steps Requirements
+- **CHG-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **CHG-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **CHG-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **CHG-STP-004**: MUST define Step 4 to instruct: Generate and apply the Requirement Delta to change requirements.
+- **CHG-STP-005**: MUST define Step 5 to instruct: Generate Design Delta and implement the Implementation Delta according to the Requirement Delta.
+- **CHG-STP-006**: MUST define Step 6 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying static-analysis results, running existing unit tests with language-specific priority policy, and implementing needed bug fixes.
+- **CHG-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **CHG-STP-008**: MUST define Step 8 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **CHG-STP-009**: MUST define Step 9 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **CHG-STP-010**: MUST define Step 10 to instruct: CRITICAL: Merge Conflict Management.
+- **CHG-STP-011**: MUST define Step 11 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.3 Check Prompt
+
+##### Context Requirements
+- **CHK-CTX-001**: MUST define the `## Purpose` section to instruct: Provide an evidence-backed compliance audit by running static analysis and mapping every requirement in the SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) to concrete implementation evidence, so downstream LLM Agents MUST decide whether coverage work is required and where to apply it.
+- **CHK-CTX-002**: MUST define the `## Scope` section to instruct: In scope: read `%%DOC_PATH%%/REQUIREMENTS.md` (and related docs), run static analysis evidence (`req --here --static-check`) as evidence, mark ALL requirements as OK/FAIL with proof, and (only when FAILs exist) produce an implementation-only, patch-oriented technical report; Out of scope: any file modification (requirements/code/tests/docs) or applying fixes.
+- **CHK-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer when analyzing source code and directory structures to understand the system's architecture and logic; Act as a Business Analyst when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment; Act as a Technical Writer when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting; Act as a QA Auditor when reporting facts, requiring concrete evidence (file paths, line numbers) for every finding; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **CHK-CTX-004**: MUST define the `## Behavior` section to instruct: Only analyze the code and static-analysis execution results and present the results; make no changes; Do NOT create or modify tests in this workflow; Report facts: for each finding include file paths and, when useful, line numbers or short code excerpts; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read files as needed (read-only only; eg, `cat`, `sed -n`, `head`, `tail`, `rg`, `less`).
+
+##### Steps Requirements
+- **CHK-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **CHK-STP-002**: MUST define Step 2 to instruct: Run static analysis (`req --here --static-check`), check requirements coverage and generate Implementation Delta.
+- **CHK-STP-003**: MUST define Step 3 to instruct: Present results and Implementation Delta for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.4 Cover Prompt
+
+##### Context Requirements
+- **COV-CTX-001**: MUST define the `## Purpose` section to instruct: Close coverage gaps by implementing the missing behaviors for uncovered requirement IDs in the existing codebase, so the implementation becomes fully compliant with the current SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) without changing that SRS.
+- **COV-CTX-002**: MUST define the `## Scope` section to instruct: In scope: identify uncovered requirement IDs, implement minimal code changes under %%SRC_PATHS%%, add/adjust tests under %%TEST_PATH%% as needed, run verification with static analysis plus conditional execution of existing unit tests using language-specific test-suite priority policy, update `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, and commit; Out of scope: editing `%%DOC_PATH%%/REQUIREMENTS.md`, introducing new requirements/features, or performing large-scale rewrites (use `/req-implement` for “from scratch” rebuilds).
+- **COV-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a QA Automation Engineer when identifying uncovered requirements: you must prove the lack of coverage through code analysis or static-analysis evidence gaps; Act as a Business Analyst when mapping requirement IDs from `%%DOC_PATH%%/REQUIREMENTS.md` to observable behaviors; Act as a Senior System Architect when generating the Implementation Delta and planning the coverage strategy: ensure the new implementation integrates perfectly with the existing architecture without regressions; Act as a Senior Software Developer when implementing the missing logic: focus on satisfying the Requirement IDs previously marked as uncovered; Act as a QA Engineer during verification and testing Steps: verify compliance with zero leniency, using mandatory code evidence and strict fix loops based on static-analysis findings to ensure stability; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **COV-CTX-004**: MUST define the `## Behavior` section to instruct: Do not modify `%%DOC_PATH%%/REQUIREMENTS.md`; Always strictly respect requirements; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence; All newly written or edited content MUST be in English; Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in Evidence instead of rewriting it; Prioritize backward compatibility; Do not introduce breaking changes; preserve existing interfaces, data formats, and features; If maintaining compatibility MUST require migrations/auto-upgrades conversion logic, report the conflict instead of implementing, and then terminate the execution; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **COV-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **COV-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **COV-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **COV-STP-004**: MUST define Step 4 to instruct: Check requirements coverage, generate Design Delta and implement the Implementation Delta to cover uncovered requirements.
+- **COV-STP-005**: MUST define Step 5 to instruct: Generate Verification Delta by running static analysis (`req --here --static-check`), executing existing unit tests with language-specific priority policy, and implementing needed bug fixes.
+- **COV-STP-006**: MUST define Step 6 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **COV-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **COV-STP-008**: MUST define Step 8 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **COV-STP-009**: MUST define Step 9 to instruct: CRITICAL: Merge Conflict Management.
+- **COV-STP-010**: MUST define Step 10 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.5 Create Prompt
+
+##### Context Requirements
+- **CRT-CTX-001**: MUST define the `## Purpose` section to instruct: Bootstrap an SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) from repository evidence so downstream LLM Agents MUST start SRS-driven work grounded in what the code actually does (requirements → design → implementation → verification), without guessing undocumented behavior.
+- **CRT-CTX-002**: MUST define the `## Scope` section to instruct: In scope: static analysis of source under %%SRC_PATHS%% (and targeted tests only as evidence when needed) to create/update `%%DOC_PATH%%/REQUIREMENTS.md` in English; Out of scope: any changes to source code, tests, `%%DOC_PATH%%/WORKFLOW.md`, or `%%DOC_PATH%%/REFERENCES.md`.
+- **CRT-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Technical Requirements Engineer when analyzing source code to infer behavior: ensure every software requirement generated is atomic, unambiguous, and empirically testable; Act as a Technical Writer when structuring the SRS document `%%DOC_PATH%%/REQUIREMENTS.md`: use RFC 2119 keywords exclusively (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and never use the forbidden non-RFC modal verb; maintain a clean, hierarchical Markdown structure with a maximum depth of 3 levels; Act as a Business Analyst when verifying the "True State": ensure the draft accurately reflects implemented logic, including limitations or bugs.
+- **CRT-CTX-004**: MUST define the `## Behavior` section to instruct: Write the document in English; Do not perform unrelated edits; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ), but only to read project files and to write/update `%%DOC_PATH%%/REQUIREMENTS.md`; Avoid in-place edits on any other path; Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **CRT-STP-001**: MUST define Step 1 to instruct: Generate the Software Requirements Specification.
+- **CRT-STP-002**: MUST define Step 2 to instruct: Validate the Software Requirements Specification.
+- **CRT-STP-003**: MUST define Step 3 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.6 Fix Prompt
+
+##### Context Requirements
+- **FIX-CTX-001**: MUST define the `## Purpose` section to instruct: Restore required behavior by diagnosing and fixing a defect while keeping the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) unchanged, so downstream LLM Agents MUST treat the fix as a semantics-correcting change rather than a requirements change.
+- **FIX-CTX-002**: MUST define the `## Scope` section to instruct: In scope: reproduce/triage defects with concrete evidence and, when relevant unit-test suites exist, prefer a test-first defect flow (create one failing reproducer unit test -> design smallest safe fix -> implement -> verify reproducer pass), then verify with requirement evidence plus static analysis and conditional execution of existing unit tests using language-specific test-suite priority policy, update `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, and commit; Out of scope: editing requirements, adding new features, or unnecessary refactors.
+- **FIX-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as an Expert Debugger when diagnosing defects: you MUST identify the failure symptom with concrete evidence (failure evidence, stack trace) before proposing the fix; Act as a Senior Software Developer when implementing a defect fix: apply the smallest safe change that restores required behavior while preserving public interfaces; Act as a Business Analyst when reading `%%DOC_PATH%%/REQUIREMENTS.md` to ensure that fixes or refactors never violate or change existing documented behaviors; Act as a QA Automation Engineer when validating the fix/refactor: ensure that static-analysis results are clean (or no-source positive) and no regressions in documented behavior are introduced; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **FIX-CTX-004**: MUST define the `## Behavior` section to instruct: Do not modify `%%DOC_PATH%%/REQUIREMENTS.md`; Always strictly respect requirements; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as primary inputs; keep decisions traceable to requirement evidence; when relevant unit-test suites exist, prefer analyze defect -> create one failing reproducer unit test -> design and implement smallest safe fix -> verify reproducer passes plus requirement evidence and `req --here --static-check`; use analyze -> implement -> verify fallback only when no relevant suite exists or one-test isolation is infeasible; if output is exactly `Error: no source files found in configured directories.`, treat verification as successful; All newly written or edited content MUST be in English; Do NOT translate unrelated existing text; preserve backward compatibility unless requirements explicitly change it; report migration conflicts instead of implementing them; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **FIX-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **FIX-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **FIX-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **FIX-STP-004**: MUST define Step 4 to instruct: Read requirements, analyze defect evidence, and when relevant unit-test suites exist create one failing reproducer unit test before designing and implementing the smallest safe fix.
+- **FIX-STP-005**: MUST define Step 5 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying defect resolution with requirement evidence plus `req --here --static-check`, running existing unit tests with language-specific priority policy, explicitly confirming reproducer-unit-test success when created, and implementing needed bug fixes.
+- **FIX-STP-006**: MUST define Step 6 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **FIX-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **FIX-STP-008**: MUST define Step 8 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **FIX-STP-009**: MUST define Step 9 to instruct: CRITICAL: Merge Conflict Management.
+- **FIX-STP-010**: MUST define Step 10 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+- **FIX-STP-011**: MUST define Step 4 incompatibility branch to output a three-column requirement-conflict table (`Requirement ID`, `Conflicting Excerpt`, `Conflict Reason + Interrupted Implementation Intent`) before emitting the exact error string and terminating.
+
+#### 3.3.7 Implement Prompt
+
+##### Context Requirements
+- **IMP-CTX-001**: MUST define the `## Purpose` section to instruct: Produce a working implementation from the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) by building missing functionality end-to-end (including “from scratch” where needed), so the codebase becomes fully compliant with the documented requirement IDs without changing those requirements.
+- **IMP-CTX-002**: MUST define the `## Scope` section to instruct: In scope: read `%%DOC_PATH%%/REQUIREMENTS.md`, implement/introduce source under %%SRC_PATHS%% (including new modules/files), add tests under %%TEST_PATH%%, verify via static analysis and conditional execution of existing unit tests using language-specific test-suite priority policy, update `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, and commit; Out of scope: editing requirements or introducing features not present in the SRS (use `/req-change` or `/req-new` to evolve requirements first).
+- **IMP-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a QA Automation Engineer when identifying uncovered requirements: you must prove the lack of coverage through code analysis or static-analysis evidence gaps; Act as a Business Analyst when mapping requirement IDs from `%%DOC_PATH%%/REQUIREMENTS.md` to observable behaviors; Act as a Senior System Architect when generating the Implementation Delta and planning the coverage strategy: ensure the new implementation integrates perfectly with the existing architecture without regressions; Act as a Senior Software Developer when implementing the missing logic: focus on satisfying the Requirement IDs previously marked as uncovered; Act as a QA Engineer during verification and testing Steps: verify compliance with zero leniency, using mandatory code evidence and strict fix loops based on static-analysis findings to ensure stability; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **IMP-CTX-004**: MUST define the `## Behavior` section to instruct: Do not modify `%%DOC_PATH%%/REQUIREMENTS.md`; Always strictly respect requirements; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence; All newly written or edited content MUST be in English; Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in Evidence instead of rewriting it; Prioritize backward compatibility; Do not introduce breaking changes; preserve existing interfaces, data formats, and features; If maintaining compatibility MUST require migrations/auto-upgrades conversion logic, report the conflict instead of implementing, and then terminate the execution; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **IMP-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **IMP-STP-002**: MUST define Step 2 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **IMP-STP-003**: MUST define Step 3 to instruct: Read requirements, generate Design Delta and implement the Implementation Delta to cover all requirements.
+- **IMP-STP-004**: MUST define Step 4 to instruct: Generate Verification Delta by running static analysis (`req --here --static-check`), executing existing unit tests with language-specific priority policy, and implementing needed bug fixes.
+- **IMP-STP-005**: MUST define Step 5 to instruct: Static analysis: build the runtime model from %%SRC_PATHS%%.
+- **IMP-STP-006**: MUST define Step 6 to instruct: Generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` document using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **IMP-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **IMP-STP-008**: MUST define Step 8 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **IMP-STP-009**: MUST define Step 9 to instruct: CRITICAL: Merge Conflict Management.
+- **IMP-STP-010**: MUST define Step 10 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.8 New Prompt
+
+##### Context Requirements
+- **NEW-CTX-001**: MUST define the `## Purpose` section to instruct: Introduce a new, backwards-compatible capability by first extending the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) with the new requirement(s), then implementing and verifying the corresponding code/test changes with strict traceability to requirement IDs so downstream LLM Agents MUST reason over the new feature deterministically.
+- **NEW-CTX-002**: MUST define the `## Scope` section to instruct: In scope: patch-style updates to `%%DOC_PATH%%/REQUIREMENTS.md` that add the new feature requirements, an implementation plan, code/test changes under %%SRC_PATHS%% and %%TEST_PATH%%, verification via static analysis, requirements evidence checks, and conditional execution of existing unit tests using language-specific test-suite priority policy, updates to `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, and a clean git commit; Out of scope: breaking changes, migrations/compatibility conversions, or any feature work not captured as explicit requirements (report conflicts and terminate per prompt rules).
+- **NEW-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Business Analyst when generating Requirement Delta and during requirements analysis and update: your priority is requirement integrity, atomic description of changes, and ensuring no logical conflicts in `%%DOC_PATH%%/REQUIREMENTS.md`; Act as a Senior System Architect when generating the Implementation Delta: translate requirements into a robust, modular, and non-breaking technical implementation plan; Act as a Senior Software Developer during implementation: implement the planned changes with high-quality, idiomatic code that maps strictly to Requirement IDs; Act as a QA Engineer during verification and testing: verify compliance with zero leniency, using mandatory code evidence and strict fix loops based on static-analysis findings to ensure stability; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **NEW-CTX-004**: MUST define the `## Behavior` section to instruct: Propose changes based only on the requirements, user request, and repository evidence; Every proposed code change MUST reference at least one requirement ID or explicit text in user request; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence; All newly written or edited content MUST be in English; Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in Evidence instead of rewriting it; Prioritize backward compatibility; Do not introduce breaking changes; preserve existing interfaces, data formats, and features; If maintaining compatibility MUST require migrations/auto-upgrades conversion logic, report the conflict instead of implementing, and then terminate the execution; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **NEW-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **NEW-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **NEW-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **NEW-STP-004**: MUST define Step 4 to instruct: Generate and apply the Requirement Delta to cover new requirements.
+- **NEW-STP-005**: MUST define Step 5 to instruct: Generate Design Delta and implement the Implementation Delta according to the Requirement Delta.
+- **NEW-STP-006**: MUST define Step 6 to instruct: Generate Verification Delta by auditing ALL requirements with progressive-disclosure evidence (OK pointer-only, FAIL full), verifying static-analysis results, running existing unit tests with language-specific priority policy, and implementing needed bug fixes.
+- **NEW-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **NEW-STP-008**: MUST define Step 8 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **NEW-STP-009**: MUST define Step 9 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **NEW-STP-010**: MUST define Step 10 to instruct: CRITICAL: Merge Conflict Management.
+- **NEW-STP-011**: MUST define Step 11 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.9 ReCreate Prompt
+
+##### Context Requirements
+- **RCR-CTX-001**: MUST define the `## Purpose` section to instruct: Rebuild and reorganize the SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) from repository evidence while preserving all existing requirement IDs so downstream LLM Agents MUST rely on a clean structure and stable traceability when driving subsequent design/implementation work.
+- **RCR-CTX-002**: MUST define the `## Scope` section to instruct: In scope: static analysis of source under %%SRC_PATHS%% (and targeted tests only as evidence when needed) to rewrite `%%DOC_PATH%%/REQUIREMENTS.md` in English, allowing reorganization and additions, but forbidding any renumbering/renaming of existing requirement IDs; Out of scope: any changes to source code, tests, `%%DOC_PATH%%/WORKFLOW.md`, or `%%DOC_PATH%%/REFERENCES.md`.
+- **RCR-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Technical Requirements Engineer when analyzing source code to infer behavior: ensure every software requirement generated is atomic, unambiguous, and empirically testable; Act as a Technical Writer when structuring the SRS document `%%DOC_PATH%%/REQUIREMENTS.md`: use RFC 2119 keywords exclusively (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and never use the forbidden non-RFC modal verb; maintain a clean, hierarchical Markdown structure with a maximum depth of 3 levels; Act as a Business Analyst when verifying the "True State": ensure the draft accurately reflects implemented logic, including limitations or bugs; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **RCR-CTX-004**: MUST define the `## Behavior` section to instruct: Write the document in English; Do not perform unrelated edits; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ), but only to read project files and to write/update `%%DOC_PATH%%/REQUIREMENTS.md`; Avoid in-place edits on any other path; Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **RCR-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **RCR-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **RCR-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **RCR-STP-004**: MUST define Step 4 to instruct: Generate the Software Requirements Specification.
+- **RCR-STP-005**: MUST define Step 5 to instruct: Validate the Software Requirements Specification.
+- **RCR-STP-006**: MUST define Step 6 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **RCR-STP-007**: MUST define Step 7 to instruct: CRITICAL: Merge Conflict Management.
+- **RCR-STP-008**: MUST define Step 8 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.10 Refactor Prompt
+
+##### Context Requirements
+- **RFR-CTX-001**: MUST define the `## Purpose` section to instruct: Improve maintainability, structure, and/or performance while strictly preserving externally observable behavior and keeping the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) unchanged, so downstream LLM Agents MUST treat the refactor as a semantics-preserving transformation.
+- **RFR-CTX-002**: MUST define the `## Scope` section to instruct: In scope: internal refactors under %%SRC_PATHS%% (including private API reshaping) that preserve public interfaces/data formats, optional test adjustments only when objectively incorrect, verification via static analysis, requirements evidence checks, and conditional execution of existing unit tests using language-specific test-suite priority policy, updates to `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md`, and a clean git commit; Out of scope: editing requirements, introducing new features, or making intentional behavioral changes (use `/req-change` or `/req-new`).
+- **RFR-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Software Developer when refactoring: prioritize clean internal logic and performance while strictly preserving public interfaces and backward compatibility; Act as a Business Analyst when reading `%%DOC_PATH%%/REQUIREMENTS.md` to ensure that fixes or refactors never violate or change existing documented behaviors; Act as a QA Automation Engineer when validating the fix/refactor: ensure that static-analysis results are clean (or no-source positive) and no regressions in documented behavior are introduced; Act as an Expert Debugger only if tests fail or a defect emerges during refactor; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **RFR-CTX-004**: MUST define the `## Behavior` section to instruct: Always strictly respect requirements; Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence; All newly written or edited content MUST be in English; Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in Evidence instead of rewriting it; Prioritize clean implementation of internal logic; You are encouraged to refactor internals and private APIs freely to achieve refactor goals; However, you MUST strictly preserve all public interfaces, data formats, and externally observable behaviors; Do not maintain backward compatibility for internal/private components (ie, remove legacy internal code), but ensure strict backward compatibility for the public API; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ); Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **RFR-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **RFR-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **RFR-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **RFR-STP-004**: MUST define Step 4 to instruct: Generate Design Delta and implement the Implementation Delta to implement the refactor.
+- **RFR-STP-005**: MUST define Step 5 to instruct: Generate Verification Delta by running static analysis (`req --here --static-check`), executing existing unit tests with language-specific priority policy, and implementing needed bug fixes.
+- **RFR-STP-006**: MUST define Step 6 to instruct: Update `%%DOC_PATH%%/WORKFLOW.md` via targeted edits using the canonical WORKFLOW document contract (same terminology, same schema, same call-trace rules) and declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **RFR-STP-007**: MUST define Step 7 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **RFR-STP-008**: MUST define Step 8 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **RFR-STP-009**: MUST define Step 9 to instruct: CRITICAL: Merge Conflict Management.
+- **RFR-STP-010**: MUST define Step 10 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.11 References Prompt
+
+##### Context Requirements
+- **REF-CTX-001**: MUST define the `## Purpose` section to instruct: Maintain a machine-usable reference index (`%%DOC_PATH%%/REFERENCES.md`) derived from repository evidence so downstream LLM Agents MUST quickly discover entrypoints, modules, dependencies, and other navigational anchors during SRS-driven work.
+- **REF-CTX-002**: MUST define the `## Scope` section to instruct: In scope: generate/update only `%%DOC_PATH%%/REFERENCES.md` in English (following the prompt’s `req --references` workflow) and commit that doc change; Out of scope: changes to requirements, workflow docs, source code, or tests.
+- **REF-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer when analyzing source code and directory structures to understand the system's architecture and logic; Act as a Technical Writer when producing the final reference index, ensuring clarity, technical precision, and structured formatting; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **REF-CTX-004**: MUST define the `## Behavior` section to instruct: Do not perform unrelated edits; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ), but only to read project files and to write/update `%%DOC_PATH%%/REFERENCES.md`; Avoid in-place edits on any other path; Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **REF-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **REF-STP-002**: MUST define Step 2 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **REF-STP-003**: MUST define Step 3 to instruct: Update `%%DOC_PATH%%/REFERENCES.md` references file.
+- **REF-STP-004**: MUST define Step 4 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **REF-STP-005**: MUST define Step 5 to instruct: CRITICAL: Merge Conflict Management.
+- **REF-STP-006**: MUST define Step 6 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.12 Renumber Prompt
+
+##### Context Requirements
+- **RNB-CTX-001**: MUST define the `## Purpose` section to instruct: Deterministically renumber requirement IDs in `%%DOC_PATH%%/REQUIREMENTS.md` to produce a clean, progressive numbering scheme while preserving the exact requirement text and document order so downstream LLM Agents MUST rely on stable, sequential identifiers.
+- **RNB-CTX-002**: MUST define the `## Scope` section to instruct: In scope: renumbering requirement identifiers in `%%DOC_PATH%%/REQUIREMENTS.md` in document order and updating internal cross-references to those identifiers, without modifying any requirement text, headings, or ordering; Out of scope: any changes to source code, tests, `%%DOC_PATH%%/WORKFLOW.md`, or `%%DOC_PATH%%/REFERENCES.md`.
+- **RNB-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Technical Requirements Engineer when analyzing source code to infer behavior: ensure every software requirement generated is atomic, unambiguous, and empirically testable; Act as a Technical Writer when structuring the SRS document `%%DOC_PATH%%/REQUIREMENTS.md`: use RFC 2119 keywords exclusively (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and never use the forbidden non-RFC modal verb; maintain a clean, hierarchical Markdown structure with a maximum depth of 3 levels; Act as a Business Analyst when verifying the "True State": ensure the draft accurately reflects implemented logic, including limitations or bugs; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **RNB-CTX-004**: MUST define the `## Behavior` section to instruct: Write the document in English; Do not perform unrelated edits; Do NOT change any requirement content or document structure; only change requirement IDs and requirement-ID cross-references; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ), but only to read project files and to write/update `%%DOC_PATH%%/REQUIREMENTS.md`; Avoid in-place edits on any other path; Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **RNB-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **RNB-STP-002**: MUST define Step 2 to instruct: CRITICAL: Check `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md` and `%%DOC_PATH%%/REFERENCES.md` file presence.
+- **RNB-STP-003**: MUST define Step 3 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **RNB-STP-004**: MUST define Step 4 to instruct: CRITICAL: Renumber requirement IDs in the Software Requirements Specification.
+- **RNB-STP-005**: MUST define Step 5 to instruct: Validate the Software Requirements Specification.
+- **RNB-STP-006**: MUST define Step 6 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **RNB-STP-007**: MUST define Step 7 to instruct: CRITICAL: Merge Conflict Management.
+- **RNB-STP-008**: MUST define Step 8 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.13 Workflow Prompt
+
+##### Context Requirements
+- **WFL-CTX-001**: MUST define the `## Purpose` section to instruct: Maintain an LLM-oriented runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`) derived from repository evidence so downstream LLM Agents MUST reason about execution units, communication edges, and internal call-traces during SRS-driven design/implementation.
+- **WFL-CTX-002**: MUST define the `## Scope` section to instruct: In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite only `%%DOC_PATH%%/WORKFLOW.md` in English only, following the mandated schema, then commit that doc change; Out of scope: changes to requirements, references, source code, or tests.
+- **WFL-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer when analyzing source code; your primary goal is to trace the execution flow (call stack) across files and modules, identifying exactly how data and control move from one function to another; Act as a Business Analyst when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment; Act as a Technical Writer when producing the final analysis report or workflow descriptions, ensuring clarity, technical precision, and structured formatting; Act as a QA Auditor when reporting facts, requiring concrete evidence as declaration file paths only (excluding line numbers and line ranges) for every finding; Act as an Expert GitOps Engineer when executing git workflows, especially when creating/removing/managing git worktrees to isolate changes safely.
+- **WFL-CTX-004**: MUST define the `## Behavior` section to instruct: Write the `%%DOC_PATH%%/WORKFLOW.md` document in English; Do not perform unrelated edits; If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`); Non-Python tooling should use the project's standard commands; Use filesystem/shell tools to read/write/delete files as needed (eg, `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ), but only to read project files and to write/update `%%DOC_PATH%%/WORKFLOW.md`; Avoid in-place edits on any other path; Prefer read-only commands for analysis.
+
+##### Steps Requirements
+- **WFL-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **WFL-STP-002**: MUST define Step 2 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **WFL-STP-003**: MUST define Step 3 to instruct: Static analysis: build the runtime model from %%SRC_PATHS%%.
+- **WFL-STP-004**: MUST define Step 4 to instruct: Generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` document using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
+- **WFL-STP-005**: MUST define Step 5 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **WFL-STP-006**: MUST define Step 6 to instruct: CRITICAL: Merge Conflict Management.
+- **WFL-STP-007**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.14 Write Prompt
+
+##### Context Requirements
+- **WRT-CTX-001**: MUST define the `## Purpose` section to instruct: Capture the user's intent as an SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) suitable for automated, SRS-driven development (requirements → design → implementation → verification), so downstream LLM Agents MUST implement the system without inventing unstated requirements.
+- **WRT-CTX-002**: MUST define the `## Scope` section to instruct: In scope: author/update only `%%DOC_PATH%%/REQUIREMENTS.md` from [User Request](#users-request) in English, using explicit Assumptions for missing details and the canonical template structure; Out of scope: using repository source code as evidence, changing any other project file, generating workflow/references docs, or committing code changes.
+- **WRT-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Technical Requirements Engineer when drafting software requirements: ensure every requirement is atomic, unambiguous, and formatted for maximum testability using RFC 2119 keywords (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and never use the forbidden non-RFC modal verb; Act as a Technical Writer when structuring the SRS document `%%DOC_PATH%%/REQUIREMENTS.md`: apply a clean, hierarchical Markdown structure (max depth 3) and ensure technical precision, clarity, and adherence to professional documentation standards; Act as a Business Analyst when interpreting project goals: bridge the gap between technical implementation and user needs, ensuring the document provides clear value and aligns with the system's intended purpose; Act as a Senior System Architect when describing components or relationships: ensure the technical descriptions reflect a modular, scalable, and robust architecture consistent with industry best practices.
+- **WRT-CTX-004**: MUST define the `## Behavior` section to instruct: Do not perform unrelated edits; (See "Absolute Rules, Non-Negotiable" for file-operation constraints).
+
+##### Steps Requirements
+- **WRT-STP-001**: MUST define Step 1 to instruct: Generate the Software Requirements Specification.
+- **WRT-STP-002**: MUST define Step 2 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.15 Readme Prompt
+
+##### Context Requirements
+- **RDM-CTX-001**: MUST define the `usage` YAML field to instruct README-only maintenance from repository evidence and MUST keep the field length less than or equal to 1024 characters.
+- **RDM-CTX-002**: MUST define the `## Purpose` section to instruct: Maintain root `README.md` as the first user-facing guide by documenting only externally visible behavior derived from repository evidence.
+- **RDM-CTX-003**: MUST define the `## Scope` section to instruct: In scope: analyze user-visible implementation deltas under %%SRC_PATHS%% and update only root `README.md`; Out of scope: internal implementation details, requirements/workflow/references regeneration, source-code edits, and tests.
+- **RDM-CTX-004**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer to locate externally visible behaviors; Act as a Business Analyst to map behavior to user outcomes; Act as a Senior Technical Writer to produce concise user-centric README content; Act as a QA Auditor for evidence-backed claims; Act as an Expert GitOps Engineer for isolated worktree and merge flow.
+- **RDM-CTX-005**: MUST define the `## Behavior` section to instruct: Analyze implementation evidence for user-visible changes (features, CLI flags/parameters, GUI UX, distributed APIs, configuration schema); identify the exact root `README.md` sections impacted by analysis before editing; execute additional README edits explicitly requested in [User Request](#users-request) using the same `%%ARGS%%`-backed reference pattern used by `write.md`; update only those sections; keep non-analysis documentary parts unchanged (headers, versioning, context/scope narratives, personal motivations, related projects, high-level graphics/descriptions); preserve existing structure and formatting when possible; keep all new or edited text in English.
+
+##### Steps Requirements
+- **RDM-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **RDM-STP-002**: MUST define Step 2 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **RDM-STP-003**: MUST define Step 3 to instruct: Analyze user-visible implementation surface from %%SRC_PATHS%% and candidate related files.
+- **RDM-STP-004**: MUST define Step 4 to instruct: Identify exact root `README.md` sections impacted by detected user-visible implementation changes and additional edits explicitly requested in [User Request](#users-request), then update only those sections while preserving unrelated content and existing structure/formatting whenever possible.
+- **RDM-STP-005**: MUST define Step 5 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **RDM-STP-006**: MUST define Step 6 to instruct: CRITICAL: Merge Conflict Management.
+- **RDM-STP-007**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+
+#### 3.3.16 Flowchart Prompt
+
+##### Context Requirements
+- **FCH-CTX-001**: MUST define the `usage` YAML field to instruct FLOWCHART-only maintenance from repository evidence and MUST keep the field length less than or equal to 1024 characters.
+- **FCH-CTX-002**: MUST define the `## Purpose` section to instruct runtime-flowchart maintenance for `%%DOC_PATH%%/FLOWCHART.md` from repository evidence only.
+- **FCH-CTX-003**: MUST define the `## Purpose` section to instruct downstream LLM Agents to reason about primary execution flow, decision branches, and grouped internal operations.
+- **FCH-CTX-004**: MUST define the `## Scope` section to limit changes to `%%DOC_PATH%%/FLOWCHART.md` and the commit that records that document update.
+- **FCH-CTX-005**: MUST define the `## Scope` section to exclude requirements, workflow, references, source-code, and test changes.
+- **FCH-CTX-006**: MUST define the `## Professional Personas` section to instruct Senior System Architect and Senior System Engineer roles for runtime-flow and call-trace analysis.
+- **FCH-CTX-007**: MUST define the `## Professional Personas` section to instruct the Business Analyst role for cross-referencing code evidence with `%%DOC_PATH%%/REQUIREMENTS.md`.
+- **FCH-CTX-008**: MUST define the `## Professional Personas` section to instruct Technical Writer and Expert Mermaid.js Developer roles for structurally valid Mermaid output.
+- **FCH-CTX-009**: MUST define the `## Professional Personas` section to instruct QA Auditor and Expert GitOps Engineer roles.
+- **FCH-CTX-010**: MUST define the `## Behavior` section to write `%%DOC_PATH%%/FLOWCHART.md` in English and to avoid unrelated edits.
+- **FCH-CTX-011**: MUST define the `## Behavior` section to allow writing only `%%DOC_PATH%%/FLOWCHART.md` and to prefer read-only commands for analysis.
+- **FCH-CTX-012**: MUST define the `## Behavior` section to use the repository's standard toolchain and the Python preference order `uv`, then `.venv`, when applicable.
+- **FCH-CTX-013**: MUST define a `## FLOWCHART.md Output Contract` section.
+- **FCH-CTX-014**: MUST require `%%DOC_PATH%%/FLOWCHART.md` to contain only a fenced `mermaid` block with `graph TD`.
+- **FCH-CTX-015**: MUST require flowchart nodes to encode alphabetical phases and numbered parameterless function prototypes.
+- **FCH-CTX-016**: MUST require decision nodes to use pseudo-code criteria and MUST hide internal working tags from visible node text.
+- **FCH-CTX-017**: MUST require cross-reference verification against the runtime model and source before writing `%%DOC_PATH%%/FLOWCHART.md`.
+
+##### Steps Requirements
+- **FCH-STP-001**: MUST define Step 1 to instruct: CRITICAL: Check GIT Status.
+- **FCH-STP-002**: MUST define Step 2 to instruct: CRITICAL: Worktree Generation & Isolation.
+- **FCH-STP-003**: MUST define Step 3 to instruct: Static analysis: build the runtime model from %%SRC_PATHS%%.
+- **FCH-STP-004**: MUST define Step 4 to instruct: Generate and overwrite `%%DOC_PATH%%/FLOWCHART.md` with a Mermaid flowchart of the primary execution flow.
+- **FCH-STP-005**: MUST define Step 4 to instruct grouping non-atomic functions into sequential alphabetical phases.
+- **FCH-STP-006**: MUST define Step 4 to instruct extracting sequentially numbered atomic operations as parameterless function prototypes.
+- **FCH-STP-007**: MUST define Step 4 to instruct deducing control flow, decisions, and joins from the Step 3 code analysis before writing the file.
+- **FCH-STP-008**: MUST define Step 5 to instruct: CRITICAL: Stage & commit, including an explicit statement that a GPG-signed commit is not required.
+- **FCH-STP-009**: MUST define Step 6 to instruct: CRITICAL: Merge Conflict Management.
+- **FCH-STP-010**: MUST define Step 7 to instruct: Present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+- **FCH-STP-011**: MUST define Step 4 to instruct sibling branches from one decision node to use comparable semantic granularity.
+- **FCH-STP-012**: MUST define Step 4 to instruct normalizing equivalent branches by expanding or collapsing composite helpers to remove hidden-step ambiguity.
+- **FCH-STP-013**: MUST define Step 4 to instruct keeping a composite helper collapsed only when sibling branches do not expose its internal operations.
+- **FCH-STP-014**: MUST define Step 4 to instruct placing joins only after sibling branches are normalized to comparable semantic granularity.
+- **FCH-STP-015**: MUST define Step 4 to instruct rendering skipped work only when source code enforces a real skip or bypass condition.
+- **FCH-STP-016**: MUST define Step 4 to instruct a strict internal audit before writing `%%DOC_PATH%%/FLOWCHART.md`.
+- **FCH-STP-017**: MUST define Step 4 to instruct auditing sibling granularity, hidden helper operations, real skips, and post-normalization joins against runtime-model and source evidence.

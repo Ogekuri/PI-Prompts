@@ -3,7 +3,7 @@
 ## Execution Units Index
 - ID: `PROC:main`
   - Type: Process
-  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents now start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with a `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime to inject pre-loaded context files.
+  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with a `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime to inject pre-loaded context files.
   - Entrypoints:
     - no internal executable entrypoints detected under `src`
   - Parent Process: none

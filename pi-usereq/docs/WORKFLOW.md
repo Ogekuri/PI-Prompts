@@ -3,7 +3,7 @@
 ## Execution Units Index
 - ID: `PROC:main`
   - Type: Process
-  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents now start with level-1 titles and omit YAML front matter.
+  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents now start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with a `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime to inject pre-loaded context files.
   - Entrypoints:
     - no internal executable entrypoints detected under `src`
   - Parent Process: none
@@ -21,7 +21,7 @@
 - Internal Call-Trace Tree:
   - none; `src/` contains static Markdown resources only and declares no internal executable functions.
 - External Boundaries:
-  - External prompt-host runtime resolves repository files, reads standalone prompt/template title lines plus instruction snippets, expands placeholders, and delivers rendered prompt text.
+  - External prompt-host runtime resolves repository files, reads standalone prompt/template title lines plus instruction snippets, expands placeholders (including `%%CONTEXT_FILES%%`), and delivers rendered prompt text.
   - Git and repository tooling execute outside `src` after the rendered prompt is consumed.
 
 ## Communication Edges

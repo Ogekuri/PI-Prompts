@@ -56,7 +56,7 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 
 ### 3.2 Functions
 - **REQ-001**: MUST access bundled prompts, templates, and guidelines from `<installation-path>/resources` without requiring user-home resource copies before prompt or tool execution.
-- **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, and `%%ARGS%%` tokens when rendering prompts.
+- **REQ-002**: MUST replace `%%DOC_PATH%%`, `%%GUIDELINES_*%%`, `%%TEMPLATE_PATH%%`, `%%SRC_PATHS%%`, `%%TEST_PATH%%`, `%%PROJECT_BASE%%`, `%%EXECUTION_PATH%%`, `%%INSTALLATION_PATH%%`, `%%CONFIG_PATH%%`, `%%COMMIT%%`, `%%ARGS%%`, and `%%CONTEXT_FILES%%` tokens when rendering prompts.
 - **REQ-003**: MUST rewrite legacy `req --...` prompt text references to internal tool names such as `search tool` and `git-check tool`, and bundled prompts MUST use `grep` instead of `git grep`.
 - **REQ-004**: MUST register `req-<prompt>` commands for each maintained bundled prompt template and send rendered prompt content as a user message.
 - **REQ-159**: MUST place `%%COMMIT%%` as the penultimate numbered step in every bundled prompt that ends with a commit workflow.
@@ -65,6 +65,8 @@ PI-useReq is a TypeScript pi extension plus companion Node CLI and standalone ex
 - **REQ-162**: MUST maintain bundled prompt templates `analyze.md`, `change.md`, `check.md`, `cover.md`, `create.md`, `fix.md`, `flowchart.md`, `implement.md`, `new.md`, `readme.md`, `recreate.md`, `refactor.md`, `renumber.md`, `workflow.md`, and `write.md` under `src/prompts`.
 - **REQ-163**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` begin with a level-1 title line starting with `# `.
 - **REQ-164**: MUST make every bundled standalone Markdown document under `src/prompts` and `src/docs` omit YAML front matter.
+- **REQ-165**: MUST append an identical `## Context Files` section as the last section of every bundled prompt under `src/prompts`, ending with the `%%CONTEXT_FILES%%` token as the final line.
+- **REQ-166**: MUST make the `## Context Files` preamble instruct the agent that enumerated files are pre-injected into context, MUST NOT be re-read or searched, and are runtime-determined by the prompt-host program.
 - **REQ-005**: MUST expose `git-path`, `get-base-path`, `files-tokens`, `files-references`, `files-compress`, and `files-search` only through agent-tool registration.
 - **REQ-044**: MUST expose `references`, `compress`, `search`, `tokens`, `files-static-check`, and `static-check` only through agent-tool registration.
 - **REQ-045**: MUST expose `git-check`, `docs-check`, `git-wt-name`, `git-wt-create`, and `git-wt-delete` only through agent-tool registration.

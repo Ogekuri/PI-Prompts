@@ -173,3 +173,9 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
 3. %%COMMIT%%
 4. Present results
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. Use the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.
+
+
+## Context Files
+The prompt-host runtime injects the files enumerated below into the initial agent context by expanding the `%%CONTEXT_FILES%%` placeholder. Each enumerated file is already present in full in the context; do NOT re-read, search, locate, or fetch it with `read`, `search`, `files-search`, `grep`, `ls`, or any discovery tool. Treat the injected contents as authoritative context for this workflow and reason over them directly. When the placeholder expands to no files, treat this section as empty and proceed without context-file assumptions. The exact file set and contents are determined at runtime by the program that uses this prompt; the agent MUST NOT assume a fixed file list.
+
+%%CONTEXT_FILES%%

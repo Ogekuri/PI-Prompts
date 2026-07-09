@@ -174,3 +174,9 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
 
 <h2 id="users-request">User's Request</h2>
 %%ARGS%%
+
+
+## Context Files
+The prompt-host runtime injects the files enumerated below into the initial agent context by expanding the `%%CONTEXT_FILES%%` placeholder. Each enumerated file is already present in full in the context; do NOT re-read, search, locate, or fetch it with `read`, `search`, `files-search`, `grep`, `ls`, or any discovery tool. Treat the injected contents as authoritative context for this workflow and reason over them directly. When the placeholder expands to no files, treat this section as empty and proceed without context-file assumptions. The exact file set and contents are determined at runtime by the program that uses this prompt; the agent MUST NOT assume a fixed file list.
+
+%%CONTEXT_FILES%%

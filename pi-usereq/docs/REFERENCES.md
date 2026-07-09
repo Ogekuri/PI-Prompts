@@ -40,23 +40,23 @@ src/
 ## Resource Index
 
 ### `src/prompts`
-| Path | Lines | Purpose |
+| Path | Purpose |
 | --- | ---: | --- |
-| `src/prompts/analyze.md` | 128 | Read-only investigation workflow that produces an evidence-backed analysis report. |
-| `src/prompts/change.md` | 188 | Requirements-change workflow that updates the SRS, implements the change, verifies it, and refreshes workflow/reference docs. |
-| `src/prompts/check.md` | 136 | Repository-read-only compliance audit workflow that evaluates every requirement ID. |
-| `src/prompts/cover.md` | 180 | Minimal implementation workflow for uncovered existing requirement IDs without changing the SRS. |
-| `src/prompts/create.md` | 104 | Source-grounded workflow that writes or updates `REQUIREMENTS.md` from implementation evidence. |
-| `src/prompts/fix.md` | 182 | Defect-remediation workflow that restores behavior without changing requirements. |
-| `src/prompts/flowchart.md` | 184 | Docs-only workflow that regenerates `FLOWCHART.md` from source evidence. |
-| `src/prompts/implement.md` | 126 | Greenfield or major-gap workflow that builds implementation from an authoritative SRS without editing requirements. |
-| `src/prompts/new.md` | 187 | Additive-feature workflow that appends new requirement IDs and implements the corresponding behavior. |
-| `src/prompts/readme.md` | 145 | Docs-only workflow that aligns root `README.md` with user-visible implementation evidence. |
-| `src/prompts/recreate.md` | 181 | Reorganization workflow that rebuilds the SRS from source evidence while preserving existing requirement IDs. |
-| `src/prompts/refactor.md` | 174 | Internal-improvement workflow that preserves observable behavior and keeps requirements unchanged. |
-| `src/prompts/renumber.md` | 87 | Deterministic renumbering workflow for requirement IDs and internal requirement cross-references. |
-| `src/prompts/workflow.md` | 165 | Docs-only workflow that regenerates `WORKFLOW.md` from source evidence. |
-| `src/prompts/write.md` | 99 | Greenfield workflow that drafts `REQUIREMENTS.md` directly from user intent. |
+| `src/prompts/analyze.md` | Read-only investigation workflow that produces an evidence-backed analysis report. |
+| `src/prompts/change.md` | Requirements-change workflow that updates the SRS, implements the change, verifies it, and refreshes workflow/reference docs. |
+| `src/prompts/check.md` | Repository-read-only compliance audit workflow that evaluates every requirement ID. |
+| `src/prompts/cover.md` | Minimal implementation workflow for uncovered existing requirement IDs without changing the SRS. |
+| `src/prompts/create.md` | Source-grounded workflow that writes or updates `REQUIREMENTS.md` from implementation evidence. |
+| `src/prompts/fix.md` | Defect-remediation workflow that restores behavior without changing requirements. |
+| `src/prompts/flowchart.md` | Docs-only workflow that regenerates `FLOWCHART.md` from source evidence. |
+| `src/prompts/implement.md` | Greenfield or major-gap workflow that builds implementation from an authoritative SRS without editing requirements. |
+| `src/prompts/new.md` | Additive-feature workflow that appends new requirement IDs and implements the corresponding behavior. |
+| `src/prompts/readme.md` | Docs-only workflow that aligns root `README.md` with user-visible implementation evidence. |
+| `src/prompts/recreate.md` | Reorganization workflow that rebuilds the SRS from source evidence while preserving existing requirement IDs. |
+| `src/prompts/refactor.md` | Internal-improvement workflow that preserves observable behavior and keeps requirements unchanged. |
+| `src/prompts/renumber.md` | Deterministic renumbering workflow for requirement IDs and internal requirement cross-references. |
+| `src/prompts/workflow.md` | Docs-only workflow that regenerates `WORKFLOW.md` from source evidence. |
+| `src/prompts/write.md` | Greenfield workflow that drafts `REQUIREMENTS.md` directly from user intent. |
 
 ### `src/docs`
 | Path | Lines | Purpose |

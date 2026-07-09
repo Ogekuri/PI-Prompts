@@ -136,7 +136,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - Use repository evidence only; for each finding, collect file paths and line ranges.
    - Derive a compact "README coverage list" of user-visible behavior that MUST appear in root `README.md`.
 2. Validate and update root `README.md`
-   - Read the current root `README.md` and compare it with the README coverage list from Step 3.
+   - Read the current root `README.md` and compare it with the README coverage list from Step 1.
    - Identify and list the exact `README.md` sections impacted by the detected user-visible implementation changes and explicit additional edits from [User Request](#users-request) before editing.
    - Update only the identified sections so `README.md` reflects the current externally visible behavior and usage flows.
    - Keep all non-analysis documentary sections unchanged (e.g., headers, versioning, context/scope narratives, motivations, related projects, high-level graphics/descriptions not tied to interface behavior).

@@ -142,7 +142,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - Isolate the core program functionality and disregard secondary or tangential flows.
    - Group non-atomic functions into logical phases with sequential alphabetical labels.
    - Inside each phase, extract atomic operations, label them with sequential integers, and document them using strictly parameterless function prototypes.
-   - Deduce actual control flow, branching, and joins from the code analyzed in Step 3.
+   - Deduce actual control flow, branching, and joins from the code analyzed in Step 1.
    - **Granularity consistency rule (CRITICAL):** maintain the same abstraction level across sibling branches that originate from the same decision node. If one branch exposes internal sub-operations of a composite internal function, then every sibling branch at that same decision depth MUST expose the equivalent internal sub-operations needed for semantic comparison; conversely, if one branch remains collapsed as a composite phase, sibling branches MUST NOT mix in a lower-level expansion unless that lower-level expansion is required in all sibling branches.
    - **Comparability rule (CRITICAL):** the flowchart MUST make branch-to-branch equivalence explicit. Do not represent one branch as a wrapper function and another branch as the wrapper’s internal steps when both branches implement the same logical stage. Expand or collapse branches so that a downstream LLM Agent can compare them without inferring hidden steps.
    - **Mandatory-entry vs optional-effect rule (CRITICAL):** explicitly distinguish between:
@@ -169,7 +169,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - **Skipped-work rule (CRITICAL):** represent intentionally skipped work explicitly only when the source code emits or enforces a real skip condition. Do not create an apparent skip merely by collapsing one branch more aggressively than another. Real pass-through branches MUST be rendered as explicit bypasses.
    - **Lexical signal check (CRITICAL):** before finalizing the flowchart, cross-check `%%DOC_PATH%%/REQUIREMENTS.md` and `%%DOC_PATH%%/WORKFLOW.md` for signal terms such as `optional`, `disabled`, `pass-through`, `enable-state validation`, `when omitted`, and `disable`; when those terms correspond to an analyzed stage or helper, ensure the flowchart reflects the same optionality semantics with visible decision and bypass structure.
    - **Normative category example (CRITICAL):** "A helper always invoked by the caller but internally bypassed by an enable/disable selector MUST be rendered as a decision region, not as an unconditional application phase."
-   - Before writing the file, perform a strict internal audit cross-referencing the generated flowchart, the runtime model from Step 3, the original source code, and the lexical signals found in `%%DOC_PATH%%/REQUIREMENTS.md` and `%%DOC_PATH%%/WORKFLOW.md`.
+   - Before writing the file, perform a strict internal audit cross-referencing the generated flowchart, the runtime model from Step 1, the original source code, and the lexical signals found in `%%DOC_PATH%%/REQUIREMENTS.md` and `%%DOC_PATH%%/WORKFLOW.md`.
    - The internal audit MUST explicitly verify:
       - every decision node has sibling branches rendered at comparable semantic granularity;
       - every optional stage with mandatory stage entry has a visible decision node;

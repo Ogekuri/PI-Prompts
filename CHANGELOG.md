@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.5.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.4.0..v0.5.0) - 2026-07-09
+### ⛰️  Features
+- add Iteration and Context Economy compliance block to all prompts [useReq] *(prompts)*
+  - Add new ICO-CTX-001..011 requirements in SRS section 3.19 covering iteration minimization and context economy
+  - Insert byte-identical ## Iteration and Context Economy chapter between Professional Personas and Absolute Rules in all 15 src/prompts/*.md
+  - Update REQ-021/REQ-024 exception lists and glossary prefix for the new mandatory compliance block
+  - Bump SRS version to 0.4.0
+
+### 🐛  Bug Fixes
+- Formatting fix.
+- correct stale step cross-refs and inline canonical git read-only block *(prompts)*
+  - readme.md/fix.md/flowchart.md: fix stale 'Step 3'/'Step 4' cross-references to 'Step 1' (REQ-018)
+  - analyze.md/check.md: inline verbatim canonical git read-only restriction block from src/instructions/git_read-only.md (REQ-033)
+  - [useReq]
+- Fix REFERENCES.md.
+- Fix requirements.
+
+### 🚜  Changes
+- BREAKING CHANGE: rewrite Context Files description without CLI/runtime references [useReq] *(prompts)*
+  - Update REQ-035 to require exactly one %%CONTEXT_FILES%% placeholder at the injection point
+  - Reframe REQ-036 to instruct the agent on authoritative pre-loaded context usage
+  - Add REQ-038 forbidding %%CONTEXT_FILES%% token, runtime, and CLI mechanism references in the Context Files description prose
+  - Rewrite the ## Context Files description in all 15 src/prompts/*.md to give clear content and usage guidance to the agent without referencing the prompt-generation CLI or the %%CONTEXT_FILES%% substitution mechanism
+- append %%CONTEXT_FILES%% section to all prompts *(prompts)*
+  - Append an identical ## Context Files section as the last section of
+  - every bundled prompt under src/prompts, ending with the %%CONTEXT_FILES%%
+  - token as the final line for runtime context-file injection.
+  - Update REQ-002 to include %%CONTEXT_FILES%% in the rendered-token list
+  - and add REQ-165/REQ-166 covering the section and preamble contract.
+  - Refresh WORKFLOW.md and REFERENCES.md to document the new section. [useReq]
+
+### 🎯  Cover Requirements
+- Fix git grep wording and add Expert GitOps Engineer persona [useReq] *(prompts)*
+  - Replace grep with git grep in shell-safety contract across 15 prompts (REQ-030, REQ-031).
+  - Fix analyze.md allowed-git list to use git grep (ANZ-CTX-004).
+  - Add Expert GitOps Engineer persona to 11 prompts (CHG/COV/FIX/IMP/NEW/RFR/RCR/RNB/WFL/RDM/FCH-CTX).
+  - No requirements, tests, or runtime-model changes.
+  - Remaining REQ-027/RDM-CTX-001/FCH-CTX-001 (usage metadata) require /req-change (DES-006 conflict).
+
 ## [0.4.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0) - 2026-07-08
 ### 🐛  Bug Fixes
 - Update README.md file.
@@ -110,8 +149,10 @@
 - \[0.2.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.2.0
 - \[0.3.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.3.0
 - \[0.4.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.4.0
+- \[0.5.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.5.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
 [0.3.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.2.0..v0.3.0
 [0.4.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0
+[0.5.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.4.0..v0.5.0

@@ -12,6 +12,7 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
 - **Act as a Business Analyst** when cross-referencing code findings with `%%DOC_PATH%%/REQUIREMENTS.md` to ensure functional alignment.
 - **Act as a Technical Writer and Expert Mermaid.js Developer** when producing the final flowchart, ensuring structurally valid Mermaid syntax and zero-hallucination mapping.
 - **Act as a QA Auditor** when reporting facts, requiring concrete evidence as declaration file paths only (excluding line numbers and line ranges) for every finding.
+- **Act as an Expert GitOps Engineer** when executing git workflows.
 
 ## Iteration and Context Economy
 - **CRITICAL**: Plan every Step to complete in the minimum number of iterations; batch independent reads, searches, and edits into a single response and dispatch parallel tool calls whenever no dependency forces sequencing.
@@ -25,7 +26,7 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
 
 
 ## Absolute Rules, Non-Negotiable
-- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
+- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the active repository directory, except under `/tmp`.
 - You can read, write, or edit `%%DOC_PATH%%/FLOWCHART.md`.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.

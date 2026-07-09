@@ -13,6 +13,7 @@ In scope: reproduce/triage the defect with concrete evidence and prefer an evide
 - **Act as a Senior Software Developer** when implementing a defect fix: apply the smallest safe change that restores required behavior while preserving public interfaces.
 - **Act as a Business Analyst** when reading `%%DOC_PATH%%/REQUIREMENTS.md` to ensure that fixes or refactors never violate or change existing documented behaviors.
 - **Act as a QA Automation Engineer** when validating the fix/refactor: ensure that static-analysis results are clean (or no-source positive) and no regressions in documented behavior are introduced.
+- **Act as an Expert GitOps Engineer** when executing git workflows.
 
 
 ## Iteration and Context Economy
@@ -27,7 +28,7 @@ In scope: reproduce/triage the defect with concrete evidence and prefer an evide
 
 
 ## Absolute Rules, Non-Negotiable
-- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
+- **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the active repository directory, except under `/tmp`.
 - You MUST read `%%DOC_PATH%%/REQUIREMENTS.md`, but you MUST NOT modify it in this workflow.
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.

@@ -172,9 +172,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-032**: MUST define `src/instructions/git_commit.md` as the canonical commit-workflow block injected into committing prompts via the `%%COMMIT%%` placeholder.
 - **REQ-033**: MUST define `src/instructions/git_read-only.md` as the canonical git read-only restriction block inlined verbatim into read-only prompts.
 - **REQ-034**: MUST inject `%%COMMIT%%` only into prompts that perform commits and MUST NOT inject it into read-only `analyze.md` or `check.md`.
-- **REQ-035**: MUST end every bundled prompt under `src/prompts/` with a `## Context Files` section containing the `%%CONTEXT_FILES%%` placeholder.
-- **REQ-036**: MUST require the prompt-host runtime to expand `%%CONTEXT_FILES%%` into pre-loaded context files the agent MUST treat as authoritative without re-reading, searching, or fetching.
+- **REQ-035**: MUST end every bundled prompt under `src/prompts/` with a `## Context Files` section containing exactly one `%%CONTEXT_FILES%%` placeholder at the dynamic-injection point.
+- **REQ-036**: MUST define the `## Context Files` section description to instruct the agent that injected files are pre-loaded authoritative context it MUST reason over without re-reading, searching, or fetching, and proceed without assumptions when none are injected.
 - **REQ-037**: MUST use the `static-check` tool for static-analysis verification and MUST NOT reference any `req --here --static-check` command.
+- **REQ-038**: MUST keep the `## Context Files` section description prose free of references to the `%%CONTEXT_FILES%%` token, the prompt-host runtime, and the CLI substitution mechanism.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

@@ -1,7 +1,7 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.3.0"
+version: "0.4.0"
 date: "2026-07-09"
 author: "req-recreate"
 scope:
@@ -20,7 +20,7 @@ tags: ["srs", "prompts", "templates", "instructions"]
 ## 1. Introduction
 
 ### 1.1 Document Rules
-Prefix `DOC` is reserved for document-authoring constraints in this section. Prefixes `INS` (instruction snippets) and `EXT` (extension-orchestrated runtime) are introduced in this revision for new requirement groups.
+Prefix `DOC` is reserved for document-authoring constraints in this section. Prefixes `INS` (instruction snippets), `EXT` (extension-orchestrated runtime), and `ICO` (iteration and context economy) are introduced in this revision for new requirement groups.
 
 - **DOC-001**: MUST write and maintain this document in English.
 - **DOC-002**: MUST use only RFC 2119 keywords (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and MUST NOT use modal verbs outside that set in requirement statements.
@@ -149,14 +149,14 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-018**: MUST NOT contain typo and grammar errors, except fenced code blocks, inline-code spans, literal error strings, placeholders, and command snippets.
 - **REQ-019**: MUST enforce canonical phrasing for shared operational instructions across prompts using built-in tools (`static-check`, `references-generation`, `search`, `files-search`) and `%%COMMIT%%` injection, allowing workflow-name specialization only.
 - **REQ-020**: MUST require prompt instructions that generate shell commands to emit only linear commands compatible with restrictive filtering systems.
-- **REQ-021**: MUST optimize prompts/templates for parser efficiency and token economy, except mandatory compliance blocks (`Professional Personas`, `Execution Protocol`, `Execution Directives`, `Steps`) that are retained verbatim.
+- **REQ-021**: MUST optimize prompts/templates for parser efficiency and token economy, except mandatory compliance blocks (`Professional Personas`, `Iteration and Context Economy`, `Execution Protocol`, `Execution Directives`, `Steps`) that are retained verbatim.
 - **REQ-022**: MUST optimize prompts/templates for LLM-agent execution and MUST require the `## Professional Personas` section to include `Prompt Engineer and LLM Optimization Specialist` for prompt, agent, skill, and LLM-targeted document work.
 - **REQ-023**: MUST use identical canonical instruction phrasing for identical actions across prompts, outside explicitly prompt-specific specializations, except where explicitly allowed below.
   - Workflow identity literals MAY vary where required to bind the emitting prompt (`/req-<name>`, commit-type prefix, workflow-specific title/scope text, and step labels tied to workflow intent).
   - Workflow-scoped failure or warning strings MAY vary only in workflow-name specialization while preserving the same control action pattern (`OUTPUT exactly "<STRING>"`, then terminate or override final line as explicitly defined).
   - Numeric bounds and scoped nouns MAY vary when they encode workflow-specific semantics (for example step-count cardinality and requirement-type nouns), while shared operational commands MUST remain byte-identical.
 - **REQ-024**: MUST avoid instructions that cause unnecessary token-heavy content, except where explicitly allowed below.
-  - Mandatory compliance blocks MAY remain verbose when retained verbatim by policy (`Professional Personas`, `Execution Protocol`, `Execution Directives`, and `Steps`).
+  - Mandatory compliance blocks MAY remain verbose when retained verbatim by policy (`Professional Personas`, `Iteration and Context Economy`, `Execution Protocol`, `Execution Directives`, and `Steps`).
   - Canonical executable literals MAY remain fully expanded where determinism depends on exact text (shell commands, fixed report schema, fixed error strings, and WORKFLOW.md schema contracts).
   - High-detail enumerations MAY be used only when they constrain behavior and reduce ambiguity (supported tag sets, allowed temp/cache paths, and explicit termination-condition matrices).
 - **REQ-025**: MUST reject unauthorized chain-interrupt instructions except at explicitly defined interruption points that emit exact strings and terminate or override the final status line.
@@ -414,5 +414,18 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **FCH-STP-015**: MUST define the generate step to render skipped work only when source code enforces a real skip or bypass condition.
 - **FCH-STP-016**: MUST define the generate step to perform a strict internal audit before writing `%%DOC_PATH%%/FLOWCHART.md`.
 - **FCH-STP-017**: MUST define the generate step to audit sibling granularity, hidden helper operations, real skips, and post-normalization joins against runtime-model and source evidence.
+
+### 3.19 Iteration and Context Economy
+- **ICO-CTX-001**: MUST insert a `## Iteration and Context Economy` section in every prompt under `src/prompts/` immediately after `## Professional Personas` and immediately before `## Absolute Rules, Non-Negotiable`.
+- **ICO-CTX-002**: MUST keep the `## Iteration and Context Economy` section byte-identical across all prompts under `src/prompts/`.
+- **ICO-CTX-003**: MUST define the `## Iteration and Context Economy` section as a list of `CRITICAL` rules that are mandatory and non-negotiable.
+- **ICO-CTX-004**: MUST require the rules to instruct the agent to minimize the number of iterations by batching independent operations and dispatching parallel tool calls whenever no dependency forces sequencing.
+- **ICO-CTX-005**: MUST require the rules to forbid re-reading, re-searching, or re-fetching files already provided as injected `%%CONTEXT_FILES%%` context or already read in the current session.
+- **ICO-CTX-006**: MUST require the rules to forbid restating requirement text, prior tool output, or unchanged file contents and to cite them by file path, symbol, and line range instead.
+- **ICO-CTX-007**: MUST require the rules to instruct the agent to add only information required by the active Step, a requirement ID, or explicit user-request text, omitting narration, filler, and speculative commentary.
+- **ICO-CTX-008**: MUST require the rules to select the most token-efficient evidence path in order: `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, `%%DOC_PATH%%/REFERENCES.md`, then `search`/`files-search`, then `rg`/`grep` fallback.
+- **ICO-CTX-009**: MUST require the rules to instruct the agent to gather all evidence a Step needs before producing its output and to not split a single logical operation across multiple iterations when one suffices.
+- **ICO-CTX-010**: MUST require the rules to instruct the agent to pause for a tool response only when a Step explicitly depends on it and to otherwise proceed autonomously without requesting confirmation.
+- **ICO-CTX-011**: MUST require the rules to govern how the agent organizes and sequences the work described in the `## Steps` section.
 
 <!-- Performance optimizations: No explicit performance optimizations identified. Source under src/ is static Markdown content with no executable code paths. -->

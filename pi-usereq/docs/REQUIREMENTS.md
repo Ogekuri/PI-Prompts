@@ -185,8 +185,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ANZ-STP-001**: MUST NOT embed a required-doc presence check step in `analyze.md` because doc validation is externalized outside the prompt.
 - **ANZ-STP-002**: MUST define the analysis step to analyze the [User Request](#users-request).
 - **ANZ-STP-003**: MUST define the follow-up-dispatch step positioned between the analysis step and the present-results step in `analyze.md`.
-- **ANZ-STP-004**: MUST define the follow-up-dispatch step to generate the exact `/req-fix` prompt text when the analysis identifies an implementation behavior conflicting with requirements, and the exact `/req-change` prompt text when the analysis identifies changes needed to both source code and requirements.
-- **ANZ-STP-005**: MUST make the follow-up-dispatch step print the generated follow-up prompt text only when the analysis requires source-code or requirements modifications and MUST NOT print it in any other case.
+- **ANZ-STP-004**: MUST define the follow-up-dispatch step to generate the exact `/req-fix` prompt text when the analysis identifies an implementation behavior conflicting with requirements, the exact `/req-change` prompt text when the analysis identifies changes needed to both source code and requirements, and the exact `/req-refactor` prompt text when the analysis identifies source-code modifications that keep requirements unchanged with the intent of improving or adjusting the sources.
+- **ANZ-STP-005**: MUST make the follow-up-dispatch step print each generated follow-up prompt text (`/req-fix`, `/req-change`, or `/req-refactor`) exactly when the analysis identified its corresponding source-code or requirements modification trigger and MUST NOT print any follow-up prompt text in any other case.
 - **ANZ-STP-006**: MUST define the present-results step to present a human-readable analysis report preserving the fixed report schema and exact final status line.
 
 ### 3.4 Change Prompt

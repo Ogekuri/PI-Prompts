@@ -42,7 +42,7 @@ src/
 ### `src/prompts`
 | Path | Purpose |
 | --- | ---: | --- |
-| `src/prompts/analyze.md` | Read-only investigation workflow that produces an evidence-backed analysis report. |
+| `src/prompts/analyze.md` | Read-only investigation workflow that produces an evidence-backed analysis report and a conditional `/req-fix` or `/req-change` follow-up prompt text. |
 | `src/prompts/change.md` | Requirements-change workflow that updates the SRS, implements the change, verifies it, and refreshes workflow/reference docs. |
 | `src/prompts/check.md` | Repository-read-only compliance audit workflow that evaluates every requirement ID. |
 | `src/prompts/cover.md` | Minimal implementation workflow for uncovered existing requirement IDs without changing the SRS. |

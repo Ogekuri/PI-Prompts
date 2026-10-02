@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.6.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.5.0..v0.6.0) - 2026-10-02
+### 🚜  Changes
+- add /req-refactor branch to analysis follow-up dispatch [useReq] *(analyze)*
+  - REQUIREMENTS.md: extend ANZ-STP-004 with the exact /req-refactor prompt
+  - text trigger (source-code-only modifications keeping requirements
+  - unchanged with improvement intent); restate ANZ-STP-005 as an
+  - if-and-only-if printing rule per follow-up command.
+  - analyze.md: add /req-refactor ELSE-IF branch to Step 2 classification
+  - (after /req-change, before ELSE) and bind the print rule to the
+  - identified trigger per command; workflow stays read-only.
+  - REFERENCES.md: update analyze.md purpose row to include /req-refactor.
+- add conditional follow-up prompt step to analyze [useReq] *(prompts)*
+  - Requirements: split ANZ-STP-002 (analysis step) and add ANZ-STP-003..ANZ-STP-006
+  - defining the follow-up-dispatch step between analysis and present-results.
+  - analyze.md: new Step 2 generates the /req-fix prompt text when analysis finds
+  - behavior conflicting with requirements, or the /req-change prompt text when
+  - both source code and requirements need changes; the generated text is printed
+  - only when source-code or requirements modifications are required, never
+  - otherwise; former Present results step renumbered to Step 3.
+  - REFERENCES.md: aligned analyze.md resource purpose line.
+  - Note: 2 pre-existing unit-test failures on canonical-docs front matter exist
+  - at HEAD and are unrelated to this change surface.
+
 ## [0.5.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.4.0..v0.5.0) - 2026-07-09
 ### ⛰️  Features
 - add Iteration and Context Economy compliance block to all prompts [useReq] *(prompts)*
@@ -150,9 +173,11 @@
 - \[0.3.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.3.0
 - \[0.4.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.4.0
 - \[0.5.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.5.0
+- \[0.6.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.6.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
 [0.3.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.2.0..v0.3.0
 [0.4.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0
 [0.5.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.4.0..v0.5.0
+[0.6.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.5.0..v0.6.0

@@ -1,7 +1,7 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.5.0"
+version: "0.6.0"
 date: "2026-10-05"
 author: "req-change"
 scope:
@@ -374,7 +374,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RDM-CTX-002**: MUST define the `## Purpose` section to instruct: Maintain root `README.md` as the first user-facing guide by documenting only externally visible behavior derived from repository evidence.
 - **RDM-CTX-003**: MUST define the `## Scope` section to instruct: In scope: analyze user-visible implementation deltas under %%SRC_PATHS%% and update only root `README.md`; Out of scope: internal implementation details, requirements/workflow/references regeneration, source-code edits, and tests.
 - **RDM-CTX-004**: MUST define the `## Professional Personas` section to instruct: Act as a Senior System Engineer to locate externally visible behaviors; Act as a Business Analyst to map behavior to user outcomes; Act as a Senior Technical Writer to produce concise user-centric README content; Act as a QA Auditor for evidence-backed claims; Act as an Expert GitOps Engineer for isolated worktree and merge flow.
-- **RDM-CTX-005**: MUST define the `## Behavior` section to instruct: Analyze implementation evidence for user-visible changes; identify the exact root `README.md` sections impacted before editing; execute additional README edits explicitly requested in [User Request](#users-request); update only those sections; keep non-analysis documentary parts unchanged; keep all new or edited text in English.
+- **RDM-CTX-005**: MUST define the `## Behavior` section to instruct: Analyze implementation evidence for user-visible changes; validate every enumerated root `README.md` section sentence-by-sentence against implementation evidence, recording per-sentence outcomes without skipping parts or sections; identify the exact root `README.md` sections impacted before editing; execute additional README edits explicitly requested in [User Request](#users-request); update only those sections; keep non-analysis documentary parts unchanged; keep all new or edited text in English.
 - **RDM-STP-001**: MUST NOT embed a GIT-status check step in `readme.md` because repository validation is externalized outside the prompt.
 - **RDM-STP-002**: MUST NOT embed a worktree generation and isolation step in `readme.md` because worktree routing is externalized outside the prompt.
 - **RDM-STP-003**: MUST define the analysis step to detect the user-visible implementation surface from %%SRC_PATHS%% and candidate related files.
@@ -382,6 +382,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RDM-STP-005**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **RDM-STP-006**: MUST NOT embed a merge-conflict management step in `readme.md` because merge handling is externalized outside the prompt.
 - **RDM-STP-007**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **RDM-STP-008**: MUST define the update step to enumerate all root `README.md` sections and headings in document order before validation to fix the complete validation surface.
+- **RDM-STP-009**: MUST define the update step to validate every non-excluded sentence in each enumerated section against repository implementation evidence, recording a per-sentence conformance outcome.
+- **RDM-STP-010**: MUST define the update step to enforce a completeness gate that blocks step completion until every enumerated section and sentence has a recorded outcome.
 
 ### 3.18 Flowchart Prompt
 - **FCH-CTX-001**: MUST define the `usage` metadata to instruct FLOWCHART-only maintenance from repository evidence and MUST keep the field length less than or equal to 1024 characters.

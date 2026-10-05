@@ -51,7 +51,7 @@ src/
 | `src/prompts/flowchart.md` | Docs-only workflow that regenerates `FLOWCHART.md` from source evidence. |
 | `src/prompts/implement.md` | Greenfield or major-gap workflow that builds implementation from an authoritative SRS without editing requirements. |
 | `src/prompts/new.md` | Additive-feature workflow that appends new requirement IDs and implements the corresponding behavior. |
-| `src/prompts/readme.md` | Docs-only workflow that aligns root `README.md` with user-visible implementation evidence. |
+| `src/prompts/readme.md` | Docs-only workflow that validates root `README.md` sentence-by-sentence against implementation evidence and aligns it with user-visible changes. |
 | `src/prompts/recreate.md` | Reorganization workflow that rebuilds the SRS from source evidence while preserving existing requirement IDs. |
 | `src/prompts/refactor.md` | Internal-improvement workflow that preserves observable behavior and keeps requirements unchanged. |
 | `src/prompts/renumber.md` | Deterministic renumbering workflow for requirement IDs and internal requirement cross-references. |

@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0) - 2026-10-05
+### 🚜  Changes
+- enforce exhaustive sentence-level README validation [useReq] *(readme)*
+  - REQUIREMENTS.md v0.6.0: extend RDM-CTX-005; add RDM-STP-008/009/010.
+  - src/prompts/readme.md: enumerate all README sections in document order.
+  - Validate every sentence against implementation evidence with fixed
+  - outcomes (CONFORMING/OUTDATED/UNSUPPORTED/NOT-ANALYZED-BY-DESIGN).
+  - Completeness gate blocks commit until full validation coverage.
+  - REFERENCES.md: readme.md purpose row updated; WORKFLOW.md not impacted.
+- BREAKING CHANGE: rename src/docs to src/templates and adapt SRS [useReq] *(templates)*
+  - Rename src/docs/ to src/templates/ preserving template contents (R100).
+  - REQUIREMENTS.md v0.5.0: scope.paths, 1.5 rules, PRJ-002, 2.2 table, 3.1 tree.
+  - tests: standalone-doc glob now src/templates/*.md (TST-047/TST-048 coverage kept).
+  - WORKFLOW.md/REFERENCES.md: declaration paths updated to src/templates.
+  - Pre-existing: unittest failures on REQUIREMENTS.md front matter (unrelated to rename);
+  - references-generation cannot process .md-only sources (unsupported extension filter).
+
 ## [0.6.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.5.0..v0.6.0) - 2026-10-02
 ### 🚜  Changes
 - add /req-refactor branch to analysis follow-up dispatch [useReq] *(analyze)*
@@ -174,6 +191,7 @@
 - \[0.4.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.4.0
 - \[0.5.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.5.0
 - \[0.6.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.6.0
+- \[0.7.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.7.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -181,3 +199,4 @@
 [0.4.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.3.0..v0.4.0
 [0.5.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.4.0..v0.5.0
 [0.6.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.5.0..v0.6.0
+[0.7.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0

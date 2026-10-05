@@ -1,13 +1,13 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.4.0"
-date: "2026-07-09"
-author: "req-recreate"
+version: "0.5.0"
+date: "2026-10-05"
+author: "req-change"
 scope:
   paths:
     - "src/prompts/**/*.md"
-    - "src/docs/**/*.md"
+    - "src/templates/**/*.md"
     - "src/instructions/**/*.md"
   excludes:
     - ".*/**"
@@ -51,14 +51,14 @@ This project defines and maintains prompt, template, and reusable-instruction ar
   - MUST optimize prompts/templates for LLM-agent parsing, context efficiency, and token economy.
   - MUST target prompts/templates to LLM-agent execution and MUST NOT target human-only reading.
   - MUST require an explicit change request and corresponding `docs/REQUIREMENTS.md` update for any prompt/template file addition or removal.
-  - MUST keep `src/prompts/`, `src/docs/`, and `src/instructions/` free of governance instructions about maintaining, editing, or verifying prompts/templates.
+  - MUST keep `src/prompts/`, `src/templates/`, and `src/instructions/` free of governance instructions about maintaining, editing, or verifying prompts/templates.
   - MUST NOT add instructions that increase hallucination risk unless explicitly required by a formal requirement.
 
 ## 2. Project Requirements
 
 ### 2.1 Project Functions
 - **PRJ-001**: MUST maintain prompt artifacts in `src/prompts/` for SRS-driven workflows.
-- **PRJ-002**: MUST maintain template artifacts in `src/docs/` as mandatory authoring guides and keep template taxonomy aligned with prompt-level Doxygen coverage directives.
+- **PRJ-002**: MUST maintain template artifacts in `src/templates/` as mandatory authoring guides and keep template taxonomy aligned with prompt-level Doxygen coverage directives.
 - **PRJ-003**: MUST define each prompt with a single primary workflow intent and deterministic output objective.
 - **PRJ-004**: MUST preserve the process order Requirements -> Design -> Implementation -> Verification when editing prompt instructions.
 
@@ -80,9 +80,9 @@ This project defines and maintains prompt, template, and reusable-instruction ar
 | Prompt | `src/prompts/workflow.md` | Draft `WORKFLOW.md` from source evidence. |
 | Prompt | `src/prompts/write.md` | Draft SRS from user-request text. |
 | Prompt | `src/prompts/readme.md` | Update `README.md` from user-visible implementation evidence. |
-| Template | `src/docs/Document_Source_Code_in_Doxygen_Style.md` | Mandatory source-code documentation guideline. |
-| Template | `src/docs/HDT_Test_Authoring_Guide.md` | Mandatory unit-test authoring guideline. |
-| Template | `src/docs/Requirements_Template.md` | Mandatory SRS authoring guideline. |
+| Template | `src/templates/Document_Source_Code_in_Doxygen_Style.md` | Mandatory source-code documentation guideline. |
+| Template | `src/templates/HDT_Test_Authoring_Guide.md` | Mandatory unit-test authoring guideline. |
+| Template | `src/templates/Requirements_Template.md` | Mandatory SRS authoring guideline. |
 | Instruction | `src/instructions/git_commit.md` | Reusable commit-workflow block injected via `%%COMMIT%%`. |
 | Instruction | `src/instructions/git_read-only.md` | Reusable git read-only restriction block for read-only prompts. |
 
@@ -103,7 +103,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 
 ```text
 └── src/
-    ├── docs/
+    ├── templates/
     │   ├── Document_Source_Code_in_Doxygen_Style.md
     │   ├── HDT_Test_Authoring_Guide.md
     │   └── Requirements_Template.md

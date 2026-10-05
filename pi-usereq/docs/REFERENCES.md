@@ -5,14 +5,14 @@
 - Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime
 - Executable source symbols under `src`: none detected
 - Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles
-- Template resources under `src/docs`: 3 standalone Markdown documents
+- Template resources under `src/templates`: 3 standalone Markdown documents
 - Instruction resources under `src/instructions`: 2 reusable Markdown instruction snippets
 - Removed prompt in this revision: `src/prompts/references.md`
 
 ## Files Structure
 ```text
 src/
-├── docs/
+├── templates/
 │   ├── Document_Source_Code_in_Doxygen_Style.md
 │   ├── HDT_Test_Authoring_Guide.md
 │   └── Requirements_Template.md
@@ -58,12 +58,12 @@ src/
 | `src/prompts/workflow.md` | Docs-only workflow that regenerates `WORKFLOW.md` from source evidence. |
 | `src/prompts/write.md` | Greenfield workflow that drafts `REQUIREMENTS.md` directly from user intent. |
 
-### `src/docs`
+### `src/templates`
 | Path | Lines | Purpose |
 | --- | ---: | --- |
-| `src/docs/Document_Source_Code_in_Doxygen_Style.md` | 130 | Parser-first Doxygen documentation standard for source-code comments and metadata. |
-| `src/docs/HDT_Test_Authoring_Guide.md` | 318 | Deterministic HDT unit-test authoring guide for Generator and Refactorer modes. |
-| `src/docs/Requirements_Template.md` | 58 | Canonical template for authoring or rebuilding `REQUIREMENTS.md`. |
+| `src/templates/Document_Source_Code_in_Doxygen_Style.md` | 130 | Parser-first Doxygen documentation standard for source-code comments and metadata. |
+| `src/templates/HDT_Test_Authoring_Guide.md` | 318 | Deterministic HDT unit-test authoring guide for Generator and Refactorer modes. |
+| `src/templates/Requirements_Template.md` | 58 | Canonical template for authoring or rebuilding `REQUIREMENTS.md`. |
 
 ### `src/instructions`
 | Path | Lines | Purpose |

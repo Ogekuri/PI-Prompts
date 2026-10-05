@@ -27,7 +27,7 @@ _STANDALONE_GLOB_PATTERNS = (
     "TODO.md",
     "pi-usereq/docs/*.md",
     "src/prompts/*.md",
-    "src/docs/*.md",
+    "src/templates/*.md",
 )
 
 

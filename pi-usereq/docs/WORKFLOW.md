@@ -3,7 +3,7 @@
 ## Execution Units Index
 - ID: `PROC:main`
   - Type: Process
-  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/docs`, and `src/instructions`; standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with a `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime to inject pre-loaded context files.
+  - Role: External prompt-host runtime loads bundled Markdown resources from `src/prompts`, `src/templates`, and `src/instructions`; standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with a `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime to inject pre-loaded context files.
   - Entrypoints:
     - no internal executable entrypoints detected under `src`
   - Parent Process: none
@@ -14,7 +14,7 @@
 - Entrypoints:
   - none under `src`
 - Lifecycle/trigger:
-  - Start trigger: external prompt-host runtime selects one bundled Markdown asset from `src/prompts`, `src/docs`, or `src/instructions` and reads its leading Markdown title line or instruction body.
+  - Start trigger: external prompt-host runtime selects one bundled Markdown asset from `src/prompts`, `src/templates`, or `src/instructions` and reads its leading Markdown title line or instruction body.
   - Stop trigger: external prompt-host runtime finishes reading or rendering the selected asset.
   - Looping model: one-shot resource load per prompt or document request.
   - Threads: no explicit threads detected.

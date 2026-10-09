@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0) - 2026-10-09
+### 🚜  Changes
+- restrict %%CONTEXT_FILES%% token to Context Files section [useReq] *(prompts)*
+  - REQUIREMENTS: add REQ-039 token-placement ban and REQ-040 section-based
+  - phrasing; rewrite ICO-CTX-005 to cite the section; bump version to 0.7.0
+  - prompts: rewrite the Iteration and Context Economy no-re-read rule in all
+  - 15 prompts to reference the `## Context Files` section, keeping the
+  - section byte-identical across prompts (ICO-CTX-002)
+  - docs: align WORKFLOW.md runtime note and REFERENCES.md surface summary
+
 ## [0.7.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0) - 2026-10-05
 ### 🚜  Changes
 - enforce exhaustive sentence-level README validation [useReq] *(readme)*
@@ -193,6 +203,7 @@
 - \[0.6.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.6.0
 - \[0.7.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.7.0
 - \[0.8.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.8.0
+- \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -202,3 +213,4 @@
 [0.6.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.5.0..v0.6.0
 [0.7.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0
 [0.8.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.7.0..v0.8.0
+[0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0

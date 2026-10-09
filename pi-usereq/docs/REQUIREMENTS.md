@@ -1,8 +1,8 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.6.0"
-date: "2026-10-05"
+version: "0.7.0"
+date: "2026-10-09"
 author: "req-change"
 scope:
   paths:
@@ -176,6 +176,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-036**: MUST define the `## Context Files` section description to instruct the agent that injected files are pre-loaded authoritative context it MUST reason over without re-reading, searching, or fetching, and proceed without assumptions when none are injected.
 - **REQ-037**: MUST use the `static-check` tool for static-analysis verification and MUST NOT reference any `req --here --static-check` command.
 - **REQ-038**: MUST keep the `## Context Files` section description prose free of references to the `%%CONTEXT_FILES%%` token, the prompt-host runtime, and the CLI substitution mechanism.
+- **REQ-039**: MUST NOT place the `%%CONTEXT_FILES%%` placeholder in any section of a bundled prompt other than its terminal `## Context Files` section.
+- **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.
@@ -427,7 +429,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ICO-CTX-002**: MUST keep the `## Iteration and Context Economy` section byte-identical across all prompts under `src/prompts/`.
 - **ICO-CTX-003**: MUST define the `## Iteration and Context Economy` section as a list of `CRITICAL` rules that are mandatory and non-negotiable.
 - **ICO-CTX-004**: MUST require the rules to instruct the agent to minimize the number of iterations by batching independent operations and dispatching parallel tool calls whenever no dependency forces sequencing.
-- **ICO-CTX-005**: MUST require the rules to forbid re-reading, re-searching, or re-fetching files already provided as injected `%%CONTEXT_FILES%%` context or already read in the current session.
+- **ICO-CTX-005**: MUST require the rules to forbid re-reading, re-searching, or re-fetching files already provided under the `## Context Files` section or already read in the current session.
 - **ICO-CTX-006**: MUST require the rules to forbid restating requirement text, prior tool output, or unchanged file contents and to cite them by file path, symbol, and line range instead.
 - **ICO-CTX-007**: MUST require the rules to instruct the agent to add only information required by the active Step, a requirement ID, or explicit user-request text, omitting narration, filler, and speculative commentary.
 - **ICO-CTX-008**: MUST require the rules to select the most token-efficient evidence path in order: `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, `%%DOC_PATH%%/REFERENCES.md`, then `search`/`files-search`, then `rg`/`grep` fallback.

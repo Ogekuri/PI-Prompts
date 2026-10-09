@@ -2,7 +2,7 @@
 
 ## Source Surface Summary
 - Source root: `src`
-- Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose `%%CONTEXT_FILES%%` token is expanded by the runtime
+- Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt
 - Executable source symbols under `src`: none detected
 - Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles
 - Template resources under `src/templates`: 3 standalone Markdown documents

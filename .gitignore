@@ -24,7 +24,7 @@
 !setup.py
 !pyproject.toml
 !requirements.txt
-!.g.conf
+!.galias.conf
 !/**/*.sh
 !src/
 !src/**/*

@@ -1,16 +1,17 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.7.0"
-date: "2026-10-09"
+version: "0.8.0"
+date: "2026-11-07"
 author: "req-change"
 scope:
   paths:
     - "src/prompts/**/*.md"
     - "src/templates/**/*.md"
     - "src/instructions/**/*.md"
+    - ".github/workflows/*.yml"
   excludes:
-    - ".*/**"
+    - ".git/**"
 visibility: "draft"
 tags: ["srs", "prompts", "templates", "instructions"]
 ---
@@ -20,7 +21,7 @@ tags: ["srs", "prompts", "templates", "instructions"]
 ## 1. Introduction
 
 ### 1.1 Document Rules
-Prefix `DOC` is reserved for document-authoring constraints in this section. Prefixes `INS` (instruction snippets), `EXT` (extension-orchestrated runtime), and `ICO` (iteration and context economy) are introduced in this revision for new requirement groups.
+Prefix `DOC` is reserved for document-authoring constraints in this section. Prefixes `INS` (instruction snippets), `EXT` (extension-orchestrated runtime), and `ICO` (iteration and context economy) are introduced in this revision for new requirement groups. Prefix `ACT` is introduced in this revision for the GitHub Actions runtime requirement group.
 
 - **DOC-001**: MUST write and maintain this document in English.
 - **DOC-002**: MUST use only RFC 2119 keywords (MUST, MUST NOT, SHOULD, SHOULD NOT, MAY) and MUST NOT use modal verbs outside that set in requirement statements.
@@ -85,6 +86,7 @@ This project defines and maintains prompt, template, and reusable-instruction ar
 | Template | `src/templates/Requirements_Template.md` | Mandatory SRS authoring guideline. |
 | Instruction | `src/instructions/git_commit.md` | Reusable commit-workflow block injected via `%%COMMIT%%`. |
 | Instruction | `src/instructions/git_read-only.md` | Reusable git read-only restriction block for read-only prompts. |
+| Automation | `.github/workflows/release-markdown.yml` | Tag-triggered release automation executing on Node24-or-later runners. |
 
 > Note: `src/prompts/references.md` was removed in this revision; `REFERENCES.md` generation is now performed by the `references-generation` tool.
 
@@ -436,5 +438,11 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ICO-CTX-009**: MUST require the rules to instruct the agent to gather all evidence a Step needs before producing its output and to not split a single logical operation across multiple iterations when one suffices.
 - **ICO-CTX-010**: MUST require the rules to instruct the agent to pause for a tool response only when a Step explicitly depends on it and to otherwise proceed autonomously without requesting confirmation.
 - **ICO-CTX-011**: MUST require the rules to govern how the agent organizes and sequences the work described in the `## Steps` section.
+
+### 3.20 Runtime and Automation
+- **ACT-001**: MUST run every GitHub Actions workflow job in this repository on Node24 or later and MUST NOT define Node20 fallback or transitional Node24-forcing environment overrides.
+- **ACT-002**: MUST pin every JavaScript-based action reference in project workflows to a version whose declared runtime is Node24 or later.
+- **ACT-003**: MUST preserve release-automation behavior for tag-triggered releases, including branch gating, changelog generation, and release-asset upload, when migrating to Node24-or-later runtimes.
+- **ACT-004**: MUST restrict workflow jobs to GitHub-hosted `ubuntu-latest` runners, excluding Node24-incompatible targets such as macOS 13.4-or-lower and ARM32.
 
 <!-- Performance optimizations: No explicit performance optimizations identified. Source under src/ is static Markdown content with no executable code paths. -->

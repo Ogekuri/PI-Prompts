@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.9.1](https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.9.1) - 2026-11-07
+### 🐛  Bug Fixes
+- Fix .gitignore file.
+- .gitignore file.
+
+### 🚜  Changes
+- migrate release automation to Node24 [useReq] *(actions)*
+  - Add ACT-001..ACT-004 runtime requirements; SRS v0.8.0 now governs .github/workflows
+  - Bump actions/checkout v4->v5 and softprops/action-gh-release v2->v3 (node24 runtimes)
+  - Keep mikepenz/release-changelog-builder-action v6 (node24); release behavior preserved
+  - No Node20 fallback or transitional Node24-forcing variables present in automation
+  - Add tests/test_release_workflow_runtime.py guarding the Node24 automation contract
+
+### 📚  Documentation
+- Update README.md file.
+
 ## [0.9.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0) - 2026-10-09
 ### 🚜  Changes
 - restrict %%CONTEXT_FILES%% token to Context Files section [useReq] *(prompts)*
@@ -204,6 +220,7 @@
 - \[0.7.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.7.0
 - \[0.8.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.8.0
 - \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
+- \[0.9.1\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.1
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -214,3 +231,4 @@
 [0.7.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0
 [0.8.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.7.0..v0.8.0
 [0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0
+[0.9.1]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.9.1

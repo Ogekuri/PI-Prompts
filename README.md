@@ -10,7 +10,7 @@
 > * **No Support or Feature Requests:** Please **do not** open issues, bug reports, or feature requests. They will not be addressed or accepted at this stage of development.
 > * **No Warranty:** This software is provided **"AS IS"**, without warranty of any kind, express or implied. You may use it strictly for **testing and evaluation purposes** at your own sole risk.
 
-# PI-Prompts / pi-prompts (0.9.0)
+# PI-Prompts / pi-prompts (0.9.1)
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-GPL--3.0-491?style=flat-square" alt="License: GPL-3.0">

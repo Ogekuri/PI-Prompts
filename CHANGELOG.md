@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.10.1](https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.10.1) - 2026-11-08
+### 🚜  Changes
+- exempt root README.md from title-start requirement [useReq] *(tests)*
+  - Add DES-008 exempting root README.md from the DES-006 title-start constraint and rescope DES-006 to bundled prompt/template documents under src/. Skip README.md in the title layout test while keeping its front-matter invariant. Unit suite: 7 passed, 0 failed via python3 -m unittest discover. references-generation reported no processable sources; src/ unchanged.
+
+### 🎯  Cover Requirements
+- fix release yml typo and extend renumber/fix validation [useReq] *(prompts)*
+  - REQ-018: fix Italian comment typo Effetua -> Effettua in release-markdown.yml.
+  - RNB-STP-005: renumber.md validate step now cross-references the source code and verifies the SRS still reflects actual code behavior (True State), mirroring the canonical create.md validate step.
+  - FIX-CTX-004: fix.md Behavior section now treats exact static-check no-source output as successful no-source completion.
+  - Docs: WORKFLOW.md unchanged (no execution-model impact); REFERENCES.md regeneration completed as no-source.
+  - Tests: python3 -m pytest tests -q -> 7 passed, 47 subtests passed, 0 failed.
+
 ## [0.10.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0) - 2026-11-08
 ### 🐛  Bug Fixes
 - Fix .gitignore file.
@@ -223,6 +236,7 @@
 - \[0.8.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.8.0
 - \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
+- \[0.10.1\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.1
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -234,3 +248,4 @@
 [0.8.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.7.0..v0.8.0
 [0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
+[0.10.1]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.10.1

@@ -34,7 +34,7 @@ jobs:
             echo "is_master=false" >> "$GITHUB_OUTPUT"
           fi
 
-  # 2. Effetua la build
+  # 2. Effettua la build
   build-release:
     needs: check-branch
     # Esegue questo job SOLO se l'output del job precedente è 'true'

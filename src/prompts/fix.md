@@ -42,6 +42,7 @@ In scope: reproduce/triage the defect with concrete evidence and prefer an evide
 - Use `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, and `%%DOC_PATH%%/REFERENCES.md` as the primary technical inputs; keep decisions traceable to requirements and repository evidence.
 - When relevant unit-test suites exist, prefer this fix sequence: analyze and identify defect -> create one failing reproducer unit test -> design and implement source fix -> verify reproducer passes using requirement evidence, static analysis, and selected unit-test suites.
 - Only if no relevant suite exists, creating that test is too costly under test guidelines, or one-test defect isolation is not feasible, use fallback sequence: analyze and identify defect -> implement source fix -> verify resolution with explicit concrete evidence.
+- Treat `static-check` output that is exactly `Error: no source files found in configured directories.` as successful no-source completion.
 - All newly written or edited content MUST be in English. Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in **Evidence** instead of rewriting it.
 - Prioritize backward compatibility. Do not introduce breaking changes; preserve existing interfaces, data formats, and features.
 - If maintaining compatibility would require migrations/auto-upgrades conversion logic, report the conflict instead of implementing, and then terminate the execution.

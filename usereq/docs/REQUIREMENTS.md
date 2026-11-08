@@ -1,8 +1,8 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.8.0"
-date: "2026-11-07"
+version: "0.9.0"
+date: "2026-11-08"
 author: "req-change"
 scope:
   paths:
@@ -37,7 +37,7 @@ This project defines and maintains prompt, template, and reusable-instruction ar
 - No mandatory third-party runtime library was requested.
 - Verification can be implemented with deterministic textual checks on Markdown artifacts.
 - Repository validation, worktree creation, and merge handling are externalized to the slash-command extension orchestrator and are not embedded in bundled prompts.
-- **CRITICAL**: Workflows that modify source code MUST execute unit tests during verification only when relevant unit tests already exist in the repository, selecting commands via language-specific test-suite priority policy; read-only workflows MUST rely on static evidence only.
+- **CRITICAL**: Workflows that modify source code MUST execute unit tests during verification only when relevant unit tests already exist in the repository, selecting commands via language-specific test-suite priority policy, MUST record executed unit-test outcomes, and MUST gate completion on zero unresolved unit-test failures; read-only workflows MUST rely on static evidence only.
 
 ### 1.4 Persona
 - When you edit prompts and templates, act as a Senior AI Prompt Engineer and Senior LLM-Ops Engineer.
@@ -180,6 +180,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-038**: MUST keep the `## Context Files` section description prose free of references to the `%%CONTEXT_FILES%%` token, the prompt-host runtime, and the CLI substitution mechanism.
 - **REQ-039**: MUST NOT place the `%%CONTEXT_FILES%%` placeholder in any section of a bundled prompt other than its terminal `## Context Files` section.
 - **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
+- **REQ-041**: MUST record in each Verification Delta of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` the exact executed unit-test command with total, passed, and failed counts and failing-test names, or the N/A reason.
+- **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string when executed unit tests still fail after the second fix attempt.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

@@ -1,11 +1,13 @@
 # Changelog
 
-## [0.9.1](https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.9.1) - 2026-11-07
+## [0.10.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0) - 2026-11-08
 ### 🐛  Bug Fixes
 - Fix .gitignore file.
 - .gitignore file.
 
 ### 🚜  Changes
+- add unit-test outcome reporting and completion gate [useReq] *(prompts)*
+  - SRS 0.9.0: add REQ-041 (record executed unit-test command, pass/fail counts, failing tests, or N/A reason in the Verification Delta) and REQ-042 (terminate with exact workflow-specialized error string on persistent test failures); extend 1.3 test policy; apply both gates to change, cover, fix, implement, new, refactor verification steps.
 - migrate release automation to Node24 [useReq] *(actions)*
   - Add ACT-001..ACT-004 runtime requirements; SRS v0.8.0 now governs .github/workflows
   - Bump actions/checkout v4->v5 and softprops/action-gh-release v2->v3 (node24 runtimes)
@@ -220,7 +222,7 @@
 - \[0.7.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.7.0
 - \[0.8.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.8.0
 - \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
-- \[0.9.1\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.1
+- \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -231,4 +233,4 @@
 [0.7.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.6.0..v0.7.0
 [0.8.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.7.0..v0.8.0
 [0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0
-[0.9.1]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.9.1
+[0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0

@@ -98,8 +98,9 @@ This project defines and maintains prompt, template, and reusable-instruction ar
 - **DES-003**: MUST implement text-first interaction semantics and MUST NOT require GUI-specific behavior.
 - **DES-004**: MUST preserve reusable keyword tokens exactly so installation-time substitution remains valid.
 - **DES-005**: MUST maintain reusable instruction snippets under `src/instructions/` as canonical blocks consumed by prompts via placeholder tokens or verbatim inlining.
-- **DES-006**: MUST author bundled prompt and template documents as standalone Markdown starting with a level-1 title and omitting YAML front matter in `src/`.
+- **DES-006**: MUST author bundled prompt and template documents under `src/` as standalone Markdown starting with a level-1 title and omitting YAML front matter.
 - **DES-007**: MUST NOT embed repository validation, worktree creation, or merge-handling steps in bundled prompts because those concerns are externalized.
+- **DES-008**: MUST exempt root README.md from the DES-006 level-1 title-start constraint.
 
 Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 

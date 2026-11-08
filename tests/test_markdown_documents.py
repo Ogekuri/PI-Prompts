@@ -4,9 +4,10 @@
 standalone assets and asserts two invariants: the first line starts with a
 level-1 title marker and the document does not start with YAML front matter.
 Excludes `src/instructions/*.md` because those files are reusable injected
-snippets rather than standalone documents. Complexity: O(N) file reads for N
-tracked standalone Markdown documents.
-@satisfies TST-047, TST-048
+snippets rather than standalone documents. Exempts root `README.md` from the
+level-1 title invariant per DES-008 while keeping its front-matter invariant.
+Complexity: O(N) file reads for N tracked standalone Markdown documents.
+@satisfies TST-047, TST-048, DES-006, DES-008
 """
 
 from __future__ import annotations
@@ -20,7 +21,8 @@ _REPO_ROOT = Path(__file__).resolve().parents[1]
 
 #: @brief Glob patterns for standalone Markdown documents.
 #: @details Covers root docs, canonical docs, bundled prompts, and bundled
-#: templates that must satisfy the title-first/no-front-matter contract.
+#: templates subject to the no-front-matter contract and the DES-008-scoped
+#: title-first contract.
 _STANDALONE_GLOB_PATTERNS = (
     "README.md",
     "CHANGELOG.md",
@@ -29,6 +31,12 @@ _STANDALONE_GLOB_PATTERNS = (
     "src/prompts/*.md",
     "src/templates/*.md",
 )
+
+#: @brief Basenames exempt from the level-1 title invariant.
+#: @details Encodes the DES-008 exemption so root `README.md` may keep leading
+#: non-title content (for example GitHub alert blocks) while remaining subject
+#: to the front-matter invariant.
+_TITLE_EXCLUDED_BASENAMES = ("README.md",)
 
 
 def _collect_standalone_markdown_paths() -> list[Path]:
@@ -56,13 +64,17 @@ class MarkdownDocumentLayoutTest(unittest.TestCase):
 
     def test_documents_start_with_level_one_title(self) -> None:
         """
-        @brief Verifies every standalone Markdown document starts with `# `.
-        @details Reads each target document and asserts that the first line uses
-        the required level-1 Markdown title prefix.
+        @brief Verifies non-exempt standalone Markdown documents start with `# `.
+        @details Reads each target document whose basename is not listed in
+        `_TITLE_EXCLUDED_BASENAMES` and asserts that the first line uses the
+        required level-1 Markdown title prefix; exempt basenames are skipped
+        without any assertion.
         @return {None} No return value.
-        @satisfies TST-047
+        @satisfies TST-047, DES-006, DES-008
         """
         for document_path in _collect_standalone_markdown_paths():
+            if document_path.name in _TITLE_EXCLUDED_BASENAMES:
+                continue
             document_text = document_path.read_text(encoding="utf-8")
             document_lines = document_text.splitlines()
             with self.subTest(document=document_path.relative_to(_REPO_ROOT)):

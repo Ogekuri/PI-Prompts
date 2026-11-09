@@ -9,6 +9,12 @@ All documentation and comments inside source code MUST:
 -   Use **Atomic Syntax** designed for machine logic inference.
 -   Be formatted using standard Doxygen syntax (`/** ... */` for C/C++ or `""" ... """` for Python) leveraging Markdown within the comments.
 
+### Scope Exclusion (Agentic Instruction Markdown)
+-   **Excluded artifacts**: Doxygen-tag documentation MUST NOT be applied to LLM-facing instruction Markdown: `SKILL.md`, prompt and prompt-template files, `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`, and harness/CLI system Markdown of the agentic workflow.
+-   **Boundary**: the exclusion holds even when such documents are stored inside repository source directories (for example `src/templates/` or `src/prompts/`); repository membership alone does not turn a document into a code component.
+-   **Scope**: the Section 4 Tag Taxonomy targets code components exclusively (functions, classes, objects, structures, modules, variables).
+-   **Required format** for excluded artifacts: structured Markdown sections (purpose, contract, procedure, validation); Doxygen-tag blocks inside these artifacts are non-conforming and MUST be removed on update.
+
 ## 2) Language & Format Constraints
 * **Format:** Standard Doxygen with Markdown support.
 * **Language:** English (Strict US English).

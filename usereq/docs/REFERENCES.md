@@ -5,7 +5,7 @@
 - Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt
 - Executable source symbols under `src`: none detected
 - Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles
-- Template resources under `src/templates`: 3 standalone Markdown documents
+- Template resources under `src/templates`: 4 standalone Markdown documents
 - Instruction resources under `src/instructions`: 2 reusable Markdown instruction snippets
 - Removed prompt in this revision: `src/prompts/references.md`
 
@@ -13,6 +13,7 @@
 ```text
 src/
 ├── templates/
+│   ├── Agentic_Text_Authoring_Guidance.md
 │   ├── Document_Source_Code_in_Doxygen_Style.md
 │   ├── HDT_Test_Authoring_Guide.md
 │   └── Requirements_Template.md
@@ -61,6 +62,7 @@ src/
 ### `src/templates`
 | Path | Lines | Purpose |
 | --- | ---: | --- |
+| `src/templates/Agentic_Text_Authoring_Guidance.md` | 214 | Parser-first authoring standard for LLM-consumed instruction artifacts: intake and authority contract, writing rules, artifact profiles, skill and prompt packaging, CREATE/REVIEW/UPDATE procedures, reusable skeleton, validation case matrix, and delivery record. |
 | `src/templates/Document_Source_Code_in_Doxygen_Style.md` | 143 | Parser-first Doxygen documentation standard for source-code comments and metadata; Section 8 exempts harness/CLI system Markdown documents (SKILL, PROMPT, `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`) from Doxygen tags. |
 | `src/templates/HDT_Test_Authoring_Guide.md` | 318 | Deterministic HDT unit-test authoring guide for Generator and Refactorer modes. |
 | `src/templates/Requirements_Template.md` | 58 | Canonical template for authoring or rebuilding `REQUIREMENTS.md`. |

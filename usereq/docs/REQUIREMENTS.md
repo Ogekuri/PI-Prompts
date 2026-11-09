@@ -187,6 +187,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
 - **REQ-041**: MUST record in each Verification Delta of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` the exact executed unit-test command with total, passed, and failed counts and failing-test names, or the N/A reason.
 - **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string when executed unit tests still fail after the second fix attempt.
+- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a synthetic summary (at most 1024 UTF-8 characters) of the entire final output.
+- **REQ-044**: MUST place the `## **Summary**` section immediately before the `## **Outcome**` section in every bundled prompt using identical canonical phrasing.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

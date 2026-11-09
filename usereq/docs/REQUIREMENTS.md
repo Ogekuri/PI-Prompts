@@ -101,6 +101,8 @@ This project defines and maintains prompt, template, and reusable-instruction ar
 - **DES-006**: MUST author bundled prompt and template documents under `src/` as standalone Markdown starting with a level-1 title and omitting YAML front matter.
 - **DES-007**: MUST NOT embed repository validation, worktree creation, or merge-handling steps in bundled prompts because those concerns are externalized.
 - **DES-008**: MUST exempt root README.md from the DES-006 level-1 title-start constraint.
+- **DES-009**: MUST define in `Document_Source_Code_in_Doxygen_Style.md` an explicit exemption stating that SKILL and PROMPT Markdown files, `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, and `AGENTS.md` require no Doxygen-style tags.
+- **DES-010**: MUST apply the DES-009 Doxygen-tag exemption to every harness/cli agentic-flow system Markdown document even when tracked as part of harness/cli sources.
 
 Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 

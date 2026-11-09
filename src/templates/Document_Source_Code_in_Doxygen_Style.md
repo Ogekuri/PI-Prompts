@@ -128,3 +128,16 @@ def process_telemetry(data: Dict[str, Any], threshold: int = 10) -> List[float]:
 - Include only repository-relevant Doxygen rules, tags, and compact examples.
 - Exclude generic Doxygen handbook/tutorial material that does not change repository behavior.
 - Prefer atomic constraints and deterministic examples over narrative explanations.
+
+## 8) Scope Exemption: Harness/CLI System Markdown Documents
+
+**CRITICAL:** Doxygen-style documentation tags (`@brief`, `@details`, `@param`, `@return`, and any other **Tag Taxonomy** tag) are **NOT required** — and MUST NOT be mandated — inside the following harness/CLI system Markdown documents, even when those files are tracked as part of the harness/CLI sources:
+-   **SKILL Markdown documents** (e.g., `SKILL.md`).
+-   **PROMPT Markdown documents** (bundled agent prompts and system prompt files).
+-   Harness/CLI system documents: `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`.
+-   **Generalization:** any other system Markdown document belonging to the harness/CLI agentic flow.
+
+Rules:
+-   Exempted documents are LLM-facing prose/instruction artifacts, not executable code components; the **Tag Taxonomy** (Section 4) and **Operational Rules** (Section 5) do not apply to them.
+-   Exempted documents keep plain Markdown structure (headings, lists, fenced code blocks) with zero Doxygen tags; documentation compliance checks MUST NOT flag their missing Doxygen tags as failures.
+-   The exemption is class-scoped ONLY: executable code components remain fully subject to Sections 1-7.

@@ -61,7 +61,7 @@ src/
 ### `src/templates`
 | Path | Lines | Purpose |
 | --- | ---: | --- |
-| `src/templates/Document_Source_Code_in_Doxygen_Style.md` | 130 | Parser-first Doxygen documentation standard for source-code comments and metadata. |
+| `src/templates/Document_Source_Code_in_Doxygen_Style.md` | 143 | Parser-first Doxygen documentation standard for source-code comments and metadata; Section 8 exempts harness/CLI system Markdown documents (SKILL, PROMPT, `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`) from Doxygen tags. |
 | `src/templates/HDT_Test_Authoring_Guide.md` | 318 | Deterministic HDT unit-test authoring guide for Generator and Refactorer modes. |
 | `src/templates/Requirements_Template.md` | 58 | Canonical template for authoring or rebuilding `REQUIREMENTS.md`. |
 

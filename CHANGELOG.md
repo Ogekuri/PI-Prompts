@@ -1,7 +1,25 @@
 # Changelog
 
-## [0.10.1](https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.10.1) - 2026-11-08
+## [0.11.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0) - 2026-11-09
+### ⛰️  Features
+- import Agentic_Text_Authoring_Guidance, add ATG reqs [useReq] *(templates)*
+  - Import Agentic_Text_Authoring_Guidance.md verbatim under src/templates as the mandatory agentic text-authoring guideline for LLM-consumed instruction artifacts.
+  - REQUIREMENTS.md: declare the ATG prefix, add the template artifact row and structure-tree entry, and append section 3.21 with requirements ATG-001 through ATG-052 derived from the guidance file as Source of Truth.
+  - REFERENCES.md: register the fourth template with line count and purpose.
+  - Verification: static-check clean; unit tests 7 passed, 0 failed.
+
+### 🐛  Bug Fixes
+- Update Document_Source_Code_in_Doxygen_Style.md file.
+
 ### 🚜  Changes
+- mandate Summary section before final report schema [useReq] *(prompts)*
+  - Add REQ-043/REQ-044: every present-results step prints ## **Summary** (max 1024 UTF-8 chars) immediately before ## **Outcome** with identical canonical phrasing.
+  - Update the shared present-results sentence in all 15 bundled prompts via one canonical replacement.
+  - Verification: static-check clean (all checkers disabled); unittest discover tests: 7/7 OK; REFERENCES.md regeneration N/A (markdown-only src, tool reports no source files).
+- exempt harness/cli system Markdown docs from Doxygen tags [useReq] *(templates)*
+  - REQUIREMENTS.md: add DES-009/DES-010 mandating an explicit exemption so SKILL/PROMPT files and BOOTSTRAP/IDENTITY/SOUL/USER/AGENTS.md require no Doxygen-style tags even when tracked as harness/cli sources.
+  - Document_Source_Code_in_Doxygen_Style.md: add Section 8 scope exemption so agents neither require nor mandate Doxygen-like tags in exempted harness/cli agentic-flow system Markdown documents; executable code stays fully covered.
+  - REFERENCES.md: refresh template line count and purpose to reflect the Section 8 exemption.
 - exempt root README.md from title-start requirement [useReq] *(tests)*
   - Add DES-008 exempting root README.md from the DES-006 title-start constraint and rescope DES-006 to bundled prompt/template documents under src/. Skip README.md in the title layout test while keeping its front-matter invariant. Unit suite: 7 passed, 0 failed via python3 -m unittest discover. references-generation reported no processable sources; src/ unchanged.
 
@@ -236,7 +254,7 @@
 - \[0.8.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.8.0
 - \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
-- \[0.10.1\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.1
+- \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -248,4 +266,4 @@
 [0.8.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.7.0..v0.8.0
 [0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
-[0.10.1]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.10.1
+[0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0

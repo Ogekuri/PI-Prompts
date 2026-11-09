@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.12.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0) - 2026-11-09
+### 🐛  Bug Fixes
+- Minimal prompts edit.
+
+### 🚜  Changes
+- instruct agents to use Agentic_Text_Authoring_Guidance [useReq] *(prompts)*
+  - Add canonical bullet to all 15 bundled prompts: use %%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md when creating, reviewing, or updating LLM-consumed instructions
+  - Insert bullet in ## Professional Personas right after the Prompt Engineer persona, byte-identical across prompts
+  - Add REQ-048..REQ-050 to REQUIREMENTS.md encoding instruction content, mandatory designation, placement, and byte-identity
+- mandate TEMPLATE_PATH prefix and HDT guide usage instruction [useReq] *(prompts)*
+  - Add REQ-045/REQ-046/REQ-047: prompt references to the four template files MUST use the %%TEMPLATE_PATH%%/ prefix; every test-authorizing prompt MUST instruct the agent to use %%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md, naming its mandatory HDT unit-test authoring purpose (Generator and Refactorer modes).
+  - Update the unit-test instruction bullet in change/check/cover/fix/implement/new/refactor prompts with byte-identical canonical phrasing (check.md keeps its conditional specialization).
+  - Verification: static-check clean; python3 -m pytest tests -q: 7 passed, 49 subtests, 0 failed; WORKFLOW.md unchanged (static Markdown src, no runtime-model impact); REFERENCES.md regeneration N/A (no processable source files).
+
 ## [0.11.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0) - 2026-11-09
 ### ⛰️  Features
 - import Agentic_Text_Authoring_Guidance, add ATG reqs [useReq] *(templates)*
@@ -255,6 +269,7 @@
 - \[0.9.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.9.0
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
+- \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -267,3 +282,4 @@
 [0.9.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.8.0..v0.9.0
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
+[0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0

@@ -77,7 +77,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
       - **ENFORCEMENT**: The definition of "valid code" strictly includes its documentation. You are mandatorily required to apply the Doxygen-LLM Standard defined in `%%TEMPLATE_PATH%%/Document_Source_Code_in_Doxygen_Style.md` to every single code component. Any code block generated without this specific documentation format is considered a compilation error and must be rejected/regenerated.
       - Read %%GUIDELINES_FILES%% files and apply those **guidelines**; ensure the proposed code changes conform to those **guidelines**, and adjust the **Implementation Delta** if needed. Do not apply unrelated **guidelines**.
    - Locate existing unit tests in %%TEST_PATH%% that map to implemented requirement IDs; include in the **Implementation Delta** the language-specific priority order for verification runs, and record test execution as N/A when no relevant unit tests exist.
-      - **CRITICAL**: All tests MUST implement these instructions: `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md`.
+      - **CRITICAL**: When creating or modifying unit tests, use `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md`, the mandatory HDT unit-test authoring guide covering its Generator and Refactorer modes.
       - Read %%GUIDELINES_FILES%% files and apply those **guidelines**; ensure the proposed code changes conform to those **guidelines**, and adjust the **Implementation Delta** if needed. Do not apply unrelated **guidelines**.
    - IMPLEMENT the **Implementation Delta** in the source code (creating new files/directories if necessary) from scratch.
 2. Generate **Verification Delta** by verifying static-analysis results, recording unit-test outcomes, and implementing needed bug fixes

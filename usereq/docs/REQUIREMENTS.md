@@ -187,7 +187,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
 - **REQ-041**: MUST record in each Verification Delta of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` the exact executed unit-test command with total, passed, and failed counts and failing-test names, or the N/A reason.
 - **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string when executed unit tests still fail after the second fix attempt.
-- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a synthetic summary (at most 1024 UTF-8 characters) of the entire final output.
+- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a synthetic summary (at most 1010 UTF-8 characters) of the entire final output.
 - **REQ-044**: MUST place the `## **Summary**` section immediately before the `## **Outcome**` section in every bundled prompt using identical canonical phrasing.
 - **REQ-045**: MUST prefix every reference to `Agentic_Text_Authoring_Guidance.md`, `Document_Source_Code_in_Doxygen_Style.md`, `HDT_Test_Authoring_Guide.md`, and `Requirements_Template.md` with `%%TEMPLATE_PATH%%/` in bundled prompts.
 - **REQ-046**: MUST instruct the LLM agent, in every prompt authorizing unit-test creation or modification, to use `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md` as its unit-test authoring guide.

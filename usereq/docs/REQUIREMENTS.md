@@ -204,9 +204,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ANZ-STP-001**: MUST NOT embed a required-doc presence check step in `analyze.md` because doc validation is externalized outside the prompt.
 - **ANZ-STP-002**: MUST define the analysis step to analyze the [User Request](#users-request).
 - **ANZ-STP-003**: MUST define the follow-up-dispatch step positioned between the analysis step and the present-results step in `analyze.md`.
-- **ANZ-STP-004**: MUST define the follow-up-dispatch step to generate the exact `/req-fix` prompt text when the analysis identifies an implementation behavior conflicting with requirements, the exact `/req-change` prompt text when the analysis identifies changes needed to both source code and requirements, and the exact `/req-refactor` prompt text when the analysis identifies source-code modifications that keep requirements unchanged with the intent of improving or adjusting the sources.
-- **ANZ-STP-005**: MUST make the follow-up-dispatch step print each generated follow-up prompt text (`/req-fix`, `/req-change`, or `/req-refactor`) exactly when the analysis identified its corresponding source-code or requirements modification trigger and MUST NOT print any follow-up prompt text in any other case.
+- **ANZ-STP-004**: MUST define `/req-fix` for implementation behavior that conflicts with requirements, `/req-cover` for uncovered existing requirements, `/req-refactor` for requirement-preserving internal improvements, and `/req-change` for changes requiring requirement updates.
+- **ANZ-STP-005**: MUST print a follow-up only when its trigger is identified, using a `~~~text` fence containing the exact slash command on the first line followed by its actionable prompt text.
 - **ANZ-STP-006**: MUST define the present-results step to present a human-readable analysis report preserving the fixed report schema and exact final status line.
+- **ANZ-STP-007**: MUST include the slash command in every follow-up and MUST NOT print a follow-up when no corresponding modification trigger is identified.
 
 ### 3.4 Change Prompt
 - **CHG-CTX-001**: MUST define the `## Purpose` section to instruct: Evolve existing system behavior safely by first updating the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) to encode the requested change, then implementing and verifying the corresponding code/test deltas with strict traceability to requirement IDs so downstream LLM Agents MUST reason over the change deterministically.
@@ -276,6 +277,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **FIX-STP-009**: MUST NOT embed a merge-conflict management step in `fix.md` because merge handling is externalized outside the prompt.
 - **FIX-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
 - **FIX-STP-011**: MUST define the fix-step incompatibility branch to output a three-column requirement-conflict table (`Requirement ID`, `Conflicting Excerpt`, `Conflict Reason + Interrupted Implementation Intent`) before emitting the exact error string and terminating.
+- **FIX-STP-012**: MUST print a `~~~text`-fenced `/req-change` follow-up with actionable prompt text when a requested fix conflicts with requirements, and MUST print no other follow-up command.
 
 ### 3.9 Implement Prompt
 - **IMP-CTX-001**: MUST define the `## Purpose` section to instruct: Produce a working implementation from the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) by building missing functionality end-to-end (including from scratch where needed), so the codebase becomes fully compliant with the documented requirement IDs without changing those requirements.

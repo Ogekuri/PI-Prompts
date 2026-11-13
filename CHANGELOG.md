@@ -1,14 +1,21 @@
 # Changelog
 
-## [0.12.3](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.3) - 2026-11-12
+## [0.12.4](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.4) - 2026-11-13
 ### 🐛  Bug Fixes
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- bind response language to User's Request in eight prompts [useReq] *(prompts)*
+  Add REQ-057..REQ-059 defining placement, scope, and artifact-English boundary of the response-language rule.; Insert the byte-identical CRITICAL bullet into the Absolute Rules, Non-Negotiable section of analyze, change, cover, fix, new, readme, refactor, and write.; Keep report schema headings, exact strings, status line, commands, and identifiers byte-identical.; Update WORKFLOW.md runtime-model notes for the response-language bullet.
+- enforce User's Request response language in nine prompts [useReq] *(prompts)*
+  Add REQ-051..REQ-056 defining the response-language contract, its placement in the present-results step, byte-identical reuse, literal exemptions, artifact-scope boundary, and the no-User-Request exemption.; Insert the byte-identical two-bullet contract into analyze, change, check, cover, fix, new, readme, refactor, and write prompts.; Keep report schema headings, error/warning strings, status line, commands, identifiers, requirement IDs, paths, and placeholders byte-identical.; Update WORKFLOW.md runtime-model notes for the response-language contract.
 - add agentic workflow dispatch [useReq] *(prompts)*
   Traceability: ANZ-STP-004, ANZ-STP-005, ANZ-STP-007, FIX-STP-012
 - set final Summary limit to 1010 UTF-8 characters [useReq] *(prompts)*
   Update REQ-043 in usereq/docs/REQUIREMENTS.md from 1024 to 1010 UTF-8 characters.; Update present-results Summary limit from 1024 to 1010 UTF-8 characters across all 15 bundled prompts in src/prompts/.
+
+### ◀️  Revert
+- Roll back branch to a2c8ec72 (a2c8ec72a94ce7505c2f2ff3f5172ebcd1aa2bc7).
 
 ## [0.12.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0) - 2026-11-09
 ### 🐛  Bug Fixes
@@ -227,7 +234,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.3\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.3
+- \[0.12.4\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.4
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -241,4 +248,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.3]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.3
+[0.12.4]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.4

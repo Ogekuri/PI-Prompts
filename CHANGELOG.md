@@ -1,12 +1,14 @@
 # Changelog
 
-## [0.12.5](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.5) - 2026-11-13
+## [0.12.6](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.6) - 2026-11-13
 ### 🐛  Bug Fixes
 - emit final status line on every prompt termination path [useReq] *(prompts)*
   Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- unify mandatory-only Next Workflow fence guidance [useReq] *(prompts)*
+  REQUIREMENTS.md: add REQ-063..REQ-069 for byte-identical next-step bullet; all 15 prompts: emit next-step only when mandatory, single ~~~text fence, no prose; analyze.md: align present-results bullet, keep 4 allowed follow-up commands; WORKFLOW.md: document the two byte-identical present-results bullets
 - emit terminal status line via dedicated present-results bullet [useReq] *(prompts)*
   REQUIREMENTS.md: add REQ-060, REQ-061, REQ-062 mandating a dedicated terminal-status bullet in every present-results step.; src/prompts/*.md: move the STATUS: OK / STATUS: ERROR emission out of the PRINT bullet into its own byte-identical bullet placed after the Next Workflow content.; WORKFLOW.md: record the new byte-identical present-results status bullet invariant for PROC:main.
 - bind response language to User's Request in eight prompts [useReq] *(prompts)*
@@ -239,7 +241,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.5\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.5
+- \[0.12.6\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.6
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -253,4 +255,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.5]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.5
+[0.12.6]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.6

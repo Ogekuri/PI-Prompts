@@ -198,6 +198,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-057**: MUST include in the `## Absolute Rules, Non-Negotiable` section of `analyze.md`, `change.md`, `cover.md`, `fix.md`, `new.md`, `readme.md`, `refactor.md`, and `write.md` a byte-identical `CRITICAL` bullet governing final response language.
 - **REQ-058**: MUST scope that bullet to all final response text, including the `## **Summary**` section, every fixed report schema section, and the final status line, using the `[User's Request](#users-request)` language.
 - **REQ-059**: MUST restrict that bullet to the final response only and MUST keep repository artifact content in English.
+- **REQ-060**: MUST define in the present-results step of every bundled prompt a dedicated bullet that emits exactly one terminal status line after the `## **Next Workflow**` section.
+- **REQ-061**: MUST state within that bullet that the terminal status line is `STATUS: OK` when the workflow completed successfully and `STATUS: ERROR` when it failed, was blocked, or ended without change.
+- **REQ-062**: MUST require that bullet to forbid any response content after the emitted terminal status line and MUST keep the bullet byte-identical across all bundled prompts.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

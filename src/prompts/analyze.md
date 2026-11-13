@@ -140,8 +140,9 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    - Print only the applicable follow-up block under `## **Next Workflow**`; do not print any follow-up text when no trigger is identified.
    - Do NOT execute the generated follow-up prompt and do NOT apply any fix or repository modification in this workflow; this workflow remains read-only.
 3. Present results
-   - PRINT, in the response, the final analysis report for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. PRINT first a ## **Summary** section containing a synthetic summary (at most 1010 UTF-8 characters) of the entire final output, then the verbose report using the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.
+   - PRINT, in the response, the final analysis report for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. PRINT first a ## **Summary** section containing a synthetic summary (at most 1010 UTF-8 characters) of the entire final output, then the verbose report using the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**.
    - Include each Step 2 generated command block under `## **Next Workflow**` ONLY when its trigger was identified; omit follow-up content entirely in all other cases.
+   - Emit exactly one terminal status line as the final line of the response, after `## **Next Workflow**`: `STATUS: OK` when the workflow completed successfully, or `STATUS: ERROR` when it failed, was blocked, or ended without change; print no content after it.
 
 <h2 id="users-request">User's Request</h2>
 %%ARGS%%

@@ -2,7 +2,7 @@
 
 ## Source Surface Summary
 - Source root: `src`
-- Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt; every prompt instruction that terminates execution before the final present-results step prints the fixed report schema and closes with exactly `STATUS: ERROR` for error and abort paths or exactly `STATUS: OK` for no-op success paths
+- Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt
 - Executable source symbols under `src`: none detected
 - Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles
 - Template resources under `src/templates`: 4 standalone Markdown documents
@@ -70,7 +70,7 @@ src/
 ### `src/instructions`
 | Path | Lines | Purpose |
 | --- | ---: | --- |
-| `src/instructions/git_commit.md` | 16 | Reusable commit-workflow instruction block injected through `%%COMMIT%%`; its dirty-repository, no-change, and unclean-post-commit paths require the fixed report schema and an exact final status line. |
+| `src/instructions/git_commit.md` | 16 | Reusable commit-workflow instruction block injected through `%%COMMIT%%`. |
 | `src/instructions/git_read-only.md` | 2 | Reusable git read-only restriction block for analysis-only workflows. |
 
 ## Symbol Status

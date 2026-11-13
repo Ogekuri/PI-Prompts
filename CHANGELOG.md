@@ -1,10 +1,14 @@
 # Changelog
 
-## [0.12.4](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.4) - 2026-11-13
+## [0.12.5](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.5) - 2026-11-13
 ### 🐛  Bug Fixes
+- emit final status line on every prompt termination path [useReq] *(prompts)*
+  Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- emit terminal status line via dedicated present-results bullet [useReq] *(prompts)*
+  REQUIREMENTS.md: add REQ-060, REQ-061, REQ-062 mandating a dedicated terminal-status bullet in every present-results step.; src/prompts/*.md: move the STATUS: OK / STATUS: ERROR emission out of the PRINT bullet into its own byte-identical bullet placed after the Next Workflow content.; WORKFLOW.md: record the new byte-identical present-results status bullet invariant for PROC:main.
 - bind response language to User's Request in eight prompts [useReq] *(prompts)*
   Add REQ-057..REQ-059 defining placement, scope, and artifact-English boundary of the response-language rule.; Insert the byte-identical CRITICAL bullet into the Absolute Rules, Non-Negotiable section of analyze, change, cover, fix, new, readme, refactor, and write.; Keep report schema headings, exact strings, status line, commands, and identifiers byte-identical.; Update WORKFLOW.md runtime-model notes for the response-language bullet.
 - enforce User's Request response language in nine prompts [useReq] *(prompts)*
@@ -15,6 +19,7 @@
   Update REQ-043 in usereq/docs/REQUIREMENTS.md from 1024 to 1010 UTF-8 characters.; Update present-results Summary limit from 1024 to 1010 UTF-8 characters across all 15 bundled prompts in src/prompts/.
 
 ### ◀️  Revert
+- Roll back branch to de3b4bd5 (de3b4bd5d0fe0ec8b3d35f887cc9d9bb3a3610cc).
 - Roll back branch to a2c8ec72 (a2c8ec72a94ce7505c2f2ff3f5172ebcd1aa2bc7).
 
 ## [0.12.0](https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0) - 2026-11-09
@@ -234,7 +239,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.4\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.4
+- \[0.12.5\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.5
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -248,4 +253,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.4]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.4
+[0.12.5]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.5

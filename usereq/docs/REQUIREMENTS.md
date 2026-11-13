@@ -201,6 +201,13 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-060**: MUST define in the present-results step of every bundled prompt a dedicated bullet that emits exactly one terminal status line after the `## **Next Workflow**` section.
 - **REQ-061**: MUST state within that bullet that the terminal status line is `STATUS: OK` when the workflow completed successfully and `STATUS: ERROR` when it failed, was blocked, or ended without change.
 - **REQ-062**: MUST require that bullet to forbid any response content after the emitted terminal status line and MUST keep the bullet byte-identical across all bundled prompts.
+- **REQ-063**: MUST define in the present-results step of every bundled prompt a `## **Next Workflow**` emission bullet and MUST keep that bullet byte-identical across all bundled prompts.
+- **REQ-064**: MUST state within that bullet that a next-step command is emitted only when the completed workflow outcome mandates it and that no next-step is printed when the outcome requires none.
+- **REQ-065**: MUST state within that bullet that optional or elective next-step commands MUST NOT be added.
+- **REQ-066**: MUST state within that bullet that every emitted next-step uses exactly one `~~~text` fenced block whose first line is the exact slash command.
+- **REQ-067**: MUST state within that bullet that the remaining fence lines carry the prompt text to pass to that command when the command expects input text.
+- **REQ-068**: MUST state within that bullet that no prose is printed inside or outside the emitted fence under `## **Next Workflow**`.
+- **REQ-069**: MUST place that bullet immediately before the terminal-status-line bullet defined by REQ-060 in the present-results step.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

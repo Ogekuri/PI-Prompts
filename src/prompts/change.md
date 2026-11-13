@@ -190,8 +190,6 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
    -  Create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 6. %%COMMIT%%
 7. Present results
-   - PRINT the entire final response in the natural language used in the [User's Request](#users-request); this rule does not change the English-only rule for written repository artifacts.
-   - Keep byte-identical inside that response the fixed report-schema headings, exact error and warning strings, the final status line, shell commands, code identifiers, requirement IDs, file paths, and placeholder tokens.
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. PRINT first a ## **Summary** section containing a synthetic summary (at most 1010 UTF-8 characters) of the entire final output, then the verbose report using the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**. Final line MUST be exactly: STATUS: OK or STATUS: ERROR.
 
 <h2 id="users-request">User's Request</h2>

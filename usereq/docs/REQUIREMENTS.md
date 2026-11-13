@@ -195,6 +195,12 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-048**: MUST instruct the LLM agent, in every bundled prompt, to use `%%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md` when creating, reviewing, or updating LLM-consumed instructions, including incidental instruction edits within larger tasks.
 - **REQ-049**: MUST state within that instruction that `%%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md` is the mandatory agentic text-authoring guidance for those tasks.
 - **REQ-050**: MUST place that instruction in the `## Professional Personas` section immediately after the `Prompt Engineer and LLM Optimization Specialist` persona and MUST keep it byte-identical across all bundled prompts.
+- **REQ-051**: MUST instruct every bundled prompt whose User's Request section is populated from `%%ARGS%%` to print the entire final response in the natural language used to express that User's Request.
+- **REQ-052**: MUST place the REQ-051 response-language instruction in the present-results step of every affected prompt.
+- **REQ-053**: MUST keep the REQ-051 response-language instruction byte-identical across every affected prompt.
+- **REQ-054**: MUST keep byte-identical inside that response the fixed report-schema headings, exact error and warning strings, the final status line, shell commands, code identifiers, requirement IDs, file paths, and placeholder tokens.
+- **REQ-055**: MUST scope the REQ-051 response-language instruction to the agent response only and MUST NOT relax the English-only rule for written repository artifacts.
+- **REQ-056**: MUST NOT apply the REQ-051 response-language instruction to bundled prompts that contain no User's Request section.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

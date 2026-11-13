@@ -2,10 +2,10 @@
    - Act as an Expert GitOps Engineer when executing the git workflow in this instruction and preparing the final commit safely.
    - Commit only the intended changes with a unique identifier and change description in the commit message.
    - Leave the working tree AND index clean (git `status --porcelain` must be empty).
-   - Do NOT "fix" a dirty repo by force (no `git reset --hard`, no `git clean -fd`, no stash) unless explicitly requested. If dirty: abort.
+   - Do NOT "fix" a dirty repo by force (no `git reset --hard`, no `git clean -fd`, no stash) unless explicitly requested. If dirty: abort the commit, print the fixed report schema ending with exactly `STATUS: ERROR`, and then terminate the execution.
    - Show a summary of changes with `git diff` and `git diff --stat`.
    - Stage changes explicitly (prefer targeted add; avoid `git add -A` if it may include unintended files): `git add <file...>` (ensure to include only the files intended by the active workflow).
-   - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", and then terminate the execution.
+   - Ensure there is something to commit with: `git diff --cached --quiet && echo "Nothing to commit. Aborting."`. If command output contains "Aborting", OUTPUT exactly "No changes to commit.", then print the fixed report schema ending with exactly `STATUS: OK`, and then terminate the execution.
    - Commit a structured commit message with: `git commit -m "<TYPE>(<COMPONENT>)<BREAKING>: <DESCRIPTION> [useReq]"`
       - Set `<TYPE>` exactly to the runtime-substituted token `%%PROMPT%%`.
       - Set `<COMPONENT>` to the most specific component, module, or function affected. If multiple areas are touched, choose the primary one. If you cannot identify a unique component, use `core`.
@@ -13,4 +13,4 @@
       - Set `<BREAKING>` to `!` if a breaking change was implemented (a modification to an API, library, or system that breaks backward compatibility, causing dependent client applications or code to fail or behave incorrectly), set empty otherwise.
       - Include main features added, requirements changes, or a bug-fix description adding a multi-line comment (maximum 10 lines).
          - Do not include the 'Co-authored-by' trailer or any AI attribution. A GPG-signed commit is not required.
-   - Confirm the repo is clean with the `git-status` tool. If the command returns an error code or prints any text containing "ERROR", override the final line with EXACTLY "WARNING: Request completed with unclean git repository!".
+   - Confirm the repo is clean with the `git-status` tool. If the command returns an error code or prints any text containing "ERROR", print exactly "WARNING: Request completed with unclean git repository!", then print the fixed report schema ending with exactly `STATUS: ERROR`.

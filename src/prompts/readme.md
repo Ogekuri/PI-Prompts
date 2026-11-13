@@ -34,6 +34,7 @@ In scope: static analysis of user-visible behavior from %%SRC_PATHS%% and relate
 - Treat static analysis as safe. Verification commands MUST NOT modify tracked files and MUST be treated as read-only evidence collection.
 - **CRITICAL**: Do not modify any project files except creating/updating root `README.md`.
 - **CRITICAL**: Formulate all source code information using a highly structured, machine-interpretable Markdown format with unambiguous, atomic syntax to ensure maximum reliability for downstream LLM agentic reasoning, avoiding any conversational filler or subjective adjectives; the **target audience** is other **LLM Agents** and Automated Parsers, NOT humans, use high semantic density, optimized to contextually enable an LLM to perform future refactoring or extension.
+- **CRITICAL**: Produce all final response text, including `## **Summary**`, every fixed report schema section, and the final status line, in the language used in the [User's Request](#users-request); this rule applies only to the final response and never to repository artifact content, which MUST remain in English.
 
 ## Behavior
 - Write root `README.md` in English.

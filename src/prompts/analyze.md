@@ -36,6 +36,7 @@ In scope: read-only analysis of the above documents plus source under %%SRC_PATH
 **CRITICAL**: Git Read-Only Restriction
    - Only read-only access to the git repository is allowed. You may inspect files, history, diffs, status, and other repository metadata, but you MUST NOT execute any command or action that modifies the repository state, the index, refs, history, branches, tags, remotes, or the .git directory. Any repository write or state-changing action is forbidden.
    - Allowed git commands in this workflow (read-only only): `git status`, `git diff`, `git ls-files`, `grep`, `git rev-parse`, `git branch --show-current`. Do NOT run any other git commands.
+- **CRITICAL**: Produce all final response text, including `## **Summary**`, every fixed report schema section, and the final status line, in the language used in the [User's Request](#users-request); this rule applies only to the final response and never to repository artifact content, which MUST remain in English.
 
 ## Behavior
 - Only analyze the code and present the results; make no changes.

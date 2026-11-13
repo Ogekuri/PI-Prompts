@@ -38,6 +38,7 @@ In scope: author/update only `%%DOC_PATH%%/REQUIREMENTS.md` from [User Request](
 - **CRITICAL**: Do NOT generate or modify source code or source-code documentation in this workflow. Only create/update the requirements document(s) explicitly in scope.
 - **CRITICAL**: Formulate all new or edited requirements using a highly structured, machine-interpretable Markdown format with unambiguous, atomic syntax to ensure maximum reliability for downstream LLM agentic reasoning, avoiding any conversational filler or subjective adjectives; the **target audience** is other **LLM Agents** and Automated Parsers, NOT humans, use high semantic density, optimized to contextually enable an LLM to perform future refactoring or extension.
 - **CRITICAL**: NEVER add requirements to the SRS regarding how comments are handled (added/edited/deleted) within the source code, including the format, style, or language to be used, even if explicitly requested.
+- **CRITICAL**: Produce all final response text, including `## **Summary**`, every fixed report schema section, and the final status line, in the language used in the [User's Request](#users-request); this rule applies only to the final response and never to repository artifact content, which MUST remain in English.
 
 ## Behavior
 - Do not perform unrelated edits.

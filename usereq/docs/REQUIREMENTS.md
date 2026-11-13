@@ -195,6 +195,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-048**: MUST instruct the LLM agent, in every bundled prompt, to use `%%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md` when creating, reviewing, or updating LLM-consumed instructions, including incidental instruction edits within larger tasks.
 - **REQ-049**: MUST state within that instruction that `%%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md` is the mandatory agentic text-authoring guidance for those tasks.
 - **REQ-050**: MUST place that instruction in the `## Professional Personas` section immediately after the `Prompt Engineer and LLM Optimization Specialist` persona and MUST keep it byte-identical across all bundled prompts.
+- **REQ-057**: MUST include in the `## Absolute Rules, Non-Negotiable` section of `analyze.md`, `change.md`, `cover.md`, `fix.md`, `new.md`, `readme.md`, `refactor.md`, and `write.md` a byte-identical `CRITICAL` bullet governing final response language.
+- **REQ-058**: MUST scope that bullet to all final response text, including the `## **Summary**` section, every fixed report schema section, and the final status line, using the `[User's Request](#users-request)` language.
+- **REQ-059**: MUST restrict that bullet to the final response only and MUST keep repository artifact content in English.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

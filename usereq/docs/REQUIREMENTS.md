@@ -199,7 +199,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-058**: MUST require human-readable final response values to use the user request language while preserving exact literals and commands.
 - **REQ-059**: MUST restrict that bullet to the final response only and MUST keep repository artifact content in English.
 - **REQ-060**: MUST require `result` to be the string `ok` on success and `error` on failure, blockage, or termination without changes.
-- **REQ-061**: MUST require string fields `summary`, `outcome`, `requirement_delta`, `design_delta`, `implementation_delta`, `verification_delta`, `evidence`, `assumptions`, and `next_workflow`.
+- **REQ-061**: MUST require string fields `summary`, `outcome`, `evidence`, `assumptions`, and `next_workflow`, and only those delta fields specified by each workflow.
 - **REQ-062**: MUST reject additional top-level fields and additional fields in command objects.
 - **REQ-063**: MUST require the `next_commands` array in every final response.
 - **REQ-064**: MUST include only commands mandated by the workflow outcome in `next_commands`.
@@ -212,6 +212,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-071**: MUST preserve Unicode content through JSON serialization.
 - **REQ-072**: MUST preserve all required diagnostics, evidence, and partial results inside the appropriate JSON string fields.
 - **REQ-073**: MUST return the complete JSON object with `result` set to `error` on every early error or no-change termination.
+- **REQ-074**: MUST place a mandatory final JSON output contract in the `## Absolute Rules, Non-Negotiable` section of every bundled prompt.
+- **REQ-075**: MUST describe each applicable JSON field in that contract using the workflow's existing report requirements.
+- **REQ-076**: MUST use identical JSON serialization, result, and next-command rules across all bundled prompt contracts.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

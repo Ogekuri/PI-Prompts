@@ -28,6 +28,14 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
 
 
 ## Absolute Rules, Non-Negotiable
+- **CRITICAL**: The final response, including every early termination, MUST be exactly one valid JSON object without surrounding text or fences. Set `result` to `ok` on success and `error` on failure, blockage, or no-change termination. Include only the fields described below. All fields except `next_commands` MUST be human-readable strings in the user request language; preserve exact diagnostic literals, commands, identifiers, and Unicode. Escape quotation marks, backslashes, control characters, and newlines as JSON requires.
+  - `summary`: Summarize the entire final response in at most 1010 Unicode characters.
+  - `outcome`: Report the workflow outcome and required exact diagnostics, including partial results on failure.
+  - `evidence`: Report concrete evidence, paths, and line numbers as required by the workflow.
+  - `assumptions`: Report relevant assumptions or state that none were made.
+  - `next_workflow`: Describe the mandated next actions consistently with `next_commands`, or state that none are required.
+  - `next_commands`: Use an array of objects containing only string fields `command` and `text`; include only outcome-mandated commands, with the exact slash command and required input text, or an empty `text` when input is unnecessary; use `[]` when no command is mandated.
+  - For a required field without applicable content, provide a clear not-applicable description; retain required evidence, conflict tables, diagnostics, and partial work in the appropriate fields.
 - **CRITICAL**: When instructions generate shell commands, they MUST generate only linear shell commands compatible with restrictive filtering systems, MUST verify and apply correct quoting, escaping, or option termination for literal arguments that could be parsed as options or flags, MUST use explicit option termination for `rg` and `git grep` patterns beginning with `-` or `--`, MUST NOT rely on quoting or backslash escaping alone for those patterns, and MUST NOT use command substitution (`$()` or backticks), complex variable expansion, nested substitution, shell-derived helper composition, nested shell logic, or nested pipelines.
 - **CRITICAL**: NEVER write, modify, edit, or delete files outside of the active repository directory, except under `/tmp`.
 - You can read, write, or edit `%%DOC_PATH%%/WORKFLOW.md`.
@@ -168,7 +176,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
          - `<child internal calls as nested bullet list, in call order>`
 3. %%COMMIT%%
 4. Present results
-   - Emit exactly one valid JSON object as the entire final response, without external text or fences. Include only these required fields: `result`, `summary`, `outcome`, `requirement_delta`, `design_delta`, `implementation_delta`, `verification_delta`, `evidence`, `assumptions`, `next_workflow`, and `next_commands`.
+   - Emit the JSON object required by the `## Absolute Rules, Non-Negotiable` section.
    - Set `result` to `ok` for success or `error` for failure, blockage, or no-change termination. All fields except `next_commands` are human-readable strings; retain exact diagnostic literals and commands. Use the user request language for human-readable values; keep repository artifacts in English. Limit `summary` to 1010 Unicode characters.
    - Populate the report fields with all applicable results, diagnostics, evidence and partial work; use a clear not-applicable description when a section has no content. Preserve required paths, line numbers, conflict tables and exact diagnostic strings inside the appropriate strings.
    - Set `next_commands` to an array of objects containing only string fields `command` and `text`. Include only commands mandated by the outcome, never optional commands; use the exact slash command and its required input text, or an empty `text` if input is unnecessary. Use `[]` when none are mandated. Describe the same next actions in `next_workflow`, or state that none are required.

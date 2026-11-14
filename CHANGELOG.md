@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.12.7](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.7) - 2026-11-14
+## [0.12.8](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.8) - 2026-11-14
 ### 🐛  Bug Fixes
 - emit final status line on every prompt termination path [useReq] *(prompts)*
   Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- BREAKING CHANGE: define mandatory workflow JSON contracts [useReq] *(prompts)*
+  Update requirements and align prompt-specific output fields and workflow model.
+- BREAKING CHANGE: define JSON response contract in SRS and prompts [useReq] *(prompts)*
+  Specify structured outcomes, diagnostics, and mandatory follow-up commands.
 - BREAKING CHANGE: emit parseable status keywords [useReq] *(prompts)*
   REQ-061 and REQ-073: update terminal status and early error exits. Align the commit instruction and workflow model.
 - BREAKING CHANGE: add parseable result fences [useReq] *(prompts)*
@@ -248,7 +252,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.7\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.7
+- \[0.12.8\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.8
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -262,4 +266,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.7]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.7
+[0.12.8]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.8

@@ -1,12 +1,20 @@
 # Changelog
 
-## [0.12.8](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.8) - 2026-11-14
+## [0.12.9](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.9) - 2026-11-14
 ### 🐛  Bug Fixes
+- Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
   Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- mandate empty-workflow output when no source is detected [useReq] *(workflow)*
+  Add WFL-STP-008..010: the workflow prompt detects the no-source
+  outcome on prescribed source paths and overwrites WORKFLOW.md with
+  the byte-exact empty-workflow system_directive content that marks
+  the req-workflow skill and command as unnecessary and deprecated.
+  Update the SRS to v0.9.1 and reflect the no-source fallback in the
+  runtime model document.
 - BREAKING CHANGE: define mandatory workflow JSON contracts [useReq] *(prompts)*
   Update requirements and align prompt-specific output fields and workflow model.
 - BREAKING CHANGE: define JSON response contract in SRS and prompts [useReq] *(prompts)*
@@ -252,7 +260,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.8\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.8
+- \[0.12.9\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.9
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -266,4 +274,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.8]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.8
+[0.12.9]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.9

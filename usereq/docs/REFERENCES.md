@@ -4,7 +4,7 @@
 - Source root: `src`
 - Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt
 - Executable source symbols under `src`: none detected
-- Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles
+- Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles; present-results instructions specify `RESULT_SUMMARY` and `NEXT_WORKFLOW` fenced blocks
 - Template resources under `src/templates`: 4 standalone Markdown documents
 - Instruction resources under `src/instructions`: 2 reusable Markdown instruction snippets
 - Removed prompt in this revision: `src/prompts/references.md`

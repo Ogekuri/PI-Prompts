@@ -187,7 +187,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
 - **REQ-041**: MUST record in each Verification Delta of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` the exact executed unit-test command with total, passed, and failed counts and failing-test names, or the N/A reason.
 - **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string when executed unit tests still fail after the second fix attempt.
-- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a synthetic summary (at most 1010 UTF-8 characters) of the entire final output.
+- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a human-readable summary of the entire final output, limited to 1010 Unicode characters.
 - **REQ-044**: MUST place the `## **Summary**` section immediately before the `## **Outcome**` section in every bundled prompt using identical canonical phrasing.
 - **REQ-045**: MUST prefix every reference to `Agentic_Text_Authoring_Guidance.md`, `Document_Source_Code_in_Doxygen_Style.md`, `HDT_Test_Authoring_Guide.md`, and `Requirements_Template.md` with `%%TEMPLATE_PATH%%/` in bundled prompts.
 - **REQ-046**: MUST instruct the LLM agent, in every prompt authorizing unit-test creation or modification, to use `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md` as its unit-test authoring guide.
@@ -204,10 +204,13 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-063**: MUST define in the present-results step of every bundled prompt a `## **Next Workflow**` emission bullet and MUST keep that bullet byte-identical across all bundled prompts.
 - **REQ-064**: MUST state within that bullet that a next-step command is emitted only when the completed workflow outcome mandates it and that no next-step is printed when the outcome requires none.
 - **REQ-065**: MUST state within that bullet that optional or elective next-step commands MUST NOT be added.
-- **REQ-066**: MUST state within that bullet that every emitted next-step uses exactly one `~~~text` fenced block whose first line is the exact slash command.
-- **REQ-067**: MUST state within that bullet that the remaining fence lines carry the prompt text to pass to that command when the command expects input text.
-- **REQ-068**: MUST state within that bullet that no prose is printed inside or outside the emitted fence under `## **Next Workflow**`.
+- **REQ-066**: MUST state within that bullet that `## **Next Workflow**` contains exactly one `~~~NEXT_WORKFLOW` fenced block with any mandated commands.
+- **REQ-067**: MUST state within that bullet that each command starts with its exact slash command and is followed by its input text when required.
+- **REQ-068**: MUST state within that bullet that a brief human-readable description precedes the `NEXT_WORKFLOW` block.
 - **REQ-069**: MUST place that bullet immediately before the terminal-status-line bullet defined by REQ-060 in the present-results step.
+- **REQ-070**: MUST enclose the `## **Summary**` human-readable summary in exactly one `~~~RESULT_SUMMARY` fenced block.
+- **REQ-071**: MUST state within the `## **Next Workflow**` emission bullet that mandated commands in the block are separated by blank lines.
+- **REQ-072**: MUST state within the `## **Next Workflow**` emission bullet that the block is empty and the description reports no next action when no command is mandated.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.
@@ -218,7 +221,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ANZ-STP-002**: MUST define the analysis step to analyze the [User Request](#users-request).
 - **ANZ-STP-003**: MUST define the follow-up-dispatch step positioned between the analysis step and the present-results step in `analyze.md`.
 - **ANZ-STP-004**: MUST define `/req-fix` for implementation behavior that conflicts with requirements, `/req-cover` for uncovered existing requirements, `/req-refactor` for requirement-preserving internal improvements, and `/req-change` for changes requiring requirement updates.
-- **ANZ-STP-005**: MUST print a follow-up only when its trigger is identified, using a `~~~text` fence containing the exact slash command on the first line followed by its actionable prompt text.
+- **ANZ-STP-005**: MUST print a follow-up only when its trigger is identified, using the `NEXT_WORKFLOW` block with the exact slash command followed by its actionable prompt text.
 - **ANZ-STP-006**: MUST define the present-results step to present a human-readable analysis report preserving the fixed report schema and exact final status line.
 - **ANZ-STP-007**: MUST include the slash command in every follow-up and MUST NOT print a follow-up when no corresponding modification trigger is identified.
 
@@ -290,7 +293,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **FIX-STP-009**: MUST NOT embed a merge-conflict management step in `fix.md` because merge handling is externalized outside the prompt.
 - **FIX-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
 - **FIX-STP-011**: MUST define the fix-step incompatibility branch to output a three-column requirement-conflict table (`Requirement ID`, `Conflicting Excerpt`, `Conflict Reason + Interrupted Implementation Intent`) before emitting the exact error string and terminating.
-- **FIX-STP-012**: MUST print a `~~~text`-fenced `/req-change` follow-up with actionable prompt text when a requested fix conflicts with requirements, and MUST print no other follow-up command.
+- **FIX-STP-012**: MUST print a `/req-change` follow-up with actionable prompt text in the `NEXT_WORKFLOW` block when a requested fix conflicts with requirements, and MUST print no other follow-up command.
 
 ### 3.9 Implement Prompt
 - **IMP-CTX-001**: MUST define the `## Purpose` section to instruct: Produce a working implementation from the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) by building missing functionality end-to-end (including from scratch where needed), so the codebase becomes fully compliant with the documented requirement IDs without changing those requirements.

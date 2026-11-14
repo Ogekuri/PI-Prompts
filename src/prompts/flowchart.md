@@ -189,7 +189,7 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
 4. Present results
    - PRINT, in the response, the results for a human reader using clear, easily understandable sentences and readable Markdown formatting that highlight key findings, file paths, and concise evidence. PRINT first a ## **Summary** section containing a human-readable summary of the entire final output, at most 1010 Unicode characters encoded as UTF-8, enclosed in exactly one `~~~RESULT_SUMMARY` fenced block, then the verbose report using the fixed report schema: ## **Outcome**, ## **Requirement Delta**, ## **Design Delta**, ## **Implementation Delta**, ## **Verification Delta**, ## **Evidence**, ## **Assumptions**, ## **Next Workflow**.
    - Under `## **Next Workflow**`, print a brief human-readable description followed by exactly one `~~~NEXT_WORKFLOW` fenced block. Include only commands mandated by the completed workflow outcome; never add optional or elective commands. For each command, print the exact slash command followed by its input text when required, and separate commands with blank lines. If no command is mandated, describe that no next action is required and leave the block empty.
-   - Emit exactly one terminal status line as the final line of the response, after `## **Next Workflow**`: `STATUS: OK` when the workflow completed successfully, or `STATUS: ERROR` when it failed, was blocked, or ended without change; print no content after it.
+   - Emit exactly one terminal status line as the final line of the response, after `## **Next Workflow**`: `STATUS_OK` when the workflow completed successfully, or `STATUS_ERROR` when it failed, was blocked, or ended without change; print no content after it.
 
 
 ## Context Files

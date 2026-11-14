@@ -199,7 +199,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-058**: MUST scope that bullet to all final response text, including the `## **Summary**` section, every fixed report schema section, and the final status line, using the `[User's Request](#users-request)` language.
 - **REQ-059**: MUST restrict that bullet to the final response only and MUST keep repository artifact content in English.
 - **REQ-060**: MUST define in the present-results step of every bundled prompt a dedicated bullet that emits exactly one terminal status line after the `## **Next Workflow**` section.
-- **REQ-061**: MUST state within that bullet that the terminal status line is `STATUS: OK` when the workflow completed successfully and `STATUS: ERROR` when it failed, was blocked, or ended without change.
+- **REQ-061**: MUST state within that bullet that the terminal status line is `STATUS_OK` when the workflow completed successfully and `STATUS_ERROR` when it failed, was blocked, or ended without change.
 - **REQ-062**: MUST require that bullet to forbid any response content after the emitted terminal status line and MUST keep the bullet byte-identical across all bundled prompts.
 - **REQ-063**: MUST define in the present-results step of every bundled prompt a `## **Next Workflow**` emission bullet and MUST keep that bullet byte-identical across all bundled prompts.
 - **REQ-064**: MUST state within that bullet that a next-step command is emitted only when the completed workflow outcome mandates it and that no next-step is printed when the outcome requires none.
@@ -211,6 +211,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-070**: MUST enclose the `## **Summary**` human-readable summary in exactly one `~~~RESULT_SUMMARY` fenced block.
 - **REQ-071**: MUST state within the `## **Next Workflow**` emission bullet that mandated commands in the block are separated by blank lines.
 - **REQ-072**: MUST state within the `## **Next Workflow**` emission bullet that the block is empty and the description reports no next action when no command is mandated.
+- **REQ-073**: MUST require every early error termination to emit `STATUS_ERROR` as the final line after any required diagnostic.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

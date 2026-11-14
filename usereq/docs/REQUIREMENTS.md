@@ -1,8 +1,8 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.9.0"
-date: "2026-11-08"
+version: "0.9.1"
+date: "2026-11-14"
 author: "req-change"
 scope:
   paths:
@@ -400,6 +400,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **WFL-STP-005**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **WFL-STP-006**: MUST NOT embed a merge-conflict management step in `workflow.md` because merge handling is externalized outside the prompt.
 - **WFL-STP-007**: MUST define the present-results step to present human-readable results in the required JSON object.
+- **WFL-STP-008**: MUST define the static-analysis step to detect the no-source outcome when the prescribed %%SRC_PATHS%% searches yield no analyzable source code.
+- **WFL-STP-009**: MUST make the generate step, on the no-source outcome, overwrite `%%DOC_PATH%%/WORKFLOW.md` with the byte-exact empty-workflow literal from workflow.md instead of the canonical schema.
+- **WFL-STP-010**: MUST define that literal byte-exactly in workflow.md starting with `<system_directive>`, containing `[STATUS]: NO_SOURCE_CODE_DETECTED`, `[FILE_CONTENT]: EMPTY_WORKFLOW`, and the `req-workflow` deprecation instructions, and ending with `</system_directive>`.
 
 ### 3.16 Write Prompt
 - **WRT-CTX-001**: MUST define the `## Purpose` section to instruct: Capture the user's intent as an SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) suitable for automated, SRS-driven development, so downstream LLM Agents MUST implement the system without inventing unstated requirements.

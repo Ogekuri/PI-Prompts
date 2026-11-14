@@ -71,6 +71,7 @@ In scope: static analysis of source under %%SRC_PATHS%% to generate/overwrite on
   - ALL processes and threads used at runtime (static analysis), including the main process.
   - For EACH execution unit: a complete internal call-trace tree from entrypoint(s) down to internal leaf functions (internal functions only).
   - ALL explicit communication/interconnection paths between execution units.
+- Schema exception: when Step 1 records the `NO_SOURCE_CODE_DETECTED` outcome, Step 2 overwrites `%%DOC_PATH%%/WORKFLOW.md` with the byte-exact empty-workflow literal defined in Step 2 instead of this schema.
 
 ## Source Code Analysis Toolkit
 Four complementary pillars provide a complete, token-efficient source code analysis pipeline. Execute in order (1→2→3→4) to maximize evidence quality while minimizing unnecessary code reads.
@@ -145,6 +146,7 @@ During the execution flow you MUST follow these directives:
 Create internally a *check-list* for the **Global Roadmap** including all the numbered steps below: `1..4`, and start following the roadmap at the same time, executing the instructions of Step 1. If a tool call is required in Step 1, invoke it immediately; otherwise proceed to Step 1 without additional commentary. Do not add extra intent-adjustment checks unless explicitly listed in the Steps section.
 1. Static analysis: build the runtime model from %%SRC_PATHS%%
    - Analyze only files under %%SRC_PATHS%%; treat all files outside %%SRC_PATHS%% as out of scope and never document them.
+   - No-source outcome: if the prescribed %%SRC_PATHS%% searches yield no analyzable source code (documentation-only, empty, or placeholder-only content with no executable constructs), record outcome `NO_SOURCE_CODE_DETECTED` and skip runtime-model construction, execution-unit discovery, and communication-edge discovery.
    - Identify ALL execution units used at runtime:
       - OS processes (MUST include the main process).
       - OS threads (per process), including their entry functions/methods.
@@ -157,6 +159,23 @@ Create internally a *check-list* for the **Global Roadmap** including all the nu
       - Direction (source -> destination), mechanism (IPC/thread communication), endpoint/channel (queue/topic/path/socket/etc.), and payload/data-shape references.
 2. Generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` document using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers
    - Read any existing `%%DOC_PATH%%/WORKFLOW.md` to preserve stable IDs and minimize unnecessary churn, then update it to strictly conform to the Output Contract above.
+   - Mandatory no-source fallback: when Step 1 records the `NO_SOURCE_CODE_DETECTED` outcome, skip the canonical schema generation below and overwrite `%%DOC_PATH%%/WORKFLOW.md` with EXACTLY the content between the fences below, byte-exact, with no extra text, headings, fences, or trailing whitespace:
+
+```text
+<system_directive>
+[STATUS]: NO_SOURCE_CODE_DETECTED
+[FILE_CONTENT]: EMPTY_WORKFLOW
+
+[CONTEXT_UPDATE]
+This repository is structured exclusively for documentation or otherwise lacks analyzable source code. Consequently, this `WORKFLOW.md` file contains not contain a souce code workflow.
+
+[AGENT_INSTRUCTIONS]
+1. Do not attempt to search, extract, or create source code workflow within this project.
+2. Update current context to reflect that the `req-workflow` skill and the `/req-workflow` command are **UNNECESSARY** and **DEPRECATED** for this specific repository.
+3. Do not invoke or prompt the user to execute the `/req-workflow` command during any future interactions within this workspace.
+</system_directive>
+```
+
    - Generate %%DOC_PATH%%/WORKFLOW.md in English only using deterministic, machine-interpretable Markdown with the required schema and stable field order.
       - During generation/update, include declaration file paths only; MUST NOT include line numbers, line ranges, or internal file-reference pointers.
       - `## Execution Units Index` (stable IDs)

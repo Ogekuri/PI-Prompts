@@ -160,13 +160,13 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-022**: MUST optimize prompts/templates for LLM-agent execution and MUST require the `## Professional Personas` section to include `Prompt Engineer and LLM Optimization Specialist` for prompt, agent, skill, and LLM-targeted document work.
 - **REQ-023**: MUST use identical canonical instruction phrasing for identical actions across prompts, outside explicitly prompt-specific specializations, except where explicitly allowed below.
   - Workflow identity literals MAY vary where required to bind the emitting prompt (`/req-<name>`, commit-type prefix, workflow-specific title/scope text, and step labels tied to workflow intent).
-  - Workflow-scoped failure or warning strings MAY vary only in workflow-name specialization while preserving the same control action pattern (`OUTPUT exactly "<STRING>"`, then terminate or override final line as explicitly defined).
+  - Workflow-scoped failure or warning strings MAY vary only in workflow-name specialization while preserving the same control action pattern (`OUTPUT exactly "<STRING>"`, then terminate or report the warning in JSON as explicitly defined).
   - Numeric bounds and scoped nouns MAY vary when they encode workflow-specific semantics (for example step-count cardinality and requirement-type nouns), while shared operational commands MUST remain byte-identical.
 - **REQ-024**: MUST avoid instructions that cause unnecessary token-heavy content, except where explicitly allowed below.
   - Mandatory compliance blocks MAY remain verbose when retained verbatim by policy (`Professional Personas`, `Iteration and Context Economy`, `Execution Protocol`, `Execution Directives`, and `Steps`).
   - Canonical executable literals MAY remain fully expanded where determinism depends on exact text (shell commands, fixed report schema, fixed error strings, and WORKFLOW.md schema contracts).
   - High-detail enumerations MAY be used only when they constrain behavior and reduce ambiguity (supported tag sets, allowed temp/cache paths, and explicit termination-condition matrices).
-- **REQ-025**: MUST reject unauthorized chain-interrupt instructions except at explicitly defined interruption points that emit exact strings and terminate or override the final status line.
+- **REQ-025**: MUST reject unauthorized chain-interrupt instructions except at explicitly defined interruption points that emit exact diagnostic strings in JSON and terminate or report the warning in JSON.
 - **REQ-026**: MUST reject new hallucination-risk instructions, except where explicitly allowed below.
   - Evidence-first high-recall directives MAY remain when uncertainty is explicitly downgraded to candidates and never asserted as complete without file-backed proof.
   - Autonomous disambiguation directives MAY remain only when constrained to least-invasive choices anchored to repository evidence and requirement traceability.
@@ -186,9 +186,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-039**: MUST NOT place the `%%CONTEXT_FILES%%` placeholder in any section of a bundled prompt other than its terminal `## Context Files` section.
 - **REQ-040**: MUST phrase prompt instructions that refer to injected context as files injected under the `## Context Files` section.
 - **REQ-041**: MUST record in each Verification Delta of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` the exact executed unit-test command with total, passed, and failed counts and failing-test names, or the N/A reason.
-- **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string when executed unit tests still fail after the second fix attempt.
-- **REQ-043**: MUST define every present-results step to print first a `## **Summary**` section containing a human-readable summary of the entire final output, limited to 1010 Unicode characters.
-- **REQ-044**: MUST place the `## **Summary**` section immediately before the `## **Outcome**` section in every bundled prompt using identical canonical phrasing.
+- **REQ-042**: MUST terminate `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` with an exact workflow-specialized error string in the JSON outcome when executed unit tests still fail after the second fix attempt.
+- **REQ-043**: MUST require `summary` to summarize the entire final response in at most 1010 Unicode characters.
+- **REQ-044**: MUST require every final response to be one JSON object without surrounding text or fences.
 - **REQ-045**: MUST prefix every reference to `Agentic_Text_Authoring_Guidance.md`, `Document_Source_Code_in_Doxygen_Style.md`, `HDT_Test_Authoring_Guide.md`, and `Requirements_Template.md` with `%%TEMPLATE_PATH%%/` in bundled prompts.
 - **REQ-046**: MUST instruct the LLM agent, in every prompt authorizing unit-test creation or modification, to use `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md` as its unit-test authoring guide.
 - **REQ-047**: MUST state within that instruction that `%%TEMPLATE_PATH%%/HDT_Test_Authoring_Guide.md` is the mandatory HDT unit-test authoring guide for Generator and Refactorer modes.
@@ -196,22 +196,22 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-049**: MUST state within that instruction that `%%TEMPLATE_PATH%%/Agentic_Text_Authoring_Guidance.md` is the mandatory agentic text-authoring guidance for those tasks.
 - **REQ-050**: MUST place that instruction in the `## Professional Personas` section immediately after the `Prompt Engineer and LLM Optimization Specialist` persona and MUST keep it byte-identical across all bundled prompts.
 - **REQ-057**: MUST include in the `## Absolute Rules, Non-Negotiable` section of `analyze.md`, `change.md`, `cover.md`, `fix.md`, `new.md`, `readme.md`, `refactor.md`, and `write.md` a byte-identical `CRITICAL` bullet governing final response language.
-- **REQ-058**: MUST scope that bullet to all final response text, including the `## **Summary**` section, every fixed report schema section, and the final status line, using the `[User's Request](#users-request)` language.
+- **REQ-058**: MUST require human-readable final response values to use the user request language while preserving exact literals and commands.
 - **REQ-059**: MUST restrict that bullet to the final response only and MUST keep repository artifact content in English.
-- **REQ-060**: MUST define in the present-results step of every bundled prompt a dedicated bullet that emits exactly one terminal status line after the `## **Next Workflow**` section.
-- **REQ-061**: MUST state within that bullet that the terminal status line is `STATUS_OK` when the workflow completed successfully and `STATUS_ERROR` when it failed, was blocked, or ended without change.
-- **REQ-062**: MUST require that bullet to forbid any response content after the emitted terminal status line and MUST keep the bullet byte-identical across all bundled prompts.
-- **REQ-063**: MUST define in the present-results step of every bundled prompt a `## **Next Workflow**` emission bullet and MUST keep that bullet byte-identical across all bundled prompts.
-- **REQ-064**: MUST state within that bullet that a next-step command is emitted only when the completed workflow outcome mandates it and that no next-step is printed when the outcome requires none.
-- **REQ-065**: MUST state within that bullet that optional or elective next-step commands MUST NOT be added.
-- **REQ-066**: MUST state within that bullet that `## **Next Workflow**` contains exactly one `~~~NEXT_WORKFLOW` fenced block with any mandated commands.
-- **REQ-067**: MUST state within that bullet that each command starts with its exact slash command and is followed by its input text when required.
-- **REQ-068**: MUST state within that bullet that a brief human-readable description precedes the `NEXT_WORKFLOW` block.
-- **REQ-069**: MUST place that bullet immediately before the terminal-status-line bullet defined by REQ-060 in the present-results step.
-- **REQ-070**: MUST enclose the `## **Summary**` human-readable summary in exactly one `~~~RESULT_SUMMARY` fenced block.
-- **REQ-071**: MUST state within the `## **Next Workflow**` emission bullet that mandated commands in the block are separated by blank lines.
-- **REQ-072**: MUST state within the `## **Next Workflow**` emission bullet that the block is empty and the description reports no next action when no command is mandated.
-- **REQ-073**: MUST require every early error termination to emit `STATUS_ERROR` as the final line after any required diagnostic.
+- **REQ-060**: MUST require `result` to be the string `ok` on success and `error` on failure, blockage, or termination without changes.
+- **REQ-061**: MUST require string fields `summary`, `outcome`, `requirement_delta`, `design_delta`, `implementation_delta`, `verification_delta`, `evidence`, `assumptions`, and `next_workflow`.
+- **REQ-062**: MUST reject additional top-level fields and additional fields in command objects.
+- **REQ-063**: MUST require the `next_commands` array in every final response.
+- **REQ-064**: MUST include only commands mandated by the workflow outcome in `next_commands`.
+- **REQ-065**: MUST exclude optional or elective commands from `next_commands`.
+- **REQ-066**: MUST represent each mandated command as an object containing only string fields `command` and `text`.
+- **REQ-067**: MUST set `command` to the exact slash command and `text` to the required input or an empty string when input is unnecessary.
+- **REQ-068**: MUST describe the mandated next action in `next_workflow` consistently with `next_commands`.
+- **REQ-069**: MUST use an empty `next_commands` array and describe no required next action when no command is mandated.
+- **REQ-070**: MUST serialize the final object as valid JSON, escaping quotation marks, backslashes, control characters, and multiline string content.
+- **REQ-071**: MUST preserve Unicode content through JSON serialization.
+- **REQ-072**: MUST preserve all required diagnostics, evidence, and partial results inside the appropriate JSON string fields.
+- **REQ-073**: MUST return the complete JSON object with `result` set to `error` on every early error or no-change termination.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.
@@ -222,9 +222,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ANZ-STP-002**: MUST define the analysis step to analyze the [User Request](#users-request).
 - **ANZ-STP-003**: MUST define the follow-up-dispatch step positioned between the analysis step and the present-results step in `analyze.md`.
 - **ANZ-STP-004**: MUST define `/req-fix` for implementation behavior that conflicts with requirements, `/req-cover` for uncovered existing requirements, `/req-refactor` for requirement-preserving internal improvements, and `/req-change` for changes requiring requirement updates.
-- **ANZ-STP-005**: MUST print a follow-up only when its trigger is identified, using the `NEXT_WORKFLOW` block with the exact slash command followed by its actionable prompt text.
-- **ANZ-STP-006**: MUST define the present-results step to present a human-readable analysis report preserving the fixed report schema and exact final status line.
-- **ANZ-STP-007**: MUST include the slash command in every follow-up and MUST NOT print a follow-up when no corresponding modification trigger is identified.
+- **ANZ-STP-005**: MUST include each triggered follow-up command and actionable prompt text in `next_commands`.
+- **ANZ-STP-006**: MUST present the human-readable analysis report in the required JSON fields.
+- **ANZ-STP-007**: MUST include no follow-up command when no corresponding modification trigger is identified.
 
 ### 3.4 Change Prompt
 - **CHG-CTX-001**: MUST define the `## Purpose` section to instruct: Evolve existing system behavior safely by first updating the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) to encode the requested change, then implementing and verifying the corresponding code/test deltas with strict traceability to requirement IDs so downstream LLM Agents MUST reason over the change deterministically.
@@ -241,7 +241,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **CHG-STP-008**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **CHG-STP-009**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **CHG-STP-010**: MUST NOT embed a merge-conflict management step in `change.md` because merge handling is externalized outside the prompt.
-- **CHG-STP-011**: MUST define the present-results step to present results for human readers using clear sentences and readable Markdown while preserving the fixed report schema and exact final status line.
+- **CHG-STP-011**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.5 Check Prompt
 - **CHK-CTX-001**: MUST define the `## Purpose` section to instruct: Provide an evidence-backed compliance audit by running static analysis and mapping every requirement in the SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) to concrete implementation evidence, so downstream LLM Agents MUST decide whether coverage work is required and where to apply it.
@@ -250,7 +250,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **CHK-CTX-004**: MUST define the `## Behavior` section to instruct: Only analyze the code and static-analysis execution results and present the results; make no changes; Do NOT create or modify tests; Report facts with file paths and line numbers or short code excerpts.
 - **CHK-STP-001**: MUST NOT embed a required-doc presence check step in `check.md` because doc validation is externalized outside the prompt.
 - **CHK-STP-002**: MUST define the coverage step to run the `static-check` tool, check requirements coverage, and generate the Implementation Delta.
-- **CHK-STP-003**: MUST define the present-results step to present results and Implementation Delta for human readers while preserving the fixed report schema and exact final status line.
+- **CHK-STP-003**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.6 Cover Prompt
 - **COV-CTX-001**: MUST define the `## Purpose` section to instruct: Close coverage gaps by implementing the missing behaviors for uncovered requirement IDs in the existing codebase, so the implementation becomes fully compliant with the current SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) without changing that SRS.
@@ -266,7 +266,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **COV-STP-007**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **COV-STP-008**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **COV-STP-009**: MUST NOT embed a merge-conflict management step in `cover.md` because merge handling is externalized outside the prompt.
-- **COV-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **COV-STP-010**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.7 Create Prompt
 - **CRT-CTX-001**: MUST define the `## Purpose` section to instruct: Bootstrap an SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) from repository evidence so downstream LLM Agents MUST start SRS-driven work grounded in what the code actually does, without guessing undocumented behavior.
@@ -275,7 +275,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **CRT-CTX-004**: MUST define the `## Behavior` section to instruct: Write the document in English; Do not perform unrelated edits; Use filesystem/shell tools to read project files and to write/update only `%%DOC_PATH%%/REQUIREMENTS.md`; Prefer read-only commands for analysis.
 - **CRT-STP-001**: MUST define the generate step to produce the Software Requirements Specification from source evidence following `%%TEMPLATE_PATH%%/Requirements_Template.md`.
 - **CRT-STP-002**: MUST define the validate step to validate the Software Requirements Specification against actual code behavior (True State).
-- **CRT-STP-003**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **CRT-STP-003**: MUST define the present-results step to present human-readable results in the required JSON object.
 - **CRT-STP-004**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 
 ### 3.8 Fix Prompt
@@ -292,9 +292,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **FIX-STP-007**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **FIX-STP-008**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **FIX-STP-009**: MUST NOT embed a merge-conflict management step in `fix.md` because merge handling is externalized outside the prompt.
-- **FIX-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
-- **FIX-STP-011**: MUST define the fix-step incompatibility branch to output a three-column requirement-conflict table (`Requirement ID`, `Conflicting Excerpt`, `Conflict Reason + Interrupted Implementation Intent`) before emitting the exact error string and terminating.
-- **FIX-STP-012**: MUST print a `/req-change` follow-up with actionable prompt text in the `NEXT_WORKFLOW` block when a requested fix conflicts with requirements, and MUST print no other follow-up command.
+- **FIX-STP-010**: MUST define the present-results step to present human-readable results in the required JSON object.
+- **FIX-STP-011**: MUST include the three-column requirement-conflict table and exact error diagnostic in JSON string fields before terminating the incompatible fix.
+- **FIX-STP-012**: MUST include only `/req-change` with actionable prompt text in `next_commands` when a requested fix conflicts with requirements.
 
 ### 3.9 Implement Prompt
 - **IMP-CTX-001**: MUST define the `## Purpose` section to instruct: Produce a working implementation from the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) by building missing functionality end-to-end (including from scratch where needed), so the codebase becomes fully compliant with the documented requirement IDs without changing those requirements.
@@ -310,7 +310,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **IMP-STP-007**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **IMP-STP-008**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **IMP-STP-009**: MUST NOT embed a merge-conflict management step in `implement.md` because merge handling is externalized outside the prompt.
-- **IMP-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **IMP-STP-010**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.10 New Prompt
 - **NEW-CTX-001**: MUST define the `## Purpose` section to instruct: Introduce a new, backwards-compatible capability by first extending the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) with the new requirement(s), then implementing and verifying the corresponding code/test changes with strict traceability to requirement IDs so downstream LLM Agents MUST reason over the new feature deterministically.
@@ -327,7 +327,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **NEW-STP-008**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **NEW-STP-009**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **NEW-STP-010**: MUST NOT embed a merge-conflict management step in `new.md` because merge handling is externalized outside the prompt.
-- **NEW-STP-011**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **NEW-STP-011**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.11 ReCreate Prompt
 - **RCR-CTX-001**: MUST define the `## Purpose` section to instruct: Rebuild and reorganize the SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) from repository evidence while preserving all existing requirement IDs so downstream LLM Agents MUST rely on a clean structure and stable traceability when driving subsequent design/implementation work.
@@ -341,7 +341,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RCR-STP-005**: MUST define the validate step to validate the Software Requirements Specification against actual code behavior (True State).
 - **RCR-STP-006**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **RCR-STP-007**: MUST NOT embed a merge-conflict management step in `recreate.md` because merge handling is externalized outside the prompt.
-- **RCR-STP-008**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **RCR-STP-008**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.12 Refactor Prompt
 - **RFR-CTX-001**: MUST define the `## Purpose` section to instruct: Improve maintainability, structure, and/or performance while strictly preserving externally observable behavior and keeping the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) unchanged, so downstream LLM Agents MUST treat the refactor as a semantics-preserving transformation.
@@ -357,7 +357,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RFR-STP-007**: MUST define the REFERENCES-update step to create/update `%%DOC_PATH%%/REFERENCES.md` with the `references-generation` tool.
 - **RFR-STP-008**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **RFR-STP-009**: MUST NOT embed a merge-conflict management step in `refactor.md` because merge handling is externalized outside the prompt.
-- **RFR-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **RFR-STP-010**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.13 References Prompt
 - **REF-CTX-001**: MUST NOT maintain a bundled `src/prompts/references.md` prompt in this revision because it was removed.
@@ -383,7 +383,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RNB-STP-005**: MUST define the validate step to validate the Software Requirements Specification against actual code behavior (True State).
 - **RNB-STP-006**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **RNB-STP-007**: MUST NOT embed a merge-conflict management step in `renumber.md` because merge handling is externalized outside the prompt.
-- **RNB-STP-008**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **RNB-STP-008**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.15 Workflow Prompt
 - **WFL-CTX-001**: MUST define the `## Purpose` section to instruct: Maintain an LLM-oriented runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`) derived from repository evidence so downstream LLM Agents MUST reason about execution units, communication edges, and internal call-traces during SRS-driven design/implementation.
@@ -396,7 +396,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **WFL-STP-004**: MUST define the generate step to generate and overwrite `%%DOC_PATH%%/WORKFLOW.md` using declaration file paths only, excluding line numbers, line ranges, and internal file-reference pointers.
 - **WFL-STP-005**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **WFL-STP-006**: MUST NOT embed a merge-conflict management step in `workflow.md` because merge handling is externalized outside the prompt.
-- **WFL-STP-007**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **WFL-STP-007**: MUST define the present-results step to present human-readable results in the required JSON object.
 
 ### 3.16 Write Prompt
 - **WRT-CTX-001**: MUST define the `## Purpose` section to instruct: Capture the user's intent as an SRS (`%%DOC_PATH%%/REQUIREMENTS.md`) suitable for automated, SRS-driven development, so downstream LLM Agents MUST implement the system without inventing unstated requirements.
@@ -404,7 +404,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **WRT-CTX-003**: MUST define the `## Professional Personas` section to instruct: Act as a Senior Technical Requirements Engineer when drafting software requirements using RFC 2119 keywords; Act as a Technical Writer when structuring the SRS document with a max depth of 3; Act as a Business Analyst when interpreting project goals; Act as a Senior System Architect when describing components or relationships.
 - **WRT-CTX-004**: MUST define the `## Behavior` section to instruct: Do not perform unrelated edits; observe the Absolute Rules, Non-Negotiable for file-operation constraints.
 - **WRT-STP-001**: MUST define the generate step to produce the Software Requirements Specification from the [User Request](#users-request) following `%%TEMPLATE_PATH%%/Requirements_Template.md`.
-- **WRT-STP-002**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **WRT-STP-002**: MUST define the present-results step to present human-readable results in the required JSON object.
 - **WRT-STP-003**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 
 ### 3.17 Readme Prompt
@@ -419,7 +419,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **RDM-STP-004**: MUST define the update step to identify exact root `README.md` sections impacted by detected user-visible changes and additional requested edits, then update only those sections while preserving unrelated content and existing structure/formatting.
 - **RDM-STP-005**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **RDM-STP-006**: MUST NOT embed a merge-conflict management step in `readme.md` because merge handling is externalized outside the prompt.
-- **RDM-STP-007**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **RDM-STP-007**: MUST define the present-results step to present human-readable results in the required JSON object.
 - **RDM-STP-008**: MUST define the update step to enumerate all root `README.md` sections and headings in document order before validation to fix the complete validation surface.
 - **RDM-STP-009**: MUST define the update step to validate every non-excluded sentence in each enumerated section against repository implementation evidence, recording a per-sentence conformance outcome.
 - **RDM-STP-010**: MUST define the update step to enforce a completeness gate that blocks step completion until every enumerated section and sentence has a recorded outcome.
@@ -451,7 +451,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **FCH-STP-007**: MUST define the generate step to deduce control flow, decisions, and joins from the static-analysis step before writing the file.
 - **FCH-STP-008**: MUST define the commit step as the `%%COMMIT%%` placeholder that injects the canonical commit-workflow block from `src/instructions/git_commit.md`, including an explicit statement that a GPG-signed commit is not required.
 - **FCH-STP-009**: MUST NOT embed a merge-conflict management step in `flowchart.md` because merge handling is externalized outside the prompt.
-- **FCH-STP-010**: MUST define the present-results step to present results for human readers while preserving the fixed report schema and exact final status line.
+- **FCH-STP-010**: MUST define the present-results step to present human-readable results in the required JSON object.
 - **FCH-STP-011**: MUST define the generate step to instruct sibling branches from one decision node to use comparable semantic granularity.
 - **FCH-STP-012**: MUST define the generate step to normalize equivalent branches by expanding or collapsing composite helpers to remove hidden-step ambiguity.
 - **FCH-STP-013**: MUST define the generate step to keep a composite helper collapsed only when sibling branches do not expose its internal operations.

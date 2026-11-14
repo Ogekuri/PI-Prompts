@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.12.9](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.9) - 2026-11-14
+## [0.12.10](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.10) - 2026-11-14
 ### 🐛  Bug Fixes
 - Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
@@ -8,6 +8,14 @@
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- mandate json-validator validation of final JSON output [useReq] *(prompts)*
+  REQUIREMENTS: extend REQ-076 to json-validator validation rules; add
+  REQ-077 mandating tool execution on the final JSON object before
+  emission and REQ-078 forbidding presumed correctness and emission
+  while the structure is invalid.
+  Prompts: add byte-identical json-validator validation sentences to
+  the Absolute-Rules JSON contract bullet and the present-results
+  Serialize bullet of all 15 bundled prompts.
 - mandate empty-workflow output when no source is detected [useReq] *(workflow)*
   Add WFL-STP-008..010: the workflow prompt detects the no-source
   outcome on prescribed source paths and overwrites WORKFLOW.md with
@@ -260,7 +268,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.9\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.9
+- \[0.12.10\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.10
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -274,4 +282,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.9]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.9
+[0.12.10]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.10

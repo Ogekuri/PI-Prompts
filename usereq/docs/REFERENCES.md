@@ -1,79 +1,12 @@
-# PI-Prompts References
+<system_directive>
+[STATUS]: NO_SOURCE_CODE_DETECTED
+[FILE_CONTENT]: EMPTY_REFERENCES
 
-## Source Surface Summary
-- Source root: `src`
-- Source kind: static Markdown resources only; bundled standalone prompt/template documents start with level-1 titles and omit YAML front matter; every bundled prompt under `src/prompts` ends with an identical `## Context Files` section whose single `%%CONTEXT_FILES%%` token occurrence is expanded by the runtime and which is the only place the token appears in a prompt
-- Executable source symbols under `src`: none detected
-- Prompt resources under `src/prompts`: 15 standalone Markdown prompt documents with leading level-1 titles; present-results instructions specify `RESULT_SUMMARY` and `NEXT_WORKFLOW` fenced blocks
-- Template resources under `src/templates`: 4 standalone Markdown documents
-- Instruction resources under `src/instructions`: 2 reusable Markdown instruction snippets
-- Removed prompt in this revision: `src/prompts/references.md`
+[CONTEXT_UPDATE]
+This repository is structured exclusively for documentation or otherwise lacks analyzable source code. Consequently, this `REFERENCES.md` file contains no source code mappings or references.
 
-## Files Structure
-```text
-src/
-├── templates/
-│   ├── Agentic_Text_Authoring_Guidance.md
-│   ├── Document_Source_Code_in_Doxygen_Style.md
-│   ├── HDT_Test_Authoring_Guide.md
-│   └── Requirements_Template.md
-├── instructions/
-│   ├── git_commit.md
-│   └── git_read-only.md
-└── prompts/
-    ├── analyze.md
-    ├── change.md
-    ├── check.md
-    ├── cover.md
-    ├── create.md
-    ├── fix.md
-    ├── flowchart.md
-    ├── implement.md
-    ├── new.md
-    ├── readme.md
-    ├── recreate.md
-    ├── refactor.md
-    ├── renumber.md
-    ├── workflow.md
-    └── write.md
-```
-
-## Resource Index
-
-### `src/prompts`
-| Path | Purpose |
-| --- | ---: | --- |
-| `src/prompts/analyze.md` | Read-only investigation workflow that produces an evidence-backed analysis report and a conditional `/req-fix`, `/req-cover`, `/req-change`, or `/req-refactor` follow-up command block. |
-| `src/prompts/change.md` | Requirements-change workflow that updates the SRS, implements the change, verifies it, and refreshes workflow/reference docs. |
-| `src/prompts/check.md` | Repository-read-only compliance audit workflow that evaluates every requirement ID. |
-| `src/prompts/cover.md` | Minimal implementation workflow for uncovered existing requirement IDs without changing the SRS. |
-| `src/prompts/create.md` | Source-grounded workflow that writes or updates `REQUIREMENTS.md` from implementation evidence. |
-| `src/prompts/fix.md` | Defect-remediation workflow that restores behavior without changing requirements. |
-| `src/prompts/flowchart.md` | Docs-only workflow that regenerates `FLOWCHART.md` from source evidence. |
-| `src/prompts/implement.md` | Greenfield or major-gap workflow that builds implementation from an authoritative SRS without editing requirements. |
-| `src/prompts/new.md` | Additive-feature workflow that appends new requirement IDs and implements the corresponding behavior. |
-| `src/prompts/readme.md` | Docs-only workflow that validates root `README.md` sentence-by-sentence against implementation evidence and aligns it with user-visible changes. |
-| `src/prompts/recreate.md` | Reorganization workflow that rebuilds the SRS from source evidence while preserving existing requirement IDs. |
-| `src/prompts/refactor.md` | Internal-improvement workflow that preserves observable behavior and keeps requirements unchanged. |
-| `src/prompts/renumber.md` | Deterministic renumbering workflow for requirement IDs and internal requirement cross-references. |
-| `src/prompts/workflow.md` | Docs-only workflow that regenerates `WORKFLOW.md` from source evidence. |
-| `src/prompts/write.md` | Greenfield workflow that drafts `REQUIREMENTS.md` directly from user intent. |
-
-### `src/templates`
-| Path | Lines | Purpose |
-| --- | ---: | --- |
-| `src/templates/Agentic_Text_Authoring_Guidance.md` | 214 | Parser-first authoring standard for LLM-consumed instruction artifacts: intake and authority contract, writing rules, artifact profiles, skill and prompt packaging, CREATE/REVIEW/UPDATE procedures, reusable skeleton, validation case matrix, and delivery record. |
-| `src/templates/Document_Source_Code_in_Doxygen_Style.md` | 143 | Parser-first Doxygen documentation standard for source-code comments and metadata; Section 8 exempts harness/CLI system Markdown documents (SKILL, PROMPT, `BOOTSTRAP.md`, `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`) from Doxygen tags. |
-| `src/templates/HDT_Test_Authoring_Guide.md` | 318 | Deterministic HDT unit-test authoring guide for Generator and Refactorer modes. |
-| `src/templates/Requirements_Template.md` | 58 | Canonical template for authoring or rebuilding `REQUIREMENTS.md`. |
-
-### `src/instructions`
-| Path | Lines | Purpose |
-| --- | ---: | --- |
-| `src/instructions/git_commit.md` | 16 | Reusable commit-workflow instruction block injected through `%%COMMIT%%`. |
-| `src/instructions/git_read-only.md` | 2 | Reusable git read-only restriction block for analysis-only workflows. |
-
-## Symbol Status
-- Internal functions/classes/modules under `src`: none detected.
-- Reason: every tracked file under `src` in this revision is Markdown content intended for prompt delivery, documentation templating, or instruction injection.
-- Implication: navigation in this repository is file-oriented rather than symbol-oriented.
+[AGENT_INSTRUCTIONS]
+1. Do not attempt to search, extract, or index source code references within this project.
+2. Update current context to reflect that the `req-references` skill and the `/req-references` command are **UNNECESSARY** and **DEPRECATED** for this specific repository.
+3. Do not invoke or prompt the user to execute the `/req-references` command during any future interactions within this workspace.
+</system_directive>

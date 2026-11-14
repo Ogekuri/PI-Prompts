@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.12.10](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.10) - 2026-11-14
+## [0.12.11](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.11) - 2026-11-14
 ### 🐛  Bug Fixes
 - Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
@@ -268,7 +268,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.10\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.10
+- \[0.12.11\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.11
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -282,4 +282,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.10]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.10
+[0.12.11]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.11

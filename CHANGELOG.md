@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.12.6](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.6) - 2026-11-13
+## [0.12.7](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.7) - 2026-11-14
 ### 🐛  Bug Fixes
 - emit final status line on every prompt termination path [useReq] *(prompts)*
   Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- BREAKING CHANGE: emit parseable status keywords [useReq] *(prompts)*
+  REQ-061 and REQ-073: update terminal status and early error exits. Align the commit instruction and workflow model.
+- BREAKING CHANGE: add parseable result fences [useReq] *(prompts)*
+  REQ-070: specify summary and next-workflow fences across prompts. Update requirements and resource documentation.
 - unify mandatory-only Next Workflow fence guidance [useReq] *(prompts)*
   REQUIREMENTS.md: add REQ-063..REQ-069 for byte-identical next-step bullet; all 15 prompts: emit next-step only when mandatory, single ~~~text fence, no prose; analyze.md: align present-results bullet, keep 4 allowed follow-up commands; WORKFLOW.md: document the two byte-identical present-results bullets
 - emit terminal status line via dedicated present-results bullet [useReq] *(prompts)*
@@ -19,6 +23,9 @@
   Traceability: ANZ-STP-004, ANZ-STP-005, ANZ-STP-007, FIX-STP-012
 - set final Summary limit to 1010 UTF-8 characters [useReq] *(prompts)*
   Update REQ-043 in usereq/docs/REQUIREMENTS.md from 1024 to 1010 UTF-8 characters.; Update present-results Summary limit from 1024 to 1010 UTF-8 characters across all 15 bundled prompts in src/prompts/.
+
+### 📚  Documentation
+- Update REFERENCES.md document. [useReq] *(references)*
 
 ### ◀️  Revert
 - Roll back branch to de3b4bd5 (de3b4bd5d0fe0ec8b3d35f887cc9d9bb3a3610cc).
@@ -241,7 +248,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.6\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.6
+- \[0.12.7\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.7
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -255,4 +262,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.6]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.6
+[0.12.7]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.7

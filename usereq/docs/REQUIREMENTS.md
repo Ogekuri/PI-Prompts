@@ -214,9 +214,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-073**: MUST return the complete JSON object with `result` set to `error` on every early error or no-change termination.
 - **REQ-074**: MUST place a mandatory final JSON output contract in the `## Absolute Rules, Non-Negotiable` section of every bundled prompt.
 - **REQ-075**: MUST describe each applicable JSON field in that contract using the workflow's existing report requirements.
-- **REQ-076**: MUST use identical JSON serialization, result, next-command, and `json-validator` validation rules across all bundled prompt contracts.
-- **REQ-077**: MUST require every bundled prompt's mandatory final JSON output contract to instruct the agent to execute the `json-validator` tool on the complete final JSON object to validate its structure before emitting the final response.
-- **REQ-078**: MUST require the JSON contract to forbid emitting the final response while `json-validator` reports an invalid structure and to forbid presuming structural correctness without executing the tool.
+- **REQ-076**: MUST use identical JSON serialization, result, next-command, and `result-json-validator` validation rules across all bundled prompt contracts.
+- **REQ-077**: MUST require every bundled prompt's final JSON contract to execute `result-json-validator` on the complete final JSON object before emitting the final response.
+- **REQ-078**: MUST require the final JSON contract to block emission while `result-json-validator` reports an invalid structure and to forbid presuming correctness without executing the tool.
+- **REQ-079**: MUST inform the agent in every bundled prompt that `result-json-validator` validates only the final structured result JSON and is not a validator for generic JSON artifacts.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

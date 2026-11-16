@@ -1,7 +1,9 @@
 # Changelog
 
-## [0.12.14](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.14) - 2026-11-16
+## [0.12.15](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.15) - 2026-11-16
 ### 🐛  Bug Fixes
+- enforce next_workflow/next_commands consistency [useReq] *(prompts)*
+  Add byte-identical CRITICAL bullet enforcing next_workflow/next_commands agreement in all 15 bundled prompts (DES-002, REQ-023, REQ-074, REQ-076).; Add analyze.md Step 2 decision gate: every identified follow-up maps to exactly one branch; obsolete-test boundary maps to /req-fix; operational trigger definition (REQ-068, REQ-069, ANZ-STP-005, ANZ-STP-007).; Clarify outcome-identified follow-ups are outcome-mandated, never optional, in shared next_commands contract bullets.; Add reproducer test tests/test_next_workflow_contract.py; no SRS changes.
 - Update .pi-usereq.json conf.
 - Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
@@ -283,7 +285,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.14\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.14
+- \[0.12.15\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.15
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -297,4 +299,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.14]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.14
+[0.12.15]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.15

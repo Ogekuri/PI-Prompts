@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.12.12](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.12) - 2026-11-16
+## [0.12.13](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.13) - 2026-11-16
 ### 🐛  Bug Fixes
 - Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
@@ -8,6 +8,8 @@
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- BREAKING CHANGE: use req-prefixed tools in prompts and requirements [useReq] *(prompts)*
+  Align prompt tool references and SRS requirements with canonical names.
 - BREAKING CHANGE: scope result JSON validation in prompts and requirements [useReq] *(prompts)*
   Require result-json-validator before every final response.
   Restrict validation guidance to the final structured result JSON.
@@ -271,7 +273,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.12\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.12
+- \[0.12.13\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.13
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -285,4 +287,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.12]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.12
+[0.12.13]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.13

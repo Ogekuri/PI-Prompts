@@ -1,8 +1,8 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.9.1"
-date: "2026-11-14"
+version: "0.9.2"
+date: "2026-11-16"
 author: "req-change"
 scope:
   paths:
@@ -221,6 +221,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-080**: MUST refer to pi-usereq global tools in bundled prompts by their canonical names: `req-compress`, `req-references`, `req-search`, `req-static-check`, `req-summarize`, and `req-tokens`.
 - **REQ-081**: MUST refer to pi-usereq file-scoped tools in bundled prompts by their canonical names: `req-files-compress`, `req-files-search`, `req-files-static-check`, `req-files-summarize`, and `req-files-tokens`.
 - **REQ-082**: MUST refer to the pi-usereq result validator in bundled prompts by its canonical name `req-result-json-validator`.
+- **REQ-083**: MUST include in every bundled prompt a mandatory pre-execution directive requiring the agent to verify, before executing any workflow activity, that `req-search`, `req-files-search`, `req-static-check`, `req-references`, and `req-result-json-validator` are registered and accessible.
+- **REQ-084**: MUST require that directive to terminate the workflow with the exact diagnostic `ERROR: Required tools are not registered or accessible!` in `outcome` and `result` set to `error` when any required tool is not correctly registered or accessible.
+- **REQ-085**: MUST keep that directive byte-identical across all bundled prompts and MUST place it as the first CRITICAL bullet of the `## Execution Directives` section.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

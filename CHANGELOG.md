@@ -1,13 +1,23 @@
 # Changelog
 
-## [0.12.13](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.13) - 2026-11-16
+## [0.12.14](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.14) - 2026-11-16
 ### 🐛  Bug Fixes
+- Update .pi-usereq.json conf.
 - Fix WORKFLOW.md file.
 - emit final status line on every prompt termination path [useReq] *(prompts)*
   Add the canonical fixed-report close with STATUS: ERROR to every early error termination branch in fix, change, cover, implement, new, refactor, and check prompts.; Emit STATUS: OK for no-op success terminations in check and cover.; Apply the same contract to git_commit.md dirty-repository, no-change, and unclean-post-commit paths.; Add a reproducer unit test enforcing exact status lines on all termination paths.; Update WORKFLOW.md and REFERENCES.md.
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- mandate pre-execution req tool availability check [useReq] *(prompts)*
+  REQUIREMENTS.md v0.9.2: add REQ-083, REQ-084, REQ-085 requiring every
+  bundled prompt to verify req-search, req-files-search, req-static-check,
+  req-references, and req-result-json-validator availability before any
+  activity and to terminate with result=error otherwise.
+  All 15 bundled prompts: add byte-identical "Mandatory Pre-Execution Tool
+  Availability Check" directive as first CRITICAL bullet of the Execution
+  Directives section, with exact diagnostic ERROR: Required tools are not
+  registered or accessible!
 - BREAKING CHANGE: use req-prefixed tools in prompts and requirements [useReq] *(prompts)*
   Align prompt tool references and SRS requirements with canonical names.
 - BREAKING CHANGE: scope result JSON validation in prompts and requirements [useReq] *(prompts)*
@@ -273,7 +283,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.13\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.13
+- \[0.12.14\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.14
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -287,4 +297,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.13]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.13
+[0.12.14]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.14

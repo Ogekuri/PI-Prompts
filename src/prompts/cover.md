@@ -97,7 +97,7 @@ Use to: identify candidate symbols by name, description, or `@satisfies` link; o
 Use after pillars 1-2 to extract only the targeted named constructs identified during analysis.
 - Prefer the `req-search` tool for project-wide named-symbol, declaration, and construct scans, and the `req-files-search` tool when target files are already known.
 - Use these tools as the preferred extraction path for named objects, functions, data structures, declarations, constructs, and known-file lookup; they return source content exactly as it appears in source files, including comments; use `rg`/`grep` only for supplementary free-text/body-content search, fallback cases that construct extraction cannot express, or confirmation inside already targeted files.
-- `req-search` and `req-files-search` always emit original source line numbers; the `enable-line-numbers` option is unavailable.
+- `req-search` and `req-files-search` always emit original source line numbers.
 - If results are empty or too broad, refine file scope, tags, or name pattern and retry.
 - Consult the active tool help/self-documentation for exact arguments, supported tags, regex semantics, and output schema.
 

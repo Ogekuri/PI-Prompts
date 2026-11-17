@@ -71,6 +71,19 @@ _TRIGGER_SENTENCE = (
     "gate, use an empty array."
 )
 
+#: @brief Shared automatic-line-number statement for extraction guidance.
+#: @details Encodes the REQ-087-compatible instruction that declares automatic
+#: source line numbers without mentioning a removed tool option.
+_LINE_NUMBER_GUIDANCE = (
+    "`req-search` and `req-files-search` always emit original source line "
+    "numbers."
+)
+
+#: @brief Removed option identifier forbidden in bundled extraction guidance.
+#: @details Prevents prompts from instructing agents about an unavailable tool
+#: option while preserving automatic line-number guidance.
+_REMOVED_LINE_NUMBER_OPTION = "enable-line-numbers"
+
 
 def _collect_prompt_texts() -> list[tuple[str, str]]:
     """
@@ -163,6 +176,29 @@ class NextWorkflowContractTest(unittest.TestCase):
         self.assertEqual(len(clause_lines), 15)
         self.assertEqual(len(set(clause_lines)), 1)
         self.assertIn(_STEP_BULLET_CLAUSE, clause_lines[0])
+
+    def test_extraction_guidance_uses_automatic_line_numbers_without_option_reference(
+        self,
+    ) -> None:
+        """
+        @brief Verifies extraction guidance omits the removed line-number option.
+        @details Selects every bundled prompt containing the source-extraction
+        section, asserts the automatic line-number statement, and rejects the
+        removed option identifier in that prompt text.
+        @return {None} No return value.
+        @satisfies REQ-087
+        """
+        extraction_prompt_texts = [
+            (name, text)
+            for name, text in _collect_prompt_texts()
+            if "### 3. Code Extraction: `req-search` / `req-files-search` tools"
+            in text
+        ]
+        self.assertEqual(len(extraction_prompt_texts), 11)
+        for prompt_name, document_text in extraction_prompt_texts:
+            with self.subTest(document=prompt_name):
+                self.assertIn(_LINE_NUMBER_GUIDANCE, document_text)
+                self.assertNotIn(_REMOVED_LINE_NUMBER_OPTION, document_text)
 
     def test_analyze_decision_gate_is_defined(self) -> None:
         """

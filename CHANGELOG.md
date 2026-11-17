@@ -1,10 +1,13 @@
 # Changelog
 
-## [0.12.16](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.16) - 2026-11-17
+## [0.12.17](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.17) - 2026-11-17
 ### ⛰️  Features
 - prevent fixed-width commit line breaks [useReq] *(git-commit)*
 
 ### 🐛  Bug Fixes
+- remove obsolete line-number option guidance [useReq] *(prompts)*
+  Fix: retain automatic line-number guidance without removed-option references.
+  Tests: add a regression check for all extraction prompts.
 - enforce next_workflow/next_commands consistency [useReq] *(prompts)*
   Add byte-identical CRITICAL bullet enforcing next_workflow/next_commands agreement in all 15 bundled prompts (DES-002, REQ-023, REQ-074, REQ-076).; Add analyze.md Step 2 decision gate: every identified follow-up maps to exactly one branch; obsolete-test boundary maps to /req-fix; operational trigger definition (REQ-068, REQ-069, ANZ-STP-005, ANZ-STP-007).; Clarify outcome-identified follow-ups are outcome-mandated, never optional, in shared next_commands contract bullets.; Add reproducer test tests/test_next_workflow_contract.py; no SRS changes.
 - Update .pi-usereq.json conf.
@@ -14,6 +17,9 @@
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- align source extraction instructions [useReq] *(prompts)*
+  Requirements: REQ-087, REQ-088
+  Prompts: align line-number and exact-source extraction guidance.
 - mandate pre-execution req tool availability check [useReq] *(prompts)*
   REQUIREMENTS.md v0.9.2: add REQ-083, REQ-084, REQ-085 requiring every
   bundled prompt to verify req-search, req-files-search, req-static-check,
@@ -288,7 +294,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.16\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.16
+- \[0.12.17\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.17
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -302,4 +308,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.16]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.16
+[0.12.17]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.17

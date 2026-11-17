@@ -1,8 +1,8 @@
 ---
 title: "Prompts Project Requirements"
 description: Software requirements specification
-version: "0.9.2"
-date: "2026-11-16"
+version: "0.9.3"
+date: "2026-11-17"
 author: "req-change"
 scope:
   paths:
@@ -225,6 +225,8 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-084**: MUST require that directive to terminate the workflow with the exact diagnostic `ERROR: Required tools are not registered or accessible!` in `outcome` and `result` set to `error` when any required tool is not correctly registered or accessible.
 - **REQ-085**: MUST keep that directive byte-identical across all bundled prompts and MUST place it as the first CRITICAL bullet of the `## Execution Directives` section.
 - **REQ-086**: MUST require canonical commit-message generation to avoid unnecessary carriage returns or line feeds, including fixed-width paragraph alignment.
+- **REQ-087**: MUST describe `req-compress`, `req-files-compress`, `req-search`, and `req-files-search` as always emitting original source line numbers without an `enable-line-numbers` option.
+- **REQ-088**: MUST designate `req-search` and `req-files-search` as preferred extraction methods for named objects, functions, and data structures, returning exact source content including comments.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

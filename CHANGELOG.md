@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.12.17](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.17) - 2026-11-17
+## [0.12.18](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.18) - 2026-11-17
 ### ⛰️  Features
 - prevent fixed-width commit line breaks [useReq] *(git-commit)*
 
@@ -294,7 +294,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.17\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.17
+- \[0.12.18\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.18
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -308,4 +308,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.17]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.17
+[0.12.18]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.18

@@ -227,7 +227,9 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-086**: MUST require canonical commit-message generation to avoid unnecessary carriage returns or line feeds, including fixed-width paragraph alignment.
 - **REQ-087**: MUST describe `req-compress`, `req-files-compress`, `req-search`, and `req-files-search` as always emitting original source line numbers without an `enable-line-numbers` option.
 - **REQ-088**: MUST designate `req-search` and `req-files-search` as preferred extraction methods for named objects, functions, and data structures, returning exact source content including comments.
-- **REQ-089**: MUST instruct implementation workflows to avoid adding backward-compatibility logic or legacy support for features, commands, communication interfaces, GUI, TUI, or configurations unless explicitly requested in User's Request.
+- **REQ-089**: MUST enforce in change-implementing prompts the default that implemented changes exclude backward-compatibility logic and legacy support for features, commands, communication interfaces, GUI, TUI, and configurations.
+- **REQ-090**: MUST bypass the REQ-089 default only when the User's Request explicitly indicates the specific compatibility support to implement.
+- **REQ-091**: MUST include in the `## Behavior` section of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` a byte-identical bullet enforcing the REQ-089 default and the REQ-090 bypass.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

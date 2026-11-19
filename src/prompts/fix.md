@@ -58,7 +58,7 @@ In scope: reproduce/triage the defect with concrete evidence and prefer an evide
 - Only if no relevant suite exists, creating that test is too costly under test guidelines, or one-test defect isolation is not feasible, use fallback sequence: analyze and identify defect -> implement source fix -> verify resolution with explicit concrete evidence.
 - Treat `req-static-check` output that is exactly `Error: no source files found in configured directories.` as successful no-source completion.
 - All newly written or edited content MUST be in English. Do NOT translate existing text outside the minimal change surface required by this workflow; if you detect non-English text elsewhere, report it in **Evidence** instead of rewriting it.
-- Unless the [User Request](#users-request) explicitly requests otherwise, do not add backward-compatibility logic or legacy support for features, commands, communication interfaces, GUI, TUI, or configurations; implement the requested current behavior instead.
+- By default, do not add backward-compatibility logic or legacy support for features, commands, communication interfaces, GUI, TUI, or configurations; implement such support only when the [User Request](#users-request) explicitly indicates the specific support to implement.
 - If `.venv/bin/python` exists in the project root, use it for Python executions (eg, `PYTHONPATH=src .venv/bin/python -m <program name>`).
 - Non-Python tooling should use the project's standard commands.
 - Use filesystem/shell tools to read/write/delete files as needed (e.g., `cat`, `sed`, `perl -pi`, `printf > file`, `rm -f`, ...). Prefer read-only commands for analysis.

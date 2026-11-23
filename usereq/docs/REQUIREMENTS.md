@@ -232,6 +232,10 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-091**: MUST include in the `## Behavior` section of `change.md`, `cover.md`, `fix.md`, `implement.md`, `new.md`, and `refactor.md` a byte-identical bullet enforcing the REQ-089 default and the REQ-090 bypass.
 - **REQ-092**: MUST require each generated slash-command request with nonempty input to be self-contained for a new agent without access to the originating analysis.
 - **REQ-093**: MUST require each such request to include the objective, relevant context, constraints, evidence, and acceptance criteria available from the originating analysis.
+- **REQ-094**: MUST include a critical non-negotiable audit completion rule in prompts that require requirement-by-requirement compliance audits.
+- **REQ-095**: MUST require the rule to verify and record an `OK` or `FAIL` result with required evidence for every audited requirement before proceeding to the next step.
+- **REQ-096**: MUST require the rule to preserve audit scope despite iteration and context economy constraints.
+- **REQ-097**: MUST require the rule to continue incomplete audits in bounded batches and prevent staging or committing until the audit is complete.
 
 ### 3.3 Analyze Prompt
 - **ANZ-CTX-001**: MUST define the `## Purpose` section to instruct: Enable evidence-backed reasoning about a request or investigation by grounding conclusions in the normative SRS (`%%DOC_PATH%%/REQUIREMENTS.md`), the runtime/workflow model (`%%DOC_PATH%%/WORKFLOW.md`), references (`%%DOC_PATH%%/REFERENCES.md`), and the actual implementation, so downstream LLM Agents MUST choose the correct follow-up workflow with minimal re-discovery.

@@ -1,12 +1,14 @@
 # Changelog
 
-## [0.12.21](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.21) - 2026-11-23
+## [0.12.22](https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.22) - 2026-11-27
 ### ⛰️  Features
 - Add mandatory requirements check.
 - Require self-contained agent requests. *(handoff)*
 - prevent fixed-width commit line breaks [useReq] *(git-commit)*
 
 ### 🐛  Bug Fixes
+- Update .pi-usereq.json file.
+- Update .gitignore file.
 - remove obsolete line-number option guidance [useReq] *(prompts)*
   Fix: retain automatic line-number guidance without removed-option references.
   Tests: add a regression check for all extraction prompts.
@@ -19,6 +21,9 @@
 - Remove .pi-usereq.json file.
 
 ### 🚜  Changes
+- require context-first analysis and ordered search tools [useReq] *(prompts)*
+  Define separate lookup priorities for canonical documents and source files.
+  Align all 15 workflows with ICO-CTX-008 and ICO-CTX-012 through ICO-CTX-014.
 - integrate user request with SRS requirements [useReq] *(implement)*
 - tighten no-compat default bypass rule [useReq] *(prompts)*
   Enforce no backward-compatibility as a default in change-implementing prompts, bypassable only via explicit specific User's Request indications. Revise REQ-089, add REQ-090 (bypass gate) and REQ-091 (byte-identical canonical Behavior bullet in change/cover/fix/implement/new/refactor). Verification: req-static-check clean; 13 tests and 75 subtests passed.
@@ -301,7 +306,7 @@
 - \[0.10.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.10.0
 - \[0.11.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.11.0
 - \[0.12.0\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.0
-- \[0.12.21\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.21
+- \[0.12.22\]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.12.22
 
 [0.1.0]: https://github.com/Ogekuri/PI-Prompts/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.1.0..v0.2.0
@@ -315,4 +320,4 @@
 [0.10.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.9.0..v0.10.0
 [0.11.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.10.0..v0.11.0
 [0.12.0]: https://github.com/Ogekuri/PI-Prompts/compare/v0.11.0..v0.12.0
-[0.12.21]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.21
+[0.12.22]: https://github.com/Ogekuri/PI-Prompts/compare/v0.12.0..v0.12.22

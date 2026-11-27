@@ -180,7 +180,7 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **REQ-033**: MUST define `src/instructions/git_read-only.md` as the canonical git read-only restriction block inlined verbatim into read-only prompts.
 - **REQ-034**: MUST inject `%%COMMIT%%` only into prompts that perform commits and MUST NOT inject it into read-only `analyze.md` or `check.md`.
 - **REQ-035**: MUST end every bundled prompt under `src/prompts/` with a `## Context Files` section containing exactly one `%%CONTEXT_FILES%%` placeholder at the dynamic-injection point.
-- **REQ-036**: MUST define the `## Context Files` section description to instruct the agent that injected files are pre-loaded authoritative context it MUST reason over without re-reading, searching, or fetching, and proceed without assumptions when none are injected.
+- **REQ-036**: MUST describe injected files under `## Context Files` as authoritative context subject to ICO-CTX-005 and ICO-CTX-012 and instruct agents to proceed without context-file assumptions when none are injected.
 - **REQ-037**: MUST use the `req-static-check` tool for static-analysis verification and MUST NOT reference any `req --here --static-check` command.
 - **REQ-038**: MUST keep the `## Context Files` section description prose free of references to the `%%CONTEXT_FILES%%` token, the prompt-host runtime, and the CLI substitution mechanism.
 - **REQ-039**: MUST NOT place the `%%CONTEXT_FILES%%` placeholder in any section of a bundled prompt other than its terminal `## Context Files` section.
@@ -494,13 +494,17 @@ Proposed repository structure (max depth 3, depth 4 for `src/` directories):
 - **ICO-CTX-002**: MUST keep the `## Iteration and Context Economy` section byte-identical across all prompts under `src/prompts/`.
 - **ICO-CTX-003**: MUST define the `## Iteration and Context Economy` section as a list of `CRITICAL` rules that are mandatory and non-negotiable.
 - **ICO-CTX-004**: MUST require the rules to instruct the agent to minimize the number of iterations by batching independent operations and dispatching parallel tool calls whenever no dependency forces sequencing.
-- **ICO-CTX-005**: MUST require the rules to forbid re-reading, re-searching, or re-fetching files already provided under the `## Context Files` section or already read in the current session.
+- **ICO-CTX-005**: MUST require agents to reuse files injected under `## Context Files` and prior tool results without repeated retrieval except for targeted canonical-document lookups under ICO-CTX-012.
 - **ICO-CTX-006**: MUST require the rules to forbid restating requirement text, prior tool output, or unchanged file contents and to cite them by file path, symbol, and line range instead.
 - **ICO-CTX-007**: MUST require the rules to instruct the agent to add only information required by the active Step, a requirement ID, or explicit user-request text, omitting narration, filler, and speculative commentary.
-- **ICO-CTX-008**: MUST require the rules to select the most token-efficient evidence path in order: `%%DOC_PATH%%/REQUIREMENTS.md`, `%%DOC_PATH%%/WORKFLOW.md`, `%%DOC_PATH%%/REFERENCES.md`, then `req-search`/`req-files-search`, then `rg`/`grep` fallback.
+- **ICO-CTX-008**: MUST require analysis of available in-context information from `REQUIREMENTS.md`, `REFERENCES.md`, and `WORKFLOW.md` before any in-scope source-file search.
 - **ICO-CTX-009**: MUST require the rules to instruct the agent to gather all evidence a Step needs before producing its output and to not split a single logical operation across multiple iterations when one suffices.
 - **ICO-CTX-010**: MUST require the rules to instruct the agent to pause for a tool response only when a Step explicitly depends on it and to otherwise proceed autonomously without requesting confirmation.
 - **ICO-CTX-011**: MUST require the rules to govern how the agent organizes and sequences the work described in the `## Steps` section.
+
+- **ICO-CTX-012**: MUST permit targeted canonical-document lookups only for information missing from agent context or for necessary extraction or aggregation of document information.
+- **ICO-CTX-013**: MUST prioritize applicable tools for permitted canonical-document lookups in descending order: `ls`, `find`, `grep`, `read`, `bash`.
+- **ICO-CTX-014**: MUST prioritize applicable tools for source searches in descending order: `req-search`, `ls`, `find`, `req-files-search`, `grep`, `read`, `bash`.
 
 ### 3.20 Runtime and Automation
 - **ACT-001**: MUST run every GitHub Actions workflow job in this repository on Node24 or later and MUST NOT define Node20 fallback or transitional Node24-forcing environment overrides.
